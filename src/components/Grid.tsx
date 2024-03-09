@@ -43,7 +43,7 @@ const Grid = () => {
             return (
                 <div
                     key={index}
-                    className={`w-[80px] ${index % 4 === 2 && 'bg-sky-300'} ${index % 4 === 3 && 'bg-sky-300'} border border-black bg-neutral-100 p-1 text-center font-bold`}
+                    className={`w-[80px] ${index % 4 === 2 && 'bg-neutral-300'} ${index % 4 === 3 && 'bg-neutral-300'} border border-black bg-neutral-100 p-1 text-center font-bold`}
                 >
                     {lane.bahn}
                 </div>
@@ -55,7 +55,7 @@ const Grid = () => {
         return time().map((time: string, index: number) => {
             return (
                 <div
-                    className={`flex h-[40px] w-[80px] ${index === 21 && 'rounded-bl-xl'} ${index % 4 === 2 && 'bg-purple-300'} ${index % 4 === 3 && 'bg-purple-300'} items-center justify-center border border-black bg-neutral-100 text-center font-bold`}
+                    className={`flex h-[40px] w-[80px] ${index === 21 && 'rounded-bl-xl'} ${index % 4 === 2 && 'bg-neutral-300'} ${index % 4 === 3 && 'bg-neutral-300'} items-center justify-center border border-black bg-neutral-100 text-center font-bold`}
                 >
                     {time}
                 </div>
