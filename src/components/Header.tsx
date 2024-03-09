@@ -1,28 +1,62 @@
-import React from 'react';
-import {AiOutlineSchedule} from "react-icons/ai";
-import {IoIosSearch} from "react-icons/io";
+import React, { useState } from 'react';
+import 'flatpickr/dist/flatpickr.min.css';
+import { FcCalendar } from 'react-icons/fc';
+import { IoIosSearch } from 'react-icons/io';
+import { FcReadingEbook } from 'react-icons/fc';
+import { FcSettings } from 'react-icons/fc';
+import { FcMenu } from 'react-icons/fc';
+import { globalStore } from '../store/global.store';
+import DatePicker from './DatePicker';
+
 const Header = () => {
+    const { setStartLane, setStartTime, setEndTime, setEndLane, setCustomerName, setCustomerNumber, setBookingModal } = globalStore();
+    const [openMenuBar, setOpenMenuBar] = useState<boolean>(false);
+    const openModalBooking = () => {
+        setCustomerName('');
+        setCustomerNumber('');
+        setStartLane(0);
+        setEndLane(11);
+        setStartTime(0);
+        setEndTime(11);
+        setBookingModal(true);
+    };
+
     return (
-        <header className={"flex flex-row p-3 justify-between items-center bg-gray-200 w-full border border-b-1 border-gray-200"}>
-            <div className={"flex flex-row gap-1 justify-center items-center"}>
-                <AiOutlineSchedule className={"text-[25px]"}/>
-                <p className={"font-bold"}>Buchungen</p>
+        <header className={'border-b-1 flex w-full flex-row items-center justify-between border-b border-neutral-600 bg-neutral-700 p-3'}>
+            <div className={'flex flex-row items-center justify-center gap-1 text-gray-100'}>
+                <FcCalendar className={'text-[40px]'} />
+                <p className={'font-bold'}>Buchungen</p>
             </div>
 
-            <div className={"flex flex-row gap-2 justify-center items-center"}>
-                <button className={"bg-red-300 p-2 rounded-full w-[85px]"}>Buchen</button>
-                <button className={"bg-gray-300 p-2 rounded-full w-[85px]"}>Heute</button>
-                <div className={"relative flex justify-center items-center"}>
-                    <IoIosSearch className={"absolute text-xl left-2"}/>
-                    <input type={"search"} className={"p-2 rounded-full pl-8 outline-0"} placeholder={"Suchen..."}/>
+            <div className={'flex flex-row items-center justify-center'}>
+                <button className={'rounded-l-xl border bg-sky-500 p-2 font-bold text-white transition-all hover:bg-sky-600'} onClick={openModalBooking}>
+                    Buchen
+                </button>
+                <button className={'border bg-gray-200 p-2 font-bold transition-all hover:bg-gray-300'}>Heute</button>
+                <div className={'relative flex items-center justify-center'}>
+                    <IoIosSearch className={'absolute left-2 text-xl'} />
+                    <input type={'search'} className={'w-[300px] border p-2 pl-8 outline-0'} placeholder={'Suchen...'} />
                 </div>
-                <input type={"date"} className={"p-2 text-center rounded-full outline-0"}/>
+                <DatePicker />
             </div>
 
-            <div className={"flex flex-row gap-2 justify-center items-center"}>
-                <button>symbol</button>
-                <button>symbol</button>
-                <button>symbol</button>
+            <div
+                className={`relative flex flex-row items-center justify-center gap-2 ${openMenuBar ? 'rounded-r-xl' : 'rounded-xl'} bg-neutral-200 p-1 text-white`}
+            >
+                <div
+                    className={`absolute -left-[65px] flex rounded-l-xl bg-neutral-200 p-1 ${!openMenuBar && 'hidden'} animate-fade-left flex-row items-center justify-center transition-all`}
+                >
+                    <button className={'hover:animate-wiggle-more'}>
+                        <FcReadingEbook className={'text-[30px]'} />
+                    </button>
+                    <button className={'hover:animate-wiggle-more'}>
+                        <FcSettings className={'text-[30px]'} />
+                    </button>
+                </div>
+
+                <button onClick={() => setOpenMenuBar(!openMenuBar)}>
+                    <FcMenu className={`text-[30px] transition-all duration-300 ${openMenuBar && 'rotate-90'}`} />
+                </button>
             </div>
         </header>
     );
