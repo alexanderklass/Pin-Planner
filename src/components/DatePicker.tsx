@@ -20,7 +20,7 @@ const DatePicker = ({ value, day = 'Mo' }: props) => {
     }, [value]);
     return (
         <div className={'relative'}>
-            <input className={'w-[165px] rounded-r-xl border p-2 text-center font-bold'} value={value} ref={dateRef} type={'text'} />
+            <input className={'w-[165px] rounded-xl border p-2 text-center font-bold'} value={value} ref={dateRef} type={'text'} />
             <div className={'pointer-events-none absolute left-[6%] top-[20%] border-r border-gray-400 pr-1 font-bold'}>{day}</div>
             <BsCalendar2Event className={'pointer-events-none absolute right-[8%] top-[25%] text-[20px]'} />
         </div>

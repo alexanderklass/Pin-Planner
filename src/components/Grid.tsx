@@ -1,6 +1,7 @@
 import { FcOrgUnit } from 'react-icons/fc';
-import React, { useState } from 'react';
-import { initLaneData, time } from '../init/initGridData';
+import React, { useEffect } from 'react';
+import { time } from '../init/initGridData';
+import { globalStore } from '../store/global.store';
 import DropZone from './DropZone';
 import DragItem from './DragItem';
 import { DndProvider } from 'react-dnd';
@@ -8,7 +9,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import Switcher from './Switcher';
 
 const Grid = () => {
-    const [gridData, setGridData] = useState(initLaneData());
+    const { gridData, setGridData } = globalStore();
     const onDrop = (item: any, laneIndex: number, timeIndex: number) => {
         const updatedLane = [...gridData];
         updatedLane.forEach((lane) => {
@@ -89,8 +90,8 @@ const Grid = () => {
 
     return (
         <DndProvider backend={HTML5Backend}>
-            <div className={'mt-10 flex flex-row justify-center'}>
-                <div className={'flex flex-col items-center justify-center'}>
+            <div className={'flex scale-75 flex-row justify-center'}>
+                <div className={'flex flex-col justify-center'}>
                     <div className={'flex flex-row'}>
                         <div className={'flex w-[80px] items-center justify-center rounded-tl-xl border border-black bg-gray-200 p-1 text-center'}>
                             <FcOrgUnit className={'text-[25px]'} />

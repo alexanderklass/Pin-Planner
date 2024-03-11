@@ -6,7 +6,7 @@ import BookingModal from '../components/BookingModal';
 const Calendar = () => {
     return (
         <>
-            <div className={`flex h-screen flex-col bg-neutral-800`}>
+            <div className={`flex h-full flex-col bg-neutral-800`}>
                 <Header />
                 <Grid />
             </div>

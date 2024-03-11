@@ -1,4 +1,4 @@
-interface IBahn {
+export interface IBahn {
     id: number;
     bahn: string;
     time: ITime[];

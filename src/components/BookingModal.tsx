@@ -24,6 +24,7 @@ const BookingModal = () => {
         startLane,
         endTime,
         endLane,
+        addBooking,
     } = globalStore();
 
     return (
@@ -131,6 +132,7 @@ const BookingModal = () => {
                     <textarea rows={3} name={'customerNotes'} className={'w-full resize-none rounded-xl bg-gray-100 p-1'} placeholder={'Notizen...'} />
                     <div className={'flex flex-row items-center justify-center gap-2'}>
                         <button
+                            onClick={addBooking}
                             className={
                                 ' flex h-[30px] w-full items-center justify-center rounded-xl border border-green-600 bg-green-500 p-2 text-white transition-all hover:bg-green-600'
                             }

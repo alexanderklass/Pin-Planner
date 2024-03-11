@@ -28,16 +28,20 @@ const Header = () => {
                 <p className={'font-bold'}>Buchungen</p>
             </div>
 
-            <div className={'flex flex-row items-center justify-center'}>
-                <button className={'rounded-l-xl border bg-sky-500 p-2 font-bold text-white transition-all hover:bg-sky-600'} onClick={openModalBooking}>
-                    Buchen
-                </button>
-                <button className={'border bg-gray-200 p-2 font-bold transition-all hover:bg-gray-300'}>Heute</button>
+            <div className={'flex flex-row items-center justify-center gap-2'}>
+                <div>
+                    <button className={'rounded-l-xl border bg-sky-500 p-2 font-bold text-white transition-all hover:bg-sky-600'} onClick={openModalBooking}>
+                        Buchen
+                    </button>
+                    <button className={'rounded-r-xl border bg-gray-200 p-2 font-bold transition-all hover:bg-gray-300'}>Heute</button>
+                </div>
                 <div className={'relative flex items-center justify-center'}>
                     <IoIosSearch className={'absolute left-2 text-xl'} />
-                    <input type={'search'} className={'w-[300px] border p-2 pl-8 outline-0'} placeholder={'Suchen...'} />
+                    <input type={'search'} className={'w-[300px] rounded-xl border p-2 pl-8 outline-0'} placeholder={'Suchen...'} />
                 </div>
-                <DatePicker />
+                <div>
+                    <DatePicker />
+                </div>
             </div>
 
             <div
