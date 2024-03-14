@@ -17,8 +17,6 @@ interface ITime {
     startTime: number;
     endTime: number;
     payedStatus: boolean;
-    firstIndex: number;
-    secondIndex: number;
     price: number;
 }
 
@@ -44,8 +42,6 @@ export const initLaneData = () => {
                 startTime: 0,
                 endTime: 0,
                 payedStatus: false,
-                firstIndex: 0,
-                secondIndex: 0,
                 price: 0,
             };
             bahn.time.push(time);
@@ -81,3 +77,54 @@ export const time = () => {
         '00:30',
     ];
 };
+
+export const colorList = [
+    { colorGrid: 'bg-yellow-400' },
+    { colorGrid: 'bg-yellow-500' },
+    { colorGrid: 'bg-yellow-800' },
+    { colorGrid: 'bg-lime-400' },
+    { colorGrid: 'bg-lime-500' },
+    { colorGrid: 'bg-lime-800' },
+    { colorGrid: 'bg-green-400' },
+    { colorGrid: 'bg-green-500' },
+    { colorGrid: 'bg-green-800' },
+    { colorGrid: 'bg-orange-400' },
+    { colorGrid: 'bg-orange-500' },
+    { colorGrid: 'bg-orange-800' },
+    { colorGrid: 'bg-amber-400' },
+    { colorGrid: 'bg-amber-500' },
+    { colorGrid: 'bg-amber-800' },
+    { colorGrid: 'bg-teal-400' },
+    { colorGrid: 'bg-teal-500' },
+    { colorGrid: 'bg-teal-800' },
+    { colorGrid: 'bg-cyan-400' },
+    { colorGrid: 'bg-cyan-500' },
+    { colorGrid: 'bg-cyan-800' },
+    { colorGrid: 'bg-red-400' },
+    { colorGrid: 'bg-red-500' },
+    { colorGrid: 'bg-red-800' },
+    { colorGrid: 'bg-violet-400' },
+    { colorGrid: 'bg-violet-500' },
+    { colorGrid: 'bg-violet-800' },
+    { colorGrid: 'bg-sky-400' },
+    { colorGrid: 'bg-sky-500' },
+    { colorGrid: 'bg-sky-800' },
+    { colorGrid: 'bg-blue-400' },
+    { colorGrid: 'bg-blue-500' },
+    { colorGrid: 'bg-blue-800' },
+    { colorGrid: 'bg-indigo-400' },
+    { colorGrid: 'bg-indigo-500' },
+    { colorGrid: 'bg-indigo-800' },
+    { colorGrid: 'bg-purple-400' },
+    { colorGrid: 'bg-purple-500' },
+    { colorGrid: 'bg-purple-800' },
+    { colorGrid: 'bg-fuchsia-400' },
+    { colorGrid: 'bg-fuchsia-500' },
+    { colorGrid: 'bg-fuchsia-800' },
+    { colorGrid: 'bg-pink-400' },
+    { colorGrid: 'bg-pink-500' },
+    { colorGrid: 'bg-pink-800' },
+    { colorGrid: 'bg-rose-400' },
+    { colorGrid: 'bg-rose-500' },
+    { colorGrid: 'bg-rose-800' },
+];

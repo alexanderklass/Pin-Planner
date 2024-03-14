@@ -19,7 +19,7 @@ const DropZone = ({ onDrop, acceptType, children, className }: props) => {
         }),
     });
     return (
-        <div ref={drop} className={`${isOver && 'bg-green-300'} ${className}`}>
+        <div ref={drop} className={`${isOver && 'bg-yellow-300'} ${className}`}>
             {children}
         </div>
     );
