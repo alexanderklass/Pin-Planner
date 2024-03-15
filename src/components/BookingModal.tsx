@@ -7,7 +7,7 @@ import { LuTimer } from 'react-icons/lu';
 import { IoPersonAddSharp } from 'react-icons/io5';
 import { BsTelephonePlusFill } from 'react-icons/bs';
 import { FaStickyNote } from 'react-icons/fa';
-import { time } from '../init/initGridData';
+import { startTimeList, endTimeList } from '../init/initGridData';
 import InfoHover from './InfoHover';
 
 const BookingModal = () => {
@@ -37,6 +37,8 @@ const BookingModal = () => {
     const [bookAllDay, setBookAllDay] = useState(false);
     const [infoBookAllDay, setInfoBookAllDay] = useState(false);
     const [infoInactiveLane, setInfoInactiveLane] = useState(false);
+    const selectStartTime = startTimeList();
+    const selectEndTime = endTimeList();
     const laneGreater = startLane > endLane;
     const timeGreater = startTime > endTime;
     const activeBookingButton = !customerName || !customerNumber || !workerName || laneGreater || timeGreater;
@@ -125,7 +127,7 @@ const BookingModal = () => {
                                     name={'startTime'}
                                     value={startTime}
                                     onChange={(e) => setStartTime(Number(e.target.value))}>
-                                    {time().map((time, index) => {
+                                    {selectStartTime.map((time, index) => {
                                         return (
                                             <option key={index} value={index}>
                                                 {time}
@@ -140,7 +142,7 @@ const BookingModal = () => {
                                     name={'endTime'}
                                     value={endTime}
                                     onChange={(e) => setEndTime(Number(e.target.value))}>
-                                    {time().map((time, index) => {
+                                    {selectEndTime.map((time, index) => {
                                         return (
                                             <option key={index} value={index}>
                                                 {time}

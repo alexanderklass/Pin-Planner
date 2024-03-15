@@ -1,6 +1,6 @@
 import { FcOrgUnit } from 'react-icons/fc';
 import React from 'react';
-import { time } from '../init/initGridData';
+import { startTimeList } from '../init/initGridData';
 import { globalStore } from '../store/global.store';
 import DropZone from './DropZone';
 import DragItem from './DragItem';
@@ -9,54 +9,31 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import Switcher from './Switcher';
 
 const Grid = () => {
-    const { gridData, setGridData, handleCustomerClicked } = globalStore();
+    const { gridData, handleCustomerClicked, customerList, setCustomerList, date, fetchCustomerList } = globalStore();
+    const time = startTimeList();
     const onDrop = (item: any, laneIndex: number, timeIndex: number) => {
         const time = item.time;
         const laneOffset = laneIndex - time.startLane;
         const timeOffset = timeIndex - time.startTime;
         const endLane = time.endLane + laneOffset;
         const endTime = time.endTime + timeOffset;
-
-        const updatedLane = [...gridData];
-        const outOfRange = endTime > 22 || endLane > 12;
+        const outOfRange = endTime >= 22 || endLane >= 12;
         if (outOfRange) return;
-        resetPrevLane(time, laneIndex, timeIndex);
-        for (let i = laneIndex; i < endLane; i++) {
-            for (let j = timeIndex; j < endTime; j++) {
-                updatedLane[i].time[j] = {
-                    ...updatedLane[i].time[j],
-                    customerName: time.customerName,
-                    customerNumber: time.customerNumber,
-                    notes: time.notes,
+        let oldCustomerList = [...customerList];
+        let newCustomerList = oldCustomerList.map((customer: any) => {
+            if (customer.customerName === time.customerName && customer.date === date) {
+                return {
+                    ...customer,
                     startLane: laneIndex,
                     endLane: endLane,
                     startTime: timeIndex,
                     endTime: endTime,
-                    color: time.color,
                 };
             }
-        }
-        setGridData(updatedLane);
-    };
-
-    const resetPrevLane = (time: any, laneIndex: number, timeIndex: number) => {
-        const deletedUpdatedLane = [...gridData];
-        for (let i = time.startLane; i < time.endLane; i++) {
-            for (let j = time.startTime; j < time.endTime; j++) {
-                deletedUpdatedLane[i].time[j] = {
-                    ...deletedUpdatedLane[i].time[j],
-                    customerName: '',
-                    workerName: '',
-                    notes: '',
-                    color: '',
-                    startLane: 0,
-                    endLane: 0,
-                    startTime: 0,
-                    endTime: 0,
-                };
-            }
-        }
-        setGridData(deletedUpdatedLane);
+            return customer;
+        });
+        setCustomerList(newCustomerList);
+        fetchCustomerList();
     };
 
     const laneItems = () => {
@@ -72,7 +49,7 @@ const Grid = () => {
     };
 
     const timeItems = () => {
-        return time().map((time: string, index: number) => {
+        return time.map((time: string, index: number) => {
             return (
                 <div
                     className={`flex h-[40px] w-[80px] 

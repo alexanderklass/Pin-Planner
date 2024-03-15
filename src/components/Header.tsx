@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import 'flatpickr/dist/flatpickr.min.css';
 import { FcCalendar } from 'react-icons/fc';
 import { IoIosSearch } from 'react-icons/io';
@@ -9,13 +9,49 @@ import { globalStore } from '../store/global.store';
 import DatePicker from './DatePicker';
 
 const Header = () => {
-    const { setBookingModal, resetLanes, randomColorPicker, customerColor } = globalStore();
+    const { setBookingModal, resetLanes, randomColorPicker, date, setDate, fetchCustomerList } = globalStore();
     const [openMenuBar, setOpenMenuBar] = useState<boolean>(false);
+    const [currentDay, setCurrentDay] = useState('');
+    const days = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
     const openModalBooking = () => {
         resetLanes();
         randomColorPicker();
         setBookingModal(true);
     };
+
+    const handleDatePickerValue = (selectedDates: Date[], dateStr: string) => {
+        setDate(dateStr);
+        const dayIndex = getNewDayIndex(selectedDates[0]);
+        setCurrentDay(days[dayIndex]);
+    };
+
+    const handleStartUpDate = () => {
+        const date = new Date();
+        const day = ('0' + date.getDate()).slice(-2);
+        const month = ('0' + (date.getMonth() + 1)).slice(-2);
+        const year = date.getFullYear();
+        setDate(`${day}.${month}.${year}`);
+    };
+
+    const handleStartUpCurrentWeekDay = () => {
+        const dayIndex = getNewDayIndex(new Date());
+        setCurrentDay(days[dayIndex]);
+    };
+
+    const getNewDayIndex = (day: Date) => {
+        return day.getDay();
+    };
+
+    useEffect(() => {
+        handleStartUpDate();
+        handleStartUpCurrentWeekDay();
+        //eslint-disable-next-line
+    }, []);
+
+    useEffect(() => {
+        fetchCustomerList();
+        //eslint-disable-next-line
+    }, [date]);
 
     return (
         <header
@@ -44,7 +80,7 @@ const Header = () => {
                         placeholder={'Suchen...'}
                     />
                 </div>
-                <DatePicker />
+                <DatePicker value={date} onChange={handleDatePickerValue} day={currentDay} />
             </div>
 
             <div

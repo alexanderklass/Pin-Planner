@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDrag } from 'react-dnd';
 
 interface props {
@@ -18,11 +18,12 @@ const DragItem = ({ lane, time, type, children, color, onClick }: props) => {
             isDragging: monitor.isDragging(),
         }),
     });
+
     return (
         <div
             ref={drag}
             onClick={onClick}
-            className={`${isDragging && 'bg-green-400'} ${color} flex h-full w-full animate-fade cursor-pointer items-center justify-center text-[14px] font-bold shadow shadow-black duration-75`}>
+            className={`${isDragging && 'bg-green-400'} ${color} flex h-full w-full cursor-pointer items-center justify-center text-[14px] font-bold shadow shadow-black duration-75`}>
             {children}
         </div>
     );

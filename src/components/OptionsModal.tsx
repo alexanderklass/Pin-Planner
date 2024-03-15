@@ -2,6 +2,7 @@ import React from 'react';
 import { Dialog } from '@headlessui/react';
 import { globalStore } from '../store/global.store';
 import { FcPaid, FcEmptyTrash } from 'react-icons/fc';
+import { startTimeList, endTimeList } from '../init/initGridData';
 
 const OptionsModal = () => {
     const {
@@ -10,22 +11,23 @@ const OptionsModal = () => {
         setOptionsCustomerNotes,
         setOptionsCustomerName,
         setOptionsStartTime,
-        setOptionsCustomerColor,
         setOptionsCustomerNumber,
         setOptionsStartLane,
         setOptionsEndLane,
         setOptionsEndTime,
         optionsEndTime,
         optionsCustomerNotes,
-        optionsCustomerColor,
         optionsStartTime,
         optionsEndLane,
         optionsStartLane,
         optionsCustomerNumber,
         optionsCustomerName,
     } = globalStore();
+    const selectStartTime = startTimeList();
+    const selectEndTime = endTimeList();
+    //TODO:Implement Color Picker and optionsCustomColor
     return (
-        <Dialog className={'fixed left-[35%] top-[25%]'} open={optionsModal} onClose={() => {}}>
+        <Dialog className={'fixed left-[40%] top-[25%]'} open={optionsModal} onClose={() => {}}>
             <Dialog.Panel
                 className={
                     'flex w-full flex-col items-center justify-center gap-3 rounded-xl border border-gray-600 bg-neutral-700 p-3 shadow shadow-gray-500'
@@ -59,14 +61,26 @@ const OptionsModal = () => {
                                     onChange={(e) => setOptionsStartLane(Number(e.target.value))}
                                     name={'optionsStartLane'}
                                     className={'w-full rounded-xl border border-gray-300 p-1 outline-0'}>
-                                    <option></option>
+                                    {Array.from({ length: 12 }).map((_, index) => {
+                                        return (
+                                            <option key={index} value={index}>
+                                                {index + 1}
+                                            </option>
+                                        );
+                                    })}
                                 </select>
                                 <select
                                     value={optionsEndLane}
                                     onChange={(e) => setOptionsEndLane(Number(e.target.value))}
                                     name={'optionsEndLane'}
                                     className={'w-full rounded-xl border border-gray-300 p-1 outline-0'}>
-                                    <option></option>
+                                    {Array.from({ length: 12 }).map((_, index) => {
+                                        return (
+                                            <option key={index} value={index}>
+                                                {index + 1}
+                                            </option>
+                                        );
+                                    })}
                                 </select>
                             </div>
                         </div>
@@ -78,14 +92,26 @@ const OptionsModal = () => {
                                     onChange={(e) => setOptionsStartTime(Number(e.target.value))}
                                     name={'optionsStartTime'}
                                     className={'w-full rounded-xl border border-gray-300 p-1 outline-0'}>
-                                    <option></option>
+                                    {selectStartTime.map((time, index) => {
+                                        return (
+                                            <option key={index} value={index}>
+                                                {time}
+                                            </option>
+                                        );
+                                    })}
                                 </select>
                                 <select
                                     value={optionsEndTime}
                                     onChange={(e) => setOptionsEndTime(Number(e.target.value))}
                                     name={'optionsEndTime'}
                                     className={'w-full rounded-xl border border-gray-300 p-1 outline-0'}>
-                                    <option></option>
+                                    {selectEndTime.map((time, index) => {
+                                        return (
+                                            <option key={index} value={index}>
+                                                {time}
+                                            </option>
+                                        );
+                                    })}
                                 </select>
                             </div>
                         </div>

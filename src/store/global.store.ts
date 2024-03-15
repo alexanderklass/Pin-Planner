@@ -46,6 +46,12 @@ export interface IGlobal {
 
     gridData: IBahn[];
     setGridData: (data: IBahn[]) => void;
+    customerList: object[];
+    setCustomerList: (customer: object[]) => void;
+    fetchCustomerList: () => void;
+
+    date: string;
+    setDate: (newDate: string) => void;
 
     addBooking: () => void;
     resetLanes: () => void;
@@ -56,6 +62,38 @@ export interface IGlobal {
 export const globalStore = create<IGlobal>((set, get) => ({
     gridData: initLaneData(),
     setGridData: (data) => set({ gridData: data }),
+    customerList: [],
+    setCustomerList: (customer) => set({ customerList: customer }),
+    fetchCustomerList: () => {
+        const { date, setGridData, customerList } = get();
+        const updatedLane = initLaneData();
+        const filteredCustomerList = customerList.filter((item: any) => {
+            return item.date === date;
+        });
+        filteredCustomerList.forEach((item: any) => {
+            for (let i = item.startLane; i <= item.endLane; i++) {
+                for (let j = item.startTime; j <= item.endTime; j++) {
+                    updatedLane[i].time[j] = {
+                        ...updatedLane[i].time[j],
+                        customerName: item.customerName,
+                        customerNumber: item.customerNumber,
+                        date: item.date,
+                        notes: item.customerNotes,
+                        workerName: item.workerName,
+                        startLane: item.startLane,
+                        endLane: item.endLane,
+                        startTime: item.startTime,
+                        endTime: item.endTime,
+                        color: item.color,
+                    };
+                }
+            }
+        });
+        setGridData(updatedLane);
+    },
+
+    date: '',
+    setDate: (newDate) => set({ date: newDate }),
 
     bookingModal: false,
     optionsModal: false,
@@ -100,39 +138,23 @@ export const globalStore = create<IGlobal>((set, get) => ({
     setCustomerColor: (color) => set({ customerColor: color }),
 
     addBooking: () => {
-        const {
-            customerColor,
-            gridData,
-            customerName,
-            customerNumber,
-            customerNotes,
-            startLane,
-            endLane,
-            startTime,
-            endTime,
-            workerName,
-            setGridData,
-            setBookingModal,
-        } = get();
-        const updatedLane = [...gridData];
-        for (let i = startLane; i < endLane; i++) {
-            for (let j = startTime; j < endTime; j++) {
-                updatedLane[i].time[j] = {
-                    ...updatedLane[i].time[j],
-                    customerName: customerName,
-                    customerNumber: customerNumber,
-                    notes: customerNotes,
-                    workerName: workerName,
-                    startLane: startLane,
-                    endLane: endLane,
-                    startTime: startTime,
-                    endTime: endTime,
-                    color: customerColor,
-                };
-            }
-        }
-        setGridData(updatedLane);
-        setBookingModal(false);
+        get().setCustomerList([
+            ...get().customerList,
+            {
+                customerName: get().customerName,
+                customerNumber: get().customerNumber,
+                color: get().customerColor,
+                date: get().date,
+                startLane: get().startLane,
+                endLane: get().endLane,
+                startTime: get().startTime,
+                endTime: get().endTime,
+                workerName: get().workerName,
+                customerNotes: get().customerNotes,
+            },
+        ]);
+        get().setBookingModal(false);
+        get().fetchCustomerList();
     },
     resetLanes: () => {
         const {
