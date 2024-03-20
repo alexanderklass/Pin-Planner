@@ -7,12 +7,12 @@ export interface IBahn {
 interface ITime {
     bahnID: number;
     id?: number;
-    color: string;
+    customerColor: string;
     date: string;
     customerName: string;
     workerName: string;
     customerNumber: string;
-    notes: string;
+    customerNotes: string;
     startLane: number;
     endLane: number;
     startTime: number;
@@ -33,12 +33,12 @@ export const initLaneData = () => {
             let time: ITime = {
                 bahnID: 0,
                 id: j,
-                color: '',
+                customerColor: '',
                 date: '',
                 customerName: '',
                 workerName: '',
                 customerNumber: '',
-                notes: '',
+                customerNotes: '',
                 startLane: 0,
                 endLane: 0,
                 startTime: 0,
@@ -158,7 +158,58 @@ export const colorList = [
     { colorGrid: 'bg-rose-800' },
 ];
 
-export const swapTimeToIndex = (time: string) => {
+export const switchIndexToTime = (startTime: number) => {
+    switch (startTime) {
+        case 0:
+            return '14:00';
+        case 1:
+            return '14:30';
+        case 2:
+            return '15:00';
+        case 3:
+            return '15:30';
+        case 4:
+            return '16:00';
+        case 5:
+            return '16:30';
+        case 6:
+            return '17:00';
+        case 7:
+            return '17:30';
+        case 8:
+            return '18:00';
+        case 9:
+            return '18:30';
+        case 10:
+            return '19:00';
+        case 11:
+            return '19:30';
+        case 12:
+            return '20:00';
+        case 13:
+            return '20:30';
+        case 14:
+            return '21:00';
+        case 15:
+            return '21:30';
+        case 16:
+            return '22:00';
+        case 17:
+            return '22:30';
+        case 18:
+            return '23:00';
+        case 19:
+            return '23:30';
+        case 20:
+            return '00:00';
+        case 21:
+            return '00:30';
+        case 22:
+            return '01:00';
+    }
+};
+
+export const switchTimeToIndex = (time: string) => {
     let [hour, minute] = time.split(':').map(Number);
     if (minute > 30) minute = 30;
     if (minute < 30) minute = 0;
@@ -214,3 +265,5 @@ export const swapTimeToIndex = (time: string) => {
             return undefined;
     }
 };
+
+export const days = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];

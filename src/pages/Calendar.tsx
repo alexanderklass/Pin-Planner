@@ -3,6 +3,8 @@ import Header from '../components/Header';
 import Grid from '../components/Grid';
 import BookingModal from '../components/BookingModal';
 import OptionsModal from '../components/OptionsModal';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Calendar = () => {
     return (
@@ -13,6 +15,18 @@ const Calendar = () => {
             </div>
             <BookingModal />
             <OptionsModal />
+            <ToastContainer
+                position='top-right'
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme='light'
+            />
         </React.Fragment>
     );
 };

@@ -11,7 +11,10 @@ interface props {
 
 const DailyHistoryCustomer = ({ time, name, notes, onlineStatus }: props) => {
     return (
-        <div className={'relative  flex animate-fade-right flex-row items-center justify-start gap-5 rounded-xl border border-gray-400 bg-gray-300 p-1'}>
+        <div
+            className={
+                'relative  flex animate-fade-right flex-row items-center justify-start gap-5 rounded-xl border border-gray-400 bg-gray-300 p-1'
+            }>
             <FcConferenceCall className={'rounded-xl bg-gray-400 p-1 text-[35px]'} />
             <div className={'flex w-[195px] flex-col items-start justify-center'}>
                 <p className={'text-[14px] font-bold'}>{name}</p>

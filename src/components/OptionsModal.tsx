@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Dialog } from '@headlessui/react';
 import { globalStore } from '../store/global.store';
 import { FcPaid, FcEmptyTrash } from 'react-icons/fc';
 import { startTimeList, endTimeList } from '../init/initGridData';
+import InfoHover from './InfoHover';
+import ConfirmModal from './ConfirmModal';
 
 const OptionsModal = () => {
     const {
@@ -22,12 +24,80 @@ const OptionsModal = () => {
         optionsStartLane,
         optionsCustomerNumber,
         optionsCustomerName,
+        customerList,
+        setCustomerList,
+        emitSuccessToast,
+        date,
     } = globalStore();
     const selectStartTime = startTimeList();
     const selectEndTime = endTimeList();
-    //TODO:Implement Color Picker and optionsCustomColor
+    const [hoverDeleteButton, setHoverDeleteButton] = useState(false);
+    const [hoverPayButton, setHoverPayButton] = useState(false);
+    const [openDeleteModal, setOpenDeleteModal] = useState(false);
+    const disablePayedButton = optionsCustomerName === 'Außerbetrieb' || optionsCustomerName === 'Ganztagsbuchung';
+    const confirmUpdateOptions = () => {
+        const oldList = [...customerList];
+        const newList = oldList.map((customer: any) => {
+            if (customer.customerName === optionsCustomerName && customer.date === date) {
+                return {
+                    ...customer,
+                    customerNumber: optionsCustomerNumber,
+                    startLane: optionsStartLane,
+                    endLane: optionsEndLane,
+                    startTime: optionsStartTime,
+                    endTime: optionsEndTime,
+                    customerNotes: optionsCustomerNotes,
+                };
+            }
+            return customer;
+        });
+        setCustomerList(newList);
+        emitSuccessToast('Buchung wurde angepasst!');
+        setOptionsModal(false);
+    };
+
+    const handleDeleteCustomer = () => {
+        const oldList = [...customerList];
+        const newList = oldList.filter((item: any) => {
+            return item.customerName !== optionsCustomerName && item.date === date;
+        });
+        setCustomerList(newList);
+        emitSuccessToast('Buchung erfolgreich gelöscht!');
+        setOptionsModal(false);
+    };
+
+    const handlePaymentStatus = () => {
+        const oldList = [...customerList];
+        const newList = oldList.map((customer: any) => {
+            if (customer.customerName === optionsCustomerName && customer.date === date) {
+                return {
+                    ...customer,
+                    payedStatus: true,
+                };
+            }
+            return customer;
+        });
+        setCustomerList(newList);
+        emitSuccessToast('Buchung erfolgreich bezahlt!');
+        setOptionsModal(false);
+    };
+
+    const handleDeleteModal = () => {
+        setOpenDeleteModal(true);
+    };
+
+    const confirmDelete = () => {
+        handleDeleteCustomer();
+        setOpenDeleteModal(false);
+        setOptionsModal(false);
+    };
+
+    const declineDelete = () => {
+        setOpenDeleteModal(false);
+    };
+
     return (
-        <Dialog className={'fixed left-[40%] top-[25%]'} open={optionsModal} onClose={() => {}}>
+        <Dialog className={'fixed left-[40%] top-[35%]'} open={optionsModal} onClose={() => {}}>
             <Dialog.Panel
                 className={
                     'flex w-full flex-col items-center justify-center gap-3 rounded-xl border border-gray-600 bg-neutral-700 p-3 shadow shadow-gray-500'
@@ -41,6 +111,7 @@ const OptionsModal = () => {
                                 value={optionsCustomerName}
                                 onChange={(e) => setOptionsCustomerName(e.target.value)}
                                 name={'optionsCustomerName'}
+                                disabled={true}
                                 className={'w-full rounded-xl border border-gray-300 p-1 outline-0'}
                             />
                         </div>
@@ -130,20 +201,31 @@ const OptionsModal = () => {
                 <div className={'flex w-full flex-row items-center justify-between'}>
                     <div className={'flex flex-row items-center justify-center gap-1'}>
                         <button
-                            className={
-                                'flex w-[50px] items-center justify-center rounded-md bg-green-400 p-1 transition-all hover:bg-green-500'
-                            }>
-                            <FcPaid className={'rounded-md bg-green-200 text-[30px]'} />
+                            onClick={handlePaymentStatus}
+                            onMouseEnter={() => setHoverPayButton(true)}
+                            onMouseLeave={() => setHoverPayButton(false)}
+                            className={`${disablePayedButton && 'hidden'} relative flex h-[38px] w-[50px] items-center justify-center rounded-md bg-green-300 p-1 transition-all hover:bg-green-400 disabled:bg-gray-500`}>
+                            <FcPaid className={`text-[30px]`} />
+                            <InfoHover
+                                active={hoverPayButton}
+                                text={'Buchung auf bezahlt stellen!'}
+                                width={'w-[220px]'}
+                            />
                         </button>
                         <button
+                            onClick={handleDeleteModal}
+                            onMouseEnter={() => setHoverDeleteButton(true)}
+                            onMouseLeave={() => setHoverDeleteButton(false)}
                             className={
-                                'flex w-[50px] items-center justify-center rounded-md bg-red-400 p-1 text-center transition-all hover:bg-red-500'
+                                'relative flex w-[50px] items-center justify-center rounded-md bg-red-400 p-1 text-center transition-all hover:bg-red-500'
                             }>
-                            <FcEmptyTrash className={'rounded-md bg-red-200 text-[30px]'} />
+                            <FcEmptyTrash className={'text-[30px]'} />
+                            <InfoHover active={hoverDeleteButton} text={'Buchung löschen!'} width={'w-[130px]'} />
                         </button>
                     </div>
                     <div className={'flex flex-row gap-1'}>
                         <button
+                            onClick={confirmUpdateOptions}
                             className={
                                 'flex h-[30px] w-[90px] items-center justify-center rounded-md bg-sky-500 p-2 font-bold text-white transition-all hover:bg-sky-600'
                             }>
@@ -158,6 +240,12 @@ const OptionsModal = () => {
                         </button>
                     </div>
                 </div>
+                <ConfirmModal
+                    text={'Soll die Buchung wirklich gelöscht werden?'}
+                    confirm={confirmDelete}
+                    decline={declineDelete}
+                    open={openDeleteModal}
+                />
             </Dialog.Panel>
         </Dialog>
     );

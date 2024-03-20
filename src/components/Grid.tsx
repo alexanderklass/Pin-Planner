@@ -1,5 +1,5 @@
-import { FcOrgUnit } from 'react-icons/fc';
-import React from 'react';
+import { FcCheckmark } from 'react-icons/fc';
+import React, { useEffect } from 'react';
 import { startTimeList } from '../init/initGridData';
 import { globalStore } from '../store/global.store';
 import DropZone from './DropZone';
@@ -7,9 +7,19 @@ import DragItem from './DragItem';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import Switcher from './Switcher';
+import schedulerIcon from '../assets/images/scheduler-icon.png';
 
 const Grid = () => {
-    const { gridData, handleCustomerClicked, customerList, setCustomerList, date, fetchCustomerList } = globalStore();
+    const {
+        gridData,
+        handleCustomerClicked,
+        customerList,
+        setCustomerList,
+        date,
+        fetchCustomerList,
+        emitSuccessToast,
+        emitFailedToast,
+    } = globalStore();
     const time = startTimeList();
     const onDrop = (item: any, laneIndex: number, timeIndex: number) => {
         const time = item.time;
@@ -18,7 +28,10 @@ const Grid = () => {
         const endLane = time.endLane + laneOffset;
         const endTime = time.endTime + timeOffset;
         const outOfRange = endTime >= 22 || endLane >= 12;
-        if (outOfRange) return;
+        if (outOfRange) {
+            emitFailedToast('Buchung ist außerhalb des bereiches!');
+            return;
+        }
         let oldCustomerList = [...customerList];
         let newCustomerList = oldCustomerList.map((customer: any) => {
             if (customer.customerName === time.customerName && customer.date === date) {
@@ -33,15 +46,22 @@ const Grid = () => {
             return customer;
         });
         setCustomerList(newCustomerList);
-        fetchCustomerList();
+        emitSuccessToast('Buchung erfolgreich verschoben!');
     };
+
+    useEffect(() => {
+        fetchCustomerList();
+        //eslint-disable-next-line
+    }, [customerList, date]);
 
     const laneItems = () => {
         return gridData.map((lane, index) => {
             return (
                 <div
                     key={index}
-                    className={`w-[80px] ${index % 4 === 2 && 'bg-neutral-300'} ${index % 4 === 3 && 'bg-neutral-300'} border border-black bg-neutral-100 p-1 text-center font-bold`}>
+                    className={`${index % 4 === 2 && 'bg-neutral-300'} 
+                                ${index % 4 === 3 && 'bg-neutral-300'} 
+                                flex w-[80px] items-center justify-center border border-black bg-neutral-100 font-bold`}>
                     {lane.bahn}
                 </div>
             );
@@ -77,7 +97,7 @@ const Grid = () => {
                                     <DragItem
                                         type={'lane'}
                                         onClick={() => handleCustomerClicked(laneIndex, timeIndex)}
-                                        color={time.color}
+                                        color={time.customerColor}
                                         time={time}
                                         lane={lane}>
                                         <p className={'break-all'}>
@@ -85,6 +105,14 @@ const Grid = () => {
                                                 time.startTime === timeIndex &&
                                                 time.customerName}
                                         </p>
+                                        {time.payedStatus && (
+                                            <div
+                                                className={
+                                                    'absolute right-0 top-0.5 rounded-full border border-gray-800 bg-green-200 p-[1px]'
+                                                }>
+                                                <FcCheckmark />
+                                            </div>
+                                        )}
                                     </DragItem>
                                 )}
                             </DropZone>
@@ -102,9 +130,9 @@ const Grid = () => {
                     <div className={'flex flex-row'}>
                         <div
                             className={
-                                'flex w-[80px] items-center justify-center rounded-tl-xl border border-black bg-gray-200 p-1 text-center'
+                                'flex w-[80px] items-center justify-center rounded-tl-xl border border-black bg-neutral-300 p-1 text-center'
                             }>
-                            <FcOrgUnit className={'text-[25px]'} />
+                            <img className={'w-[35px] rounded-md'} src={schedulerIcon} alt={'ICON'} />
                         </div>
                         {laneItems()}
                     </div>

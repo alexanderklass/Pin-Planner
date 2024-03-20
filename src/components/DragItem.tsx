@@ -23,7 +23,7 @@ const DragItem = ({ lane, time, type, children, color, onClick }: props) => {
         <div
             ref={drag}
             onClick={onClick}
-            className={`${isDragging && 'bg-green-400'} ${color} flex h-full w-full cursor-pointer items-center justify-center text-[14px] font-bold shadow shadow-black duration-75`}>
+            className={`${isDragging && 'bg-green-400'} ${color} relative flex h-full w-full cursor-pointer items-center justify-center text-[14px] font-bold shadow shadow-black duration-75`}>
             {children}
         </div>
     );

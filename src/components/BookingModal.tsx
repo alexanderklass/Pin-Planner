@@ -20,7 +20,6 @@ const BookingModal = () => {
         setCustomerNumber,
         setStartTime,
         setEndTime,
-        addBooking,
         setWorkerName,
         setCustomerNotes,
         workerName,
@@ -31,6 +30,14 @@ const BookingModal = () => {
         endTime,
         endLane,
         customerNotes,
+        customerColor,
+        customerList,
+        setCustomerColor,
+        date,
+        setCustomerList,
+        randomColorPicker,
+        resetLanes,
+        emitSuccessToast,
     } = globalStore();
 
     const [inactiveLane, setInactiveLane] = useState(false);
@@ -42,6 +49,67 @@ const BookingModal = () => {
     const laneGreater = startLane > endLane;
     const timeGreater = startTime > endTime;
     const activeBookingButton = !customerName || !customerNumber || !workerName || laneGreater || timeGreater;
+
+    const addCustomer = () => {
+        setCustomerList([
+            ...customerList,
+            {
+                customerName: customerName,
+                customerNumber: customerNumber,
+                customerColor: customerColor,
+                date: date,
+                startLane: startLane,
+                endLane: endLane,
+                startTime: startTime,
+                endTime: endTime,
+                workerName: workerName,
+                customerNotes: customerNotes,
+                payedStatus: false,
+            },
+        ]);
+        closeBookingModal();
+        emitSuccessToast('Buchung erfolgreich!');
+    };
+
+    const addAllDayBookingToList = () => {
+        if (!bookAllDay) {
+            setBookAllDay(true);
+            setCustomerName('Ganztagsbuchung');
+            setCustomerNumber('Ganztagsbuchung');
+            setCustomerNotes('Ganztagsbuchung');
+            setWorkerName('Ganztagsbuchung');
+            setCustomerColor('bg-black');
+            setStartTime(0);
+            setStartLane(0);
+            setEndLane(11);
+            setEndTime(21);
+        } else if (bookAllDay) {
+            setBookAllDay(false);
+            resetLanes();
+            randomColorPicker();
+        }
+    };
+
+    const addMaintainingLane = () => {
+        if (!inactiveLane) {
+            setInactiveLane(true);
+            setCustomerName('Außerbetrieb');
+            setCustomerNumber('Außerbetrieb');
+            setCustomerNotes('Außerbetrieb');
+            setWorkerName('Außerbetrieb');
+            setCustomerColor('bg-black');
+        } else if (inactiveLane) {
+            setInactiveLane(false);
+            resetLanes();
+            randomColorPicker();
+        }
+    };
+
+    const closeBookingModal = () => {
+        setBookingModal(false);
+        setBookAllDay(false);
+        setInactiveLane(false);
+    };
 
     return (
         <Dialog className={'fixed left-[35%] top-[25%]'} open={bookingModal} onClose={() => {}}>
@@ -183,7 +251,7 @@ const BookingModal = () => {
                     <div className={'flex flex-row items-center justify-center gap-1'}>
                         <Switch
                             checked={inactiveLane}
-                            onChange={setInactiveLane}
+                            onChange={addMaintainingLane}
                             onMouseEnter={() => setInfoInactiveLane(true)}
                             onMouseLeave={() => setInfoInactiveLane(false)}
                             className={`${inactiveLane ? 'bg-green-400' : 'bg-gray-200'} relative flex h-[30px] w-[30px] cursor-pointer items-center justify-center rounded-full transition-colors`}>
@@ -196,7 +264,7 @@ const BookingModal = () => {
                         </Switch>
                         <Switch
                             checked={bookAllDay}
-                            onChange={setBookAllDay}
+                            onChange={addAllDayBookingToList}
                             onMouseEnter={() => setInfoBookAllDay(true)}
                             onMouseLeave={() => setInfoBookAllDay(false)}
                             className={`${bookAllDay ? 'bg-green-400' : 'bg-gray-200'} relative flex h-[30px] w-[30px] cursor-pointer items-center justify-center rounded-full transition-colors`}>
@@ -210,7 +278,7 @@ const BookingModal = () => {
                     </div>
                     <div className={'flex flex-row gap-1'}>
                         <button
-                            onClick={addBooking}
+                            onClick={addCustomer}
                             disabled={activeBookingButton}
                             className={
                                 'flex h-[30px] w-[90px] items-center justify-center rounded-md bg-green-500 p-2 font-bold text-white transition-all hover:bg-green-600 disabled:bg-gray-300 disabled:text-black'
@@ -218,7 +286,7 @@ const BookingModal = () => {
                             Buchen
                         </button>
                         <button
-                            onClick={() => setBookingModal(false)}
+                            onClick={closeBookingModal}
                             className={
                                 'flex h-[30px] w-[90px] items-center justify-center rounded-md bg-gray-300 p-2 font-bold transition-all hover:bg-gray-400'
                             }>

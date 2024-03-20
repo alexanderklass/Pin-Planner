@@ -1,0 +1,16 @@
+Header:
+- Collapse Menu => add settings and user functionality
+- Fix currentWeekDay border
+
+OptionsModal:
+- Add picking different colors => SetOptionsColor/OptionsColor
+
+DeletedHistory:
+- Add Restore and Delete functionality in localStorage
+
+Electron:
+- Add header with move, close and fullscreen buttons
+
+IMPORTANT BEFORE RELEASE:
+- Change customerName and date checker => ID checker
+- Language picker

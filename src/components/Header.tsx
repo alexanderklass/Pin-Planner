@@ -6,13 +6,15 @@ import { FcReadingEbook } from 'react-icons/fc';
 import { FcSettings } from 'react-icons/fc';
 import { FcMenu } from 'react-icons/fc';
 import { globalStore } from '../store/global.store';
+import { days } from '../init/initGridData';
 import DatePicker from './DatePicker';
+import Searchbar from './Searchbar';
+import { LuArrowLeftSquare } from 'react-icons/lu';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
-    const { setBookingModal, resetLanes, randomColorPicker, date, setDate, fetchCustomerList } = globalStore();
+    const { setBookingModal, resetLanes, randomColorPicker, date, setDate, currentDay, setCurrentDay } = globalStore();
     const [openMenuBar, setOpenMenuBar] = useState<boolean>(false);
-    const [currentDay, setCurrentDay] = useState('');
-    const days = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
     const openModalBooking = () => {
         resetLanes();
         randomColorPicker();
@@ -23,6 +25,11 @@ const Header = () => {
         setDate(dateStr);
         const dayIndex = getNewDayIndex(selectedDates[0]);
         setCurrentDay(days[dayIndex]);
+    };
+
+    const handleToday = () => {
+        handleStartUpDate();
+        handleStartUpCurrentWeekDay();
     };
 
     const handleStartUpDate = () => {
@@ -48,17 +55,19 @@ const Header = () => {
         //eslint-disable-next-line
     }, []);
 
-    useEffect(() => {
-        fetchCustomerList();
-        //eslint-disable-next-line
-    }, [date]);
-
     return (
         <header
             className={
                 'border-b-1 flex w-full flex-row items-center justify-between border-b border-neutral-600 bg-neutral-700 p-3'
             }>
             <div className={'flex flex-row items-center justify-center gap-1 text-gray-100'}>
+                <Link to={'/portal'}>
+                    <LuArrowLeftSquare
+                        className={
+                            'rounded-md text-[30px] text-gray-300 transition-all hover:bg-gray-300 hover:text-black'
+                        }
+                    />
+                </Link>
                 <FcCalendar className={'text-[40px]'} />
                 <p className={'font-bold'}>Buchungen</p>
             </div>
@@ -71,14 +80,14 @@ const Header = () => {
                     onClick={openModalBooking}>
                     Buchen
                 </button>
-                <button className={'border bg-gray-200 p-2 font-bold transition-all hover:bg-gray-300'}>Heute</button>
+                <button
+                    onClick={handleToday}
+                    className={'border bg-gray-200 p-2 font-bold transition-all hover:bg-gray-300'}>
+                    Heute
+                </button>
                 <div className={'relative flex items-center justify-center'}>
                     <IoIosSearch className={'absolute left-2 text-xl'} />
-                    <input
-                        type={'search'}
-                        className={'w-[300px] border p-2 pl-8 outline-0'}
-                        placeholder={'Suchen...'}
-                    />
+                    <Searchbar />
                 </div>
                 <DatePicker value={date} onChange={handleDatePickerValue} day={currentDay} />
             </div>

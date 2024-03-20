@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { initLaneData, IBahn, colorList } from '../init/initGridData';
+import { toast } from 'react-toastify';
 
 export interface IGlobal {
     bookingModal: boolean;
@@ -52,14 +53,24 @@ export interface IGlobal {
 
     date: string;
     setDate: (newDate: string) => void;
+    currentDay: string;
+    setCurrentDay: (day: string) => void;
 
-    addBooking: () => void;
     resetLanes: () => void;
     handleCustomerClicked: (laneIndex: number, timeIndex: number) => void;
     randomColorPicker: () => void;
+
+    emitSuccessToast: (message: string) => void;
+    emitFailedToast: (message: string) => void;
+
+    notesList: object[];
+    setNotesList: (note: object[]) => void;
 }
 
 export const globalStore = create<IGlobal>((set, get) => ({
+    notesList: [],
+    setNotesList: (note: object[]) => set({ notesList: note }),
+
     gridData: initLaneData(),
     setGridData: (data) => set({ gridData: data }),
     customerList: [],
@@ -78,13 +89,14 @@ export const globalStore = create<IGlobal>((set, get) => ({
                         customerName: item.customerName,
                         customerNumber: item.customerNumber,
                         date: item.date,
-                        notes: item.customerNotes,
+                        customerNotes: item.customerNotes,
                         workerName: item.workerName,
                         startLane: item.startLane,
                         endLane: item.endLane,
                         startTime: item.startTime,
                         endTime: item.endTime,
-                        color: item.color,
+                        customerColor: item.customerColor,
+                        payedStatus: item.payedStatus,
                     };
                 }
             }
@@ -94,6 +106,8 @@ export const globalStore = create<IGlobal>((set, get) => ({
 
     date: '',
     setDate: (newDate) => set({ date: newDate }),
+    currentDay: '',
+    setCurrentDay: (day) => set({ currentDay: day }),
 
     bookingModal: false,
     optionsModal: false,
@@ -136,26 +150,6 @@ export const globalStore = create<IGlobal>((set, get) => ({
     setOptionsModal: (toggle) => set({ optionsModal: toggle }),
     setCustomerNotes: (note) => set({ customerNotes: note }),
     setCustomerColor: (color) => set({ customerColor: color }),
-
-    addBooking: () => {
-        get().setCustomerList([
-            ...get().customerList,
-            {
-                customerName: get().customerName,
-                customerNumber: get().customerNumber,
-                color: get().customerColor,
-                date: get().date,
-                startLane: get().startLane,
-                endLane: get().endLane,
-                startTime: get().startTime,
-                endTime: get().endTime,
-                workerName: get().workerName,
-                customerNotes: get().customerNotes,
-            },
-        ]);
-        get().setBookingModal(false);
-        get().fetchCustomerList();
-    },
     resetLanes: () => {
         const {
             setCustomerNumber,
@@ -196,8 +190,8 @@ export const globalStore = create<IGlobal>((set, get) => ({
         const customerData = gridData[laneIndex].time[timeIndex];
         setOptionsCustomerName(customerData.customerName);
         setOptionsCustomerNumber(customerData.customerNumber);
-        setOptionsCustomerNotes(customerData.notes);
-        setOptionsCustomerColor(customerData.color);
+        setOptionsCustomerNotes(customerData.customerNotes);
+        setOptionsCustomerColor(customerData.customerColor);
         setOptionsEndLane(customerData.endLane);
         setOptionsEndTime(customerData.endTime);
         setOptionsStartLane(customerData.startLane);
@@ -208,5 +202,29 @@ export const globalStore = create<IGlobal>((set, get) => ({
         const index = Math.floor(Math.random() * colorList.length);
         const color = colorList[index].colorGrid;
         setCustomerColor(color);
+    },
+    emitSuccessToast: (msg) => {
+        toast.success(msg, {
+            position: 'top-right',
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light',
+        });
+    },
+    emitFailedToast: (msg) => {
+        toast.error(msg, {
+            position: 'top-right',
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light',
+        });
     },
 }));
