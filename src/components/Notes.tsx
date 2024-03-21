@@ -69,7 +69,12 @@ const Notes = () => {
                 value={extraNotes}
                 onChange={(e) => setExtraNotes(e.target.value)}
                 className={`h-full w-full resize-none rounded-xl ${focusExtraBooking && 'opacity-70'} p-2 placeholder:rounded-xl placeholder:bg-gray-200 placeholder:p-1`}
-                style={{ backgroundImage: `url(${focusExtraBooking && !extraNotes && extraBookingImage})` }}
+                style={{
+                    backgroundImage: `url(${focusExtraBooking && !extraNotes && extraBookingImage})`,
+                    backgroundRepeat: 'no-repeat',
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                }}
                 placeholder={'Sonderbuchungen...'}
             />
             <textarea
@@ -78,7 +83,12 @@ const Notes = () => {
                 value={cookNotes}
                 onChange={(e) => setCookNotes(e.target.value)}
                 className={`h-full resize-none rounded-xl p-2 ${focusCooking && 'opacity-70'} placeholder:rounded-xl placeholder:bg-gray-200 placeholder:p-1`}
-                style={{ backgroundImage: `url(${focusCooking && !cookNotes && cookingImage})` }}
+                style={{
+                    backgroundImage: `url(${focusCooking && !cookNotes && cookingImage})`,
+                    backgroundRepeat: 'no-repeat',
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                }}
                 placeholder={'Koch...'}
             />
             <textarea
@@ -87,7 +97,12 @@ const Notes = () => {
                 value={clubNotes}
                 onChange={(e) => setClubNotes(e.target.value)}
                 className={`h-full resize-none rounded-xl p-2 ${focusClub && 'opacity-70'} placeholder:rounded-xl placeholder:bg-gray-200 placeholder:p-1`}
-                style={{ backgroundImage: `url(${focusClub && !clubNotes && clubroomImage})` }}
+                style={{
+                    backgroundImage: `url(${focusClub && !clubNotes && clubroomImage})`,
+                    backgroundRepeat: 'no-repeat',
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                }}
                 placeholder={'Clubraum...'}
             />
             <button

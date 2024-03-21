@@ -22,11 +22,11 @@ const Grid = () => {
     } = globalStore();
     const time = startTimeList();
     const onDrop = (item: any, laneIndex: number, timeIndex: number) => {
-        const time = item.time;
-        const laneOffset = laneIndex - time.startLane;
-        const timeOffset = timeIndex - time.startTime;
-        const endLane = time.endLane + laneOffset;
-        const endTime = time.endTime + timeOffset;
+        const data = item.data;
+        const laneOffset = laneIndex - data.startLane;
+        const timeOffset = timeIndex - data.startTime;
+        const endLane = data.endLane + laneOffset;
+        const endTime = data.endTime + timeOffset;
         const outOfRange = endTime >= 22 || endLane >= 12;
         if (outOfRange) {
             emitFailedToast('Buchung ist außerhalb des bereiches!');
@@ -34,7 +34,7 @@ const Grid = () => {
         }
         let oldCustomerList = [...customerList];
         let newCustomerList = oldCustomerList.map((customer: any) => {
-            if (customer.customerName === time.customerName && customer.date === date) {
+            if (customer.customerName === data.customerName && customer.date === date) {
                 return {
                     ...customer,
                     startLane: laneIndex,
@@ -72,7 +72,7 @@ const Grid = () => {
         return time.map((time: string, index: number) => {
             return (
                 <div
-                    className={`flex h-[40px] w-[80px] 
+                    className={`flex h-full w-[80px] flex-col 
                       ${index === 21 && 'rounded-bl-xl'} 
                       ${index % 4 === 2 && 'bg-neutral-300'} 
                       ${index % 4 === 3 && 'bg-neutral-300'} 
@@ -86,20 +86,16 @@ const Grid = () => {
     const gridItems = () => {
         return gridData.map((lane, laneIndex) => {
             return (
-                <div key={laneIndex}>
+                <div className={'flex h-full flex-col'} key={laneIndex}>
                     {lane.time.map((time, timeIndex) => {
                         return (
-                            <DropZone
-                                className={`flex h-[40px] w-[80px] items-center justify-center border border-black bg-neutral-200`}
-                                acceptType={'lane'}
-                                onDrop={(item) => onDrop(item, laneIndex, timeIndex)}>
+                            <DropZone acceptType={'lane'} onDrop={(item) => onDrop(item, laneIndex, timeIndex)}>
                                 {time.customerName && (
                                     <DragItem
                                         type={'lane'}
                                         onClick={() => handleCustomerClicked(laneIndex, timeIndex)}
                                         color={time.customerColor}
-                                        time={time}
-                                        lane={lane}>
+                                        data={time}>
                                         <p className={'break-all'}>
                                             {time.startLane === laneIndex &&
                                                 time.startTime === timeIndex &&
@@ -125,7 +121,7 @@ const Grid = () => {
 
     return (
         <DndProvider backend={HTML5Backend}>
-            <div className={'mt-10 flex flex-row justify-center'}>
+            <div className={'flex h-full flex-row justify-center p-5'}>
                 <div className={'flex flex-col justify-center'}>
                     <div className={'flex flex-row'}>
                         <div
@@ -136,9 +132,9 @@ const Grid = () => {
                         </div>
                         {laneItems()}
                     </div>
-                    <div className={'flex flex-row items-center justify-center'}>
+                    <div className={'flex h-full flex-row'}>
                         <div className={'flex flex-col'}>{timeItems()}</div>
-                        <div className={'flex flex-row'}>{gridItems()}</div>
+                        {gridItems()}
                     </div>
                 </div>
                 <Switcher />
