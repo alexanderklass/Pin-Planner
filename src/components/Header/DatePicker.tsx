@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import flatpickr from 'flatpickr';
 import { German } from 'flatpickr/dist/l10n/de';
 import { BsCalendar2Event } from 'react-icons/bs';
+import { globalStore } from '../../store/global.store';
 
 interface props {
     value?: string;
@@ -10,23 +11,36 @@ interface props {
 }
 
 const DatePicker = ({ value, day = 'Mo', onChange }: props) => {
+    const { settingsLanguage } = globalStore();
     const dateRef: any = useRef();
+
     useEffect(() => {
-        flatpickr(dateRef.current, {
-            dateFormat: 'd.m.Y',
-            locale: German,
-            weekNumbers: true,
-            onChange: onChange,
-            defaultDate: value,
-        });
+        if (settingsLanguage === 'de') {
+            flatpickr(dateRef.current, {
+                dateFormat: 'd.m.Y',
+                locale: German,
+                weekNumbers: true,
+                onChange: onChange,
+                defaultDate: value,
+            });
+        } else {
+            flatpickr(dateRef.current, {
+                dateFormat: 'd.m.Y',
+                weekNumbers: true,
+                onChange: onChange,
+                defaultDate: value,
+            });
+        }
         //eslint-disable-next-line
-    }, [value]);
+    }, [value, settingsLanguage]);
+
     return (
         <div className={'relative'}>
             <input
                 className={'w-[165px] rounded-r-xl border bg-gray-200 p-2 text-center font-bold outline-0'}
                 ref={dateRef}
                 type={'text'}
+                name={'datePicker'}
             />
             <div
                 className={

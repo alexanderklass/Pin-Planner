@@ -1,0 +1,23 @@
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
+import translationEN from './en.json';
+import translationDE from './de.json';
+
+i18n.use(initReactI18next).init({
+    debug: true,
+    resources: {
+        en: {
+            translation: translationEN,
+        },
+        de: {
+            translation: translationDE,
+        },
+    },
+    lng: 'de', //default
+    fallbackLng: 'de',
+    interpolation: {
+        escapeValue: false,
+    },
+});
+
+export default i18n;

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import extraBookingImage from '../assets/images/extrabooking-background.png';
-import cookingImage from '../assets/images/cook-background.png';
-import clubroomImage from '../assets/images/clubroom-background.png';
-import { globalStore } from '../store/global.store';
+import extraBookingImage from '../../../assets/images/extrabooking-background.png';
+import cookingImage from '../../../assets/images/cook-background.png';
+import clubroomImage from '../../../assets/images/clubroom-background.png';
+import { globalStore } from '../../../store/global.store';
 
 const Notes = () => {
-    const { date, setNotesList, notesList } = globalStore();
+    const { date, setNotesList, notesList, emitSuccessToast, useTranslate } = globalStore();
     const [focusExtraBooking, setFocusExtraBooking] = useState(true);
     const [focusCooking, setFocusCooking] = useState(true);
     const [focusClub, setFocusClub] = useState(true);
@@ -14,6 +14,7 @@ const Notes = () => {
     const [cookNotes, setCookNotes] = useState('');
     const [clubNotes, setClubNotes] = useState('');
 
+    const notesSavedNotification = useTranslate('NotificationNotesSaved');
     const resetCalendarNotes = () => {
         setExtraNotes('');
         setCookNotes('');
@@ -54,6 +55,7 @@ const Notes = () => {
             });
             setNotesList(customizedNotes);
         }
+        emitSuccessToast(notesSavedNotification);
     };
 
     useEffect(() => {
@@ -66,6 +68,7 @@ const Notes = () => {
             <textarea
                 onFocus={() => setFocusExtraBooking(false)}
                 onBlur={() => setFocusExtraBooking(true)}
+                name={'extraBooking'}
                 value={extraNotes}
                 onChange={(e) => setExtraNotes(e.target.value)}
                 className={`h-full w-full resize-none rounded-xl ${focusExtraBooking && 'opacity-70'} p-2 placeholder:rounded-xl placeholder:bg-gray-200 placeholder:p-1`}
@@ -75,11 +78,12 @@ const Notes = () => {
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                 }}
-                placeholder={'Sonderbuchungen...'}
+                placeholder={useTranslate('NotesExtraPlaceholder')}
             />
             <textarea
                 onFocus={() => setFocusCooking(false)}
                 onBlur={() => setFocusCooking(true)}
+                name={'cookNotes'}
                 value={cookNotes}
                 onChange={(e) => setCookNotes(e.target.value)}
                 className={`h-full resize-none rounded-xl p-2 ${focusCooking && 'opacity-70'} placeholder:rounded-xl placeholder:bg-gray-200 placeholder:p-1`}
@@ -89,11 +93,12 @@ const Notes = () => {
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                 }}
-                placeholder={'Koch...'}
+                placeholder={useTranslate('NotesCookPH')}
             />
             <textarea
                 onFocus={() => setFocusClub(false)}
                 onBlur={() => setFocusClub(true)}
+                name={'clubNotes'}
                 value={clubNotes}
                 onChange={(e) => setClubNotes(e.target.value)}
                 className={`h-full resize-none rounded-xl p-2 ${focusClub && 'opacity-70'} placeholder:rounded-xl placeholder:bg-gray-200 placeholder:p-1`}
@@ -103,12 +108,12 @@ const Notes = () => {
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                 }}
-                placeholder={'Clubraum...'}
+                placeholder={useTranslate('NotesClubPH')}
             />
             <button
                 onClick={addNotesToList}
                 className={'rounded-xl bg-violet-500 p-1 font-bold text-white transition-colors hover:bg-violet-600'}>
-                Speichern
+                {useTranslate('NotesSaveButton')}
             </button>
         </div>
     );

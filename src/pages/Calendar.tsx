@@ -1,32 +1,24 @@
 import React from 'react';
-import Header from '../components/Header';
-import Grid from '../components/Grid';
-import BookingModal from '../components/BookingModal';
-import OptionsModal from '../components/OptionsModal';
-import { ToastContainer } from 'react-toastify';
+import Header from '../components/Header/Header';
+import Grid from '../components/Grid/Grid';
+import BookingModal from '../components/Modals/Booking/BookingModal';
+import OptionsModal from '../components/Modals/Options/OptionsModal';
+import CustomToastContainer from '../components/CustomToastContainer';
+import CalendarBackground from '../components/CalendarBackground';
+import SettingsModal from '../components/Modals/Settings/SettingsModal';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Calendar = () => {
     return (
         <React.Fragment>
-            <div className={`flex h-full flex-col bg-neutral-800`}>
+            <CalendarBackground>
                 <Header />
                 <Grid />
-            </div>
+            </CalendarBackground>
+            <SettingsModal />
             <BookingModal />
             <OptionsModal />
-            <ToastContainer
-                position='top-right'
-                autoClose={3000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme='light'
-            />
+            <CustomToastContainer />
         </React.Fragment>
     );
 };

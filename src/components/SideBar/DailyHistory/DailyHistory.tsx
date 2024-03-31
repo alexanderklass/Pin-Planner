@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import DailyHistoryCustomer from './DailyHistoryCustomer';
-import { globalStore } from '../store/global.store';
-import { switchIndexToTime, switchTimeToIndex } from '../init/initGridData';
+import { globalStore } from '../../../store/global.store';
+import { switchIndexToTime, switchTimeToIndex } from '../../../init/initGridData';
+import Placeholder from '../Placeholder';
 
 const DailyHistory = () => {
-    const { customerList, date } = globalStore();
+    const { customerList, date, useTranslate } = globalStore();
     const [currentTimeIndex, setCurrentTimeIndex] = useState(-1);
+    const placeholderText = useTranslate('DailyHistoryEmptyList');
     const getIndexToTime = (startTime: number, endTime: number) => {
         const switchedStartTime = switchIndexToTime(startTime);
         const switchedEndTime = switchIndexToTime(endTime + 1);
@@ -25,18 +27,21 @@ const DailyHistory = () => {
         return currentTimeIndex >= startTime && currentTimeIndex <= endTime;
     };
 
+    const filteredCustomerList = customerList
+        .filter((customer: any) => customer.date === date)
+        .sort((a: any, b: any) => a.startTime - b.startTime)
+        .sort((a: any, b: any) => a.endTime - b.endTime);
+
     useEffect(() => {
+        highlightCurrentTime();
         const timer = setInterval(() => highlightCurrentTime(), 3000);
         return () => clearInterval(timer);
     }, [date]);
 
     return (
         <div className={'no-scrollbar flex max-h-[832px] flex-col gap-1 overflow-y-auto scroll-smooth p-1'}>
-            {customerList
-                .filter((item: any) => item.date === date)
-                .sort((a: any, b: any) => a.startTime - b.startTime)
-                .sort((a: any, b: any) => a.endTime - b.endTime)
-                .map((customer: any, index) => {
+            {filteredCustomerList.length > 0 ? (
+                filteredCustomerList.map((customer: any, index) => {
                     return (
                         <DailyHistoryCustomer
                             key={index}
@@ -46,7 +51,10 @@ const DailyHistory = () => {
                             notes={customer.customerNotes}
                         />
                     );
-                })}
+                })
+            ) : (
+                <Placeholder text={placeholderText} />
+            )}
         </div>
     );
 };

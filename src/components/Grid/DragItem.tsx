@@ -6,10 +6,11 @@ interface props {
     data: any;
     children: any;
     color?: string;
+    isDraggingColor?: string;
     onClick?: () => void;
 }
 
-const DragItem = ({ data, type, children, color, onClick }: props) => {
+const DragItem = ({ data, type, children, color, onClick, isDraggingColor }: props) => {
     const [{ isDragging }, drag] = useDrag({
         item: { data: data },
         type: type,
@@ -22,7 +23,7 @@ const DragItem = ({ data, type, children, color, onClick }: props) => {
         <div
             ref={drag}
             onClick={onClick}
-            className={`${isDragging && 'bg-green-400'} ${color} relative flex h-full w-full cursor-pointer items-center justify-center text-[14px] font-bold`}>
+            className={`${isDragging && isDraggingColor} ${color} relative flex h-full w-full animate-jump-in cursor-pointer items-center justify-center text-[14px] font-bold animate-duration-300 animate-ease-linear`}>
             {children}
         </div>
     );

@@ -18,10 +18,14 @@ const Login = () => {
             ) : (
                 <React.Fragment>
                     <div className={'flex flex-col gap-2'}>
-                        <input className={'rounded-full bg-gray-200 p-1 text-center'} type={'text'} />
-                        <input className={'rounded-full bg-gray-200 p-1 text-center'} type={'password'} />
+                        <input className={'rounded-full bg-gray-200 p-1 text-center'} name={'userName'} type={'text'} />
+                        <input
+                            className={'rounded-full bg-gray-200 p-1 text-center'}
+                            name={'userPassword'}
+                            type={'password'}
+                        />
                         <div className={'flex flex-row gap-1'}>
-                            <input type={'checkbox'} />
+                            <input type={'checkbox'} name={'rememberMeToggle'} />
                             <p className={'text-white'}>Merken</p>
                         </div>
                     </div>

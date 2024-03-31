@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { globalStore } from '../store/global.store';
-import { days } from '../init/initGridData';
+import { globalStore } from '../../store/global.store';
+import { days } from '../../init/initGridData';
 import { FcPodiumWithSpeaker } from 'react-icons/fc';
 
 const Searchbar = () => {
-    const { setDate, customerList, setCurrentDay } = globalStore();
+    const { setDate, customerList, setCurrentDay, useTranslate } = globalStore();
     const [searchValue, setSearchValue] = useState('');
     const [searchList, setSearchList] = useState<any>([]);
     const [isInputFocused, setInputFocus] = useState(false);
@@ -31,12 +31,13 @@ const Searchbar = () => {
         <React.Fragment>
             <input
                 type={'search'}
+                name={'searchBar'}
                 onFocus={() => setInputFocus(true)}
                 onBlur={() => setInputFocus(false)}
                 onChange={onChangeSearch}
                 value={searchValue}
                 className={'w-[300px] border p-2 pl-8 outline-0'}
-                placeholder={'Suchen...'}
+                placeholder={useTranslate('HeaderSearchPlaceholder')}
             />
             {(isInputFocused || isMouseOver) && searchList.length !== 0 && searchValue !== '' ? (
                 <div

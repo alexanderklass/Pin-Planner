@@ -1,32 +1,34 @@
 import React, { useState } from 'react';
 import { FcClock } from 'react-icons/fc';
 import { FcKindle } from 'react-icons/fc';
-import { FcFullTrash } from 'react-icons/fc';
-import Notes from './Notes';
-import DailyHistory from './DailyHistory';
-import DeletedHistory from './DeletedHistory';
+import { globalStore } from '../../store/global.store';
+import Notes from './Notes/Notes';
+import DailyHistory from './DailyHistory/DailyHistory';
+import DeletedHistory from './DeletedHistory/DeletedHistory';
+import DeletedHistoryCounter from './DeletedHistory/DeletedHistoryCounter';
 
 const Switcher = () => {
-    const [switcherData, setSwitcherData] = useState<any>([
+    const { useTranslate } = globalStore();
+    const switcherData = [
         {
-            name: 'Notizen',
+            name: useTranslate('NotesText'),
             icon: <FcKindle />,
             active: false,
             element: <Notes />,
         },
         {
-            name: 'Tagesverlauf',
+            name: useTranslate('DailyHistoryText'),
             icon: <FcClock />,
             active: false,
             element: <DailyHistory />,
         },
         {
-            name: 'Papierkorb',
-            icon: <FcFullTrash />,
+            name: useTranslate('DeletedHistoryText'),
+            icon: <DeletedHistoryCounter />,
             active: false,
             element: <DeletedHistory />,
         },
-    ]);
+    ];
     const [currentIndex, setCurrentIndex] = useState(0);
     const [mouseHover, setMouseHover] = useState(-1);
     const hoverAnimation = (index: number) => {
@@ -46,11 +48,13 @@ const Switcher = () => {
                             onMouseEnter={() => hoverAnimation(index)}
                             onMouseLeave={resetHoverAnimation}
                             key={index}
-                            className={`flex w-[90px] flex-col ${switcherData.length - 1 === index && 'rounded-tr-xl'} items-center justify-center bg-gray-300 p-2`}
-                        >
-                            <div className={`${mouseHover === index && 'animate-wiggle-more'} text-[30px]`}>{item.icon}</div>
+                            className={`flex w-[90px] flex-col ${switcherData.length - 1 === index && 'rounded-tr-xl'} items-center justify-center bg-gray-300 p-2`}>
+                            <div className={`${mouseHover === index && 'animate-wiggle-more'} text-[30px]`}>
+                                {item.icon}
+                            </div>
                             <p className={'text-[15px] font-bold'}>{item.name}</p>
-                            <div className={`h-[7px] w-full rounded-xl ${currentIndex === index && 'animate-jump bg-sky-500'}`}></div>
+                            <div
+                                className={`h-[7px] w-full rounded-xl ${currentIndex === index && 'animate-jump bg-sky-500'}`}></div>
                         </button>
                     );
                 })}

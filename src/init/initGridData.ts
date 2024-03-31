@@ -21,9 +21,9 @@ interface ITime {
     price: number;
 }
 
-export const initLaneData = () => {
+export const initLaneData = (laneGrids: number) => {
     let dataArray: IBahn[] = [];
-    for (let i = 0; i < 12; i++) {
+    for (let i = 0; i < laneGrids; i++) {
         let bahn: IBahn = {
             id: i,
             bahn: (i + 1).toString(),
@@ -52,6 +52,8 @@ export const initLaneData = () => {
     }
     return dataArray;
 };
+
+export const days = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
 
 export const startTimeList = () => {
     return [
@@ -266,4 +268,13 @@ export const switchTimeToIndex = (time: string) => {
     }
 };
 
-export const days = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
+export const pickColorList = [
+    'bg-purple-500',
+    'bg-red-500',
+    'bg-black',
+    'bg-blue-500',
+    'bg-indigo-500',
+    'bg-lime-500',
+    'bg-orange-500',
+    'bg-stone-500',
+];

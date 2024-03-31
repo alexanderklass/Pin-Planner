@@ -1,10 +1,23 @@
 import { create } from 'zustand';
-import { initLaneData, IBahn, colorList } from '../init/initGridData';
+import { IBahn, colorList } from '../init/initGridData';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
 export interface IGlobal {
+    useTranslate: (text: string) => any;
+
     bookingModal: boolean;
     optionsModal: boolean;
+
+    settingsModal: boolean;
+    setSettingsModal: (toggle: boolean) => void;
+    settingsJsonData: any;
+    setSettingsJsonData: (data: any) => void;
+    settingsLaneGrids: number;
+    setSettingsLaneGrids: (number: number) => void;
+    settingsLanguage: string;
+    setSettingsLanguage: (language: string) => void;
+
     customerName: string;
     customerNumber: string;
     startLane: number;
@@ -49,7 +62,6 @@ export interface IGlobal {
     setGridData: (data: IBahn[]) => void;
     customerList: object[];
     setCustomerList: (customer: object[]) => void;
-    fetchCustomerList: () => void;
 
     date: string;
     setDate: (newDate: string) => void;
@@ -65,44 +77,28 @@ export interface IGlobal {
 
     notesList: object[];
     setNotesList: (note: object[]) => void;
+
+    deletedLaneToLocalStorage: () => void;
+    deletedList: object[];
+    setDeletedList: (item: object[]) => void;
 }
 
 export const globalStore = create<IGlobal>((set, get) => ({
+    useTranslate: (text) => {
+        const { t } = useTranslation();
+        return t(text);
+    },
+
     notesList: [],
     setNotesList: (note: object[]) => set({ notesList: note }),
 
-    gridData: initLaneData(),
+    deletedList: [],
+    setDeletedList: (item) => set({ deletedList: item }),
+
+    gridData: [],
     setGridData: (data) => set({ gridData: data }),
     customerList: [],
     setCustomerList: (customer) => set({ customerList: customer }),
-    fetchCustomerList: () => {
-        const { date, setGridData, customerList } = get();
-        const updatedLane = initLaneData();
-        const filteredCustomerList = customerList.filter((item: any) => {
-            return item.date === date;
-        });
-        filteredCustomerList.forEach((item: any) => {
-            for (let i = item.startLane; i <= item.endLane; i++) {
-                for (let j = item.startTime; j <= item.endTime; j++) {
-                    updatedLane[i].time[j] = {
-                        ...updatedLane[i].time[j],
-                        customerName: item.customerName,
-                        customerNumber: item.customerNumber,
-                        date: item.date,
-                        customerNotes: item.customerNotes,
-                        workerName: item.workerName,
-                        startLane: item.startLane,
-                        endLane: item.endLane,
-                        startTime: item.startTime,
-                        endTime: item.endTime,
-                        customerColor: item.customerColor,
-                        payedStatus: item.payedStatus,
-                    };
-                }
-            }
-        });
-        setGridData(updatedLane);
-    },
 
     date: '',
     setDate: (newDate) => set({ date: newDate }),
@@ -120,6 +116,25 @@ export const globalStore = create<IGlobal>((set, get) => ({
     workerName: '',
     customerNotes: '',
     customerColor: '',
+
+    settingsModal: false,
+    setSettingsModal: (toggle) => set({ settingsModal: toggle }),
+    settingsJsonData: {
+        laneSettings: {
+            currentLaneGrids: 11,
+            currentTimeGrids: 22,
+            currentPrice: 12.5,
+        },
+        language: 'DE',
+        colorDesign: 'default',
+        notifications: true,
+        notificationsPosition: 'default',
+    },
+    setSettingsJsonData: (data: any) => set({ settingsJsonData: data }),
+    settingsLaneGrids: 12,
+    setSettingsLaneGrids: (number) => set({ settingsLaneGrids: number }),
+    settingsLanguage: 'de',
+    setSettingsLanguage: (language) => set({ settingsLanguage: language }),
 
     optionsCustomerName: '',
     optionsCustomerNumber: '',
@@ -226,5 +241,23 @@ export const globalStore = create<IGlobal>((set, get) => ({
             progress: undefined,
             theme: 'light',
         });
+    },
+    deletedLaneToLocalStorage: () => {
+        const deletedLane = {
+            customerName: get().optionsCustomerName,
+            customerNumber: get().optionsCustomerNumber,
+            customerNotes: get().optionsCustomerNotes,
+            customerColor: get().optionsCustomerColor,
+            startLane: get().optionsStartLane,
+            endLane: get().optionsEndLane,
+            startTime: get().optionsStartTime,
+            endTime: get().optionsEndTime,
+            date: get().date,
+            //workerName: ,
+            payedStatus: false,
+            //bahnID: optionsId,
+        };
+        const deleteLaneJson = JSON.stringify(deletedLane);
+        if (deletedLane) localStorage.setItem(get().optionsCustomerName.toString(), deleteLaneJson);
     },
 }));

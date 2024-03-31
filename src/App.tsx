@@ -3,10 +3,11 @@ import { Routes, Route } from 'react-router-dom';
 import Login from './pages/Login';
 import Portal from './pages/Portal';
 import Calendar from './pages/Calendar';
+import './languages/i18n';
 
 function App() {
     return (
-        <div className="App h-screen">
+        <div className='App h-screen'>
             <Routes>
                 <Route path={'/'} element={<Login />} />
                 <Route path={'/portal'} element={<Portal />} />

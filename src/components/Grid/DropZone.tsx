@@ -5,9 +5,10 @@ interface props {
     onDrop: (item: any) => void;
     acceptType: string;
     children: any;
+    isOverColor?: string;
 }
 
-const DropZone = ({ onDrop, acceptType, children }: props) => {
+const DropZone = ({ onDrop, acceptType, children, isOverColor }: props) => {
     const [{ isOver }, drop] = useDrop({
         accept: acceptType,
         drop: (item) => {
@@ -18,7 +19,7 @@ const DropZone = ({ onDrop, acceptType, children }: props) => {
         }),
     });
     return (
-        <div ref={drop} className={`${isOver && 'bg-gray-700'} h-full w-[80px] border border-black bg-neutral-200`}>
+        <div ref={drop} className={`${isOver && isOverColor} h-full w-[80px] border border-black bg-neutral-200`}>
             {children}
         </div>
     );

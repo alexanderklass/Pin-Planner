@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { FcSupport, FcNeutralTrading } from 'react-icons/fc';
 import { Dialog, Switch } from '@headlessui/react';
-import { globalStore } from '../store/global.store';
+import { globalStore } from '../../../store/global.store';
 import { GiBowlingStrike } from 'react-icons/gi';
 import { LuTimer } from 'react-icons/lu';
 import { IoPersonAddSharp } from 'react-icons/io5';
 import { BsTelephonePlusFill } from 'react-icons/bs';
 import { FaStickyNote } from 'react-icons/fa';
-import { startTimeList, endTimeList } from '../init/initGridData';
-import InfoHover from './InfoHover';
+import { startTimeList, endTimeList } from '../../../init/initGridData';
+import InfoHover from '../../InfoHover';
 
 const BookingModal = () => {
     const {
@@ -38,6 +38,7 @@ const BookingModal = () => {
         randomColorPicker,
         resetLanes,
         emitSuccessToast,
+        useTranslate,
     } = globalStore();
 
     const [inactiveLane, setInactiveLane] = useState(false);
@@ -49,6 +50,7 @@ const BookingModal = () => {
     const laneGreater = startLane > endLane;
     const timeGreater = startTime > endTime;
     const activeBookingButton = !customerName || !customerNumber || !workerName || laneGreater || timeGreater;
+    const bookingNotification = useTranslate('NotificationBooking');
 
     const addCustomer = () => {
         setCustomerList([
@@ -68,7 +70,7 @@ const BookingModal = () => {
             },
         ]);
         closeBookingModal();
-        emitSuccessToast('Buchung erfolgreich!');
+        emitSuccessToast(bookingNotification);
     };
 
     const addAllDayBookingToList = () => {
@@ -112,16 +114,21 @@ const BookingModal = () => {
     };
 
     return (
-        <Dialog className={'fixed left-[35%] top-[25%]'} open={bookingModal} onClose={() => {}}>
+        <Dialog
+            className={'fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50'}
+            open={bookingModal}
+            onClose={() => {}}>
             <Dialog.Panel
                 className={
-                    'flex w-full flex-col items-center justify-center gap-3 rounded-xl border border-gray-600 bg-neutral-700 p-3 shadow shadow-gray-500'
+                    'flex animate-jump-in flex-col items-center justify-center gap-3 rounded-xl border border-gray-600 bg-neutral-700 p-3 shadow shadow-gray-500 animate-duration-300 animate-ease-linear'
                 }>
                 <div className={'flex flex-row gap-2 rounded-xl bg-gray-200 p-3'}>
                     <div className={'flex w-full flex-col'}>
-                        <Dialog.Title className={'font-bold'}>Buchen</Dialog.Title>
+                        <Dialog.Title className={'font-bold text-gray-600'}>
+                            {useTranslate('BookingModalText')}
+                        </Dialog.Title>
                         <div>
-                            <p className={'text-gray-600'}>Kundenname</p>
+                            <p className={'text-gray-600'}>{useTranslate('BookingModalCustomerName')}</p>
                             <div className={'relative'}>
                                 <input
                                     disabled={bookAllDay || inactiveLane}
@@ -137,7 +144,7 @@ const BookingModal = () => {
                             </div>
                         </div>
                         <div>
-                            <p className={'text-gray-600'}>Telefonnummer</p>
+                            <p className={'text-gray-600'}>{useTranslate('BookingModalCustomerNumber')}</p>
                             <div className={'relative'}>
                                 <input
                                     disabled={bookAllDay || inactiveLane}
@@ -153,7 +160,7 @@ const BookingModal = () => {
                             </div>
                         </div>
                         <div>
-                            <p className={'text-gray-600'}>Bahnen:</p>
+                            <p className={'text-gray-600'}>{useTranslate('BookingModalLanes')}</p>
                             <div className={'flex flex-row items-center justify-center gap-1'}>
                                 <select
                                     disabled={bookAllDay}
@@ -187,7 +194,7 @@ const BookingModal = () => {
                             </div>
                         </div>
                         <div>
-                            <p className={'text-gray-600'}>Uhrzeit:</p>
+                            <p className={'text-gray-600'}>{useTranslate('BookingModalTime')}</p>
                             <div className={'flex flex-row items-center justify-center gap-1'}>
                                 <select
                                     disabled={bookAllDay}
@@ -221,11 +228,11 @@ const BookingModal = () => {
                             </div>
                         </div>
                         <div>
-                            <p className={'text-gray-600'}>Mitarbeitername</p>
+                            <p className={'text-gray-600'}>{useTranslate('BookingModalWorkerName')}</p>
                             <div className={'relative'}>
                                 <input
                                     name={'workerName'}
-                                    placeholder={'Eingetragon von...'}
+                                    placeholder={useTranslate('BookingModalWorkerNamePH')}
                                     value={workerName}
                                     onChange={(e) => setWorkerName(e.target.value)}
                                     autoComplete={'off'}
@@ -236,14 +243,14 @@ const BookingModal = () => {
                         </div>
                     </div>
                     <div className={'flex w-full flex-col justify-end'}>
-                        <p className={'text-gray-600'}>Notizen:</p>
+                        <p className={'text-gray-600'}>{useTranslate('BookingModalNotes')}</p>
                         <textarea
                             rows={3}
                             onChange={(e) => setCustomerNotes(e.target.value)}
                             name={'customerNotes'}
                             value={customerNotes}
                             className={'h-[300px] w-full resize-none rounded-xl border border-gray-300 p-2 outline-0'}
-                            placeholder={'Kundennotizen hier eintragen...'}
+                            placeholder={useTranslate('BookingModalNotesPH')}
                         />
                     </div>
                 </div>
@@ -281,16 +288,16 @@ const BookingModal = () => {
                             onClick={addCustomer}
                             disabled={activeBookingButton}
                             className={
-                                'flex h-[30px] w-[90px] items-center justify-center rounded-md bg-green-500 p-2 font-bold text-white transition-all hover:bg-green-600 disabled:bg-gray-300 disabled:text-black'
+                                'flex h-[30px] w-[90px] items-center justify-center rounded-md bg-green-500 p-2 font-bold text-white transition-all hover:bg-green-600 disabled:bg-gray-500 disabled:text-black disabled:text-white'
                             }>
-                            Buchen
+                            {useTranslate('BookingModalBookingButton')}
                         </button>
                         <button
                             onClick={closeBookingModal}
                             className={
                                 'flex h-[30px] w-[90px] items-center justify-center rounded-md bg-gray-300 p-2 font-bold transition-all hover:bg-gray-400'
                             }>
-                            Schließen
+                            {useTranslate('BookingModalCloseButton')}
                         </button>
                     </div>
                 </div>
