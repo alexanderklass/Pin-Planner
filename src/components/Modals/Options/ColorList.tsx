@@ -11,13 +11,13 @@ const ColorList = () => {
         setOptionsCustomerColor(color);
     };
     return (
-        <div className={'mt-1 flex flex-row items-center justify-center gap-0.5 rounded-md border bg-blue-200 p-1'}>
+        <div className={'mt-1 flex flex-row items-center justify-center gap-0.5 rounded-xl border bg-blue-200 p-1'}>
             {pickColorList.map((color, index) => {
                 return (
                     <div
                         key={index}
                         onClick={() => selectColor(index, color)}
-                        className={`${color} ${selectedColor === index && 'border-red-700'} h-[20px] w-[20px] cursor-pointer rounded border-2 transition-all hover:scale-110`}></div>
+                        className={`${color} ${selectedColor === index && 'border-red-700'} h-[20px] w-[20px] cursor-pointer rounded-full border-2 transition-all hover:scale-110`}></div>
                 );
             })}
         </div>

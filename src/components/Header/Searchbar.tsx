@@ -36,6 +36,7 @@ const Searchbar = () => {
                 onBlur={() => setInputFocus(false)}
                 onChange={onChangeSearch}
                 value={searchValue}
+                autoComplete={'off'}
                 className={'w-[300px] border p-2 pl-8 outline-0'}
                 placeholder={useTranslate('HeaderSearchPlaceholder')}
             />

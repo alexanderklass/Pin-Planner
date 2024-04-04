@@ -16,7 +16,8 @@ const Account = () => {
             <div className={'flex items-center justify-between'}>
                 <p className={'w-[150px] text-gray-600'}>Name:</p>
                 <input
-                    className={'w-full rounded-md p-1 text-center'}
+                    disabled={true}
+                    className={'w-full rounded-md p-1 text-center ring-1 ring-purple-400'}
                     type={'text'}
                     name={'accountName'}
                     placeholder={'Max Mustermann'}
@@ -25,17 +26,19 @@ const Account = () => {
             <div className={'flex items-center justify-between'}>
                 <p className={'w-[150px] text-gray-600'}>{t('SettingsAccountRole')}</p>
                 <input
-                    className={'w-full rounded-md p-1 text-center'}
+                    disabled={true}
+                    value={'Test'}
+                    className={'w-full rounded-md p-1 text-center ring-1 ring-purple-400'}
                     type={'text'}
                     name={'role'}
-                    readOnly={true}
                     placeholder={'Administrator'}
                 />
             </div>
             <div className={'flex items-center justify-between'}>
                 <p className={'w-[150px] text-gray-600'}>E-Mail: </p>
                 <input
-                    className={'w-full rounded-md p-1 text-center'}
+                    disabled={true}
+                    className={'w-full rounded-md p-1 text-center ring-1 ring-purple-400'}
                     name={'e-mail'}
                     placeholder={'testmail@gmail.com'}
                     type={'email'}
@@ -49,8 +52,8 @@ const Account = () => {
                     onChange={(e) => changeLanguage(e.target.value)}
                     value={settingsLanguage}
                     className={'w-full rounded-md p-1'}>
-                    <option value={'de'}>Deutsch</option>
-                    <option value={'en'}>Englisch</option>
+                    <option value={'de'}>{t('languageValueDE')}</option>
+                    <option value={'en'}>{t('languageValueEN')}</option>
                 </select>
             </div>
         </div>

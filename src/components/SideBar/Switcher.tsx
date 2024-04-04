@@ -39,7 +39,7 @@ const Switcher = () => {
     };
 
     return (
-        <div className={'flex flex-col rounded-r-xl border border-black bg-gray-200'}>
+        <div className={'flex flex-col rounded-r-xl border border-black bg-gray-200 text-xs xl:text-base'}>
             <div className={'flex flex-row'}>
                 {switcherData.map((item: any, index: number) => {
                     return (
@@ -48,11 +48,12 @@ const Switcher = () => {
                             onMouseEnter={() => hoverAnimation(index)}
                             onMouseLeave={resetHoverAnimation}
                             key={index}
-                            className={`flex w-[90px] flex-col ${switcherData.length - 1 === index && 'rounded-tr-xl'} items-center justify-center bg-gray-300 p-2`}>
-                            <div className={`${mouseHover === index && 'animate-wiggle-more'} text-[30px]`}>
+                            className={`flex w-[70px] flex-col xl:w-[90px] ${switcherData.length - 1 === index && 'rounded-tr-xl'} items-center justify-center bg-gray-300 p-2`}>
+                            <div
+                                className={`${mouseHover === index && 'animate-wiggle-more'} text-[20px] xl:text-[30px] `}>
                                 {item.icon}
                             </div>
-                            <p className={'text-[15px] font-bold'}>{item.name}</p>
+                            <p className={'text-[12px] font-bold xl:text-[15px]'}>{item.name}</p>
                             <div
                                 className={`h-[7px] w-full rounded-xl ${currentIndex === index && 'animate-jump bg-sky-500'}`}></div>
                         </button>

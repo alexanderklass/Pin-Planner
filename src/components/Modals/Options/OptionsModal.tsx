@@ -31,6 +31,7 @@ const OptionsModal = () => {
         deletedLaneToLocalStorage,
         optionsCustomerColor,
         useTranslate,
+        optionsPrice,
         date,
     } = globalStore();
     const selectStartTime = startTimeList();
@@ -59,6 +60,7 @@ const OptionsModal = () => {
                     endTime: optionsEndTime,
                     customerNotes: optionsCustomerNotes,
                     customerColor: optionsCustomerColor,
+                    price: optionsPrice,
                 };
             }
             return customer;
@@ -118,103 +120,113 @@ const OptionsModal = () => {
                 className={
                     'flex animate-jump-in flex-col items-center justify-center gap-3 rounded-xl border border-gray-600 bg-neutral-700 p-3 shadow shadow-gray-500 animate-duration-300 animate-ease-linear'
                 }>
-                <div className={'flex flex-row items-center justify-start gap-2 rounded-xl bg-sky-100 p-3'}>
-                    <div className={'flex flex-col gap-1'}>
-                        <Dialog.Title className={'font-bold text-gray-600'}>
-                            {useTranslate('OptionsModalText')}
-                        </Dialog.Title>
-                        <div className={'flex flex-col'}>
-                            <p>{useTranslate('BookingModalCustomerName')}</p>
-                            <input
-                                value={optionsCustomerName}
-                                onChange={(e) => setOptionsCustomerName(e.target.value)}
-                                name={'optionsCustomerName'}
-                                disabled={true}
-                                className={'w-full rounded-xl border border-gray-300 p-1 outline-0'}
-                            />
-                        </div>
-                        <div className={'flex flex-col'}>
-                            <p>{useTranslate('BookingModalCustomerNumber')}</p>
-                            <input
-                                value={optionsCustomerNumber}
-                                onChange={(e) => setOptionsCustomerNumber(e.target.value)}
-                                name={'optionsCustomerNumber'}
-                                className={'w-full rounded-xl border border-gray-300 p-1 outline-0'}
-                            />
-                        </div>
-                        <div className={'flex flex-col'}>
-                            <p>{useTranslate('BookingModalLanes')}</p>
-                            <div className={'flex flex-row gap-2'}>
-                                <select
-                                    value={optionsStartLane}
-                                    onChange={(e) => setOptionsStartLane(Number(e.target.value))}
-                                    name={'optionsStartLane'}
-                                    className={'w-full rounded-xl border border-gray-300 p-1 outline-0'}>
-                                    {Array.from({ length: 12 }).map((_, index) => {
-                                        return (
-                                            <option key={index} value={index}>
-                                                {index + 1}
-                                            </option>
-                                        );
-                                    })}
-                                </select>
-                                <select
-                                    value={optionsEndLane}
-                                    onChange={(e) => setOptionsEndLane(Number(e.target.value))}
-                                    name={'optionsEndLane'}
-                                    className={'w-full rounded-xl border border-gray-300 p-1 outline-0'}>
-                                    {Array.from({ length: 12 }).map((_, index) => {
-                                        return (
-                                            <option key={index} value={index}>
-                                                {index + 1}
-                                            </option>
-                                        );
-                                    })}
-                                </select>
+                <div className={'flex flex-col items-start justify-start gap-2 rounded-xl bg-sky-100 p-3'}>
+                    <Dialog.Title className={'font-bold text-gray-600'}>
+                        {useTranslate('OptionsModalText')}
+                    </Dialog.Title>
+                    <div className={'flex flex-row gap-1'}>
+                        <div className={'flex flex-col gap-1'}>
+                            <div className={'flex flex-col'}>
+                                <p>{useTranslate('BookingModalCustomerName')}</p>
+                                <input
+                                    value={optionsCustomerName}
+                                    onChange={(e) => setOptionsCustomerName(e.target.value)}
+                                    name={'optionsCustomerName'}
+                                    disabled={true}
+                                    className={'w-full rounded-xl border border-gray-300 p-1 outline-0'}
+                                />
+                            </div>
+                            <div className={'flex flex-col'}>
+                                <p>{useTranslate('BookingModalCustomerNumber')}</p>
+                                <input
+                                    value={optionsCustomerNumber}
+                                    onChange={(e) => setOptionsCustomerNumber(e.target.value)}
+                                    name={'optionsCustomerNumber'}
+                                    className={'w-full rounded-xl border border-gray-300 p-1 outline-0'}
+                                />
+                            </div>
+                            <div className={'flex flex-col'}>
+                                <p>{useTranslate('BookingModalLanes')}</p>
+                                <div className={'flex flex-row gap-2'}>
+                                    <select
+                                        value={optionsStartLane}
+                                        onChange={(e) => setOptionsStartLane(Number(e.target.value))}
+                                        name={'optionsStartLane'}
+                                        className={'w-full rounded-xl border border-gray-300 p-1 outline-0'}>
+                                        {Array.from({ length: 12 }).map((_, index) => {
+                                            return (
+                                                <option key={index} value={index}>
+                                                    {index + 1}
+                                                </option>
+                                            );
+                                        })}
+                                    </select>
+                                    <select
+                                        value={optionsEndLane}
+                                        onChange={(e) => setOptionsEndLane(Number(e.target.value))}
+                                        name={'optionsEndLane'}
+                                        className={'w-full rounded-xl border border-gray-300 p-1 outline-0'}>
+                                        {Array.from({ length: 12 }).map((_, index) => {
+                                            return (
+                                                <option key={index} value={index}>
+                                                    {index + 1}
+                                                </option>
+                                            );
+                                        })}
+                                    </select>
+                                </div>
+                            </div>
+                            <div className={'flex flex-col'}>
+                                <p>{useTranslate('BookingModalTime')}</p>
+                                <div className={'flex flex-row gap-2'}>
+                                    <select
+                                        value={optionsStartTime}
+                                        onChange={(e) => setOptionsStartTime(Number(e.target.value))}
+                                        name={'optionsStartTime'}
+                                        className={'w-full rounded-xl border border-gray-300 p-1 outline-0'}>
+                                        {selectStartTime.map((time, index) => {
+                                            return (
+                                                <option key={index} value={index}>
+                                                    {time}
+                                                </option>
+                                            );
+                                        })}
+                                    </select>
+                                    <select
+                                        value={optionsEndTime}
+                                        onChange={(e) => setOptionsEndTime(Number(e.target.value))}
+                                        name={'optionsEndTime'}
+                                        className={'w-full rounded-xl border border-gray-300 p-1 outline-0'}>
+                                        {selectEndTime.map((time, index) => {
+                                            return (
+                                                <option key={index} value={index}>
+                                                    {time}
+                                                </option>
+                                            );
+                                        })}
+                                    </select>
+                                </div>
+                                <div>
+                                    <p>Aktueller Preis</p>
+                                    <input
+                                        className={'rounded-xl border border-gray-300 bg-red-200 p-1 font-bold'}
+                                        disabled={true}
+                                        value={optionsPrice + '.00€'}
+                                    />
+                                </div>
+                                <ColorList />
                             </div>
                         </div>
                         <div className={'flex flex-col'}>
-                            <p>{useTranslate('BookingModalTime')}</p>
-                            <div className={'flex flex-row gap-2'}>
-                                <select
-                                    value={optionsStartTime}
-                                    onChange={(e) => setOptionsStartTime(Number(e.target.value))}
-                                    name={'optionsStartTime'}
-                                    className={'w-full rounded-xl border border-gray-300 p-1 outline-0'}>
-                                    {selectStartTime.map((time, index) => {
-                                        return (
-                                            <option key={index} value={index}>
-                                                {time}
-                                            </option>
-                                        );
-                                    })}
-                                </select>
-                                <select
-                                    value={optionsEndTime}
-                                    onChange={(e) => setOptionsEndTime(Number(e.target.value))}
-                                    name={'optionsEndTime'}
-                                    className={'w-full rounded-xl border border-gray-300 p-1 outline-0'}>
-                                    {selectEndTime.map((time, index) => {
-                                        return (
-                                            <option key={index} value={index}>
-                                                {time}
-                                            </option>
-                                        );
-                                    })}
-                                </select>
-                            </div>
-                            <ColorList />
+                            <p>{useTranslate('BookingModalNotes')}</p>
+                            <textarea
+                                onChange={(e) => setOptionsCustomerNotes(e.target.value)}
+                                value={optionsCustomerNotes}
+                                placeholder={useTranslate('BookingModalNotesPH')}
+                                name={'optionsCustomerNotes'}
+                                className={'h-full resize-none rounded-xl border border-gray-300 p-2 outline-0'}
+                            />
                         </div>
-                    </div>
-                    <div>
-                        <p>{useTranslate('BookingModalNotes')}</p>
-                        <textarea
-                            onChange={(e) => setOptionsCustomerNotes(e.target.value)}
-                            value={optionsCustomerNotes}
-                            placeholder={useTranslate('BookingModalNotesPH')}
-                            name={'optionsCustomerNotes'}
-                            className={'h-[245px] resize-none rounded-xl border border-gray-300 p-2 outline-0'}
-                        />
                     </div>
                 </div>
                 <div className={'flex w-full flex-row items-center justify-between'}>
@@ -223,8 +235,8 @@ const OptionsModal = () => {
                             onClick={handlePaymentStatus}
                             onMouseEnter={() => setHoverPayButton(true)}
                             onMouseLeave={() => setHoverPayButton(false)}
-                            className={`${disablePayedButton && 'hidden'} relative flex w-[35px] items-center justify-center rounded-md bg-green-300 p-1 transition-all hover:bg-green-400 disabled:bg-gray-500`}>
-                            <FcPaid className={`text-[30px]`} />
+                            className={`${disablePayedButton && 'hidden'} relative flex items-center justify-center rounded-full bg-green-300 p-1 transition-all hover:bg-green-400 disabled:bg-gray-500`}>
+                            <FcPaid className={`text-[25px]`} />
                             <InfoHover
                                 active={hoverPayButton}
                                 text={useTranslate('OptionsModalPayedButtonHoverInfo')}
@@ -236,9 +248,9 @@ const OptionsModal = () => {
                             onMouseEnter={() => setHoverDeleteButton(true)}
                             onMouseLeave={() => setHoverDeleteButton(false)}
                             className={
-                                'relative flex w-[35px] items-center justify-center rounded-md bg-red-400 p-1 text-center transition-all hover:bg-red-500'
+                                'relative flex items-center justify-center rounded-full bg-red-400 p-1 text-center transition-all hover:bg-red-500'
                             }>
-                            <FcEmptyTrash className={'text-[30px]'} />
+                            <FcEmptyTrash className={'text-[25px]'} />
                             <InfoHover
                                 active={hoverDeleteButton}
                                 text={useTranslate('OptionsModalDeleteButtonHoverInfo')}
@@ -251,7 +263,7 @@ const OptionsModal = () => {
                             onClick={confirmUpdateOptions}
                             disabled={activeConfirmButton}
                             className={
-                                'flex h-[30px] w-[90px] items-center justify-center rounded-md bg-sky-500 p-2 font-bold text-white transition-all hover:bg-sky-600 disabled:bg-gray-500'
+                                'outline-text flex h-[30px] w-[90px] items-center justify-center rounded-md bg-sky-500 p-2 font-bold text-white transition-all hover:bg-sky-600 disabled:bg-gray-500'
                             }>
                             {useTranslate('OptionsModalConfirmButton')}
                         </button>

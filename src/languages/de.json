@@ -55,5 +55,7 @@
   "NotificationBookingDeleted": "Buchung erfolgreich gelöscht!",
   "NotificationBookingPayed": "Buchung wurde erfolgreich bezahlt!",
   "NotificationCantMoveBooking": "Buchung ist außerhalb des bereiches!",
-  "NotificationNotesSaved": "Notizen gespeichert!"
+  "NotificationNotesSaved": "Notizen gespeichert!",
+  "languageValueDE": "Deutsch",
+  "languageValueEN": "Englisch"
 }

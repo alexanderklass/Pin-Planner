@@ -37,6 +37,9 @@ export interface IGlobal {
     optionsCustomerColor: string;
     optionsCustomerNotes: string;
 
+    optionsPrice: number;
+    setOptionsPrice: (price: number) => void;
+
     setOptionsCustomerName: (name: string) => void;
     setOptionsCustomerNumber: (number: string) => void;
     setOptionsStartLane: (start: number) => void;
@@ -144,6 +147,7 @@ export const globalStore = create<IGlobal>((set, get) => ({
     optionsEndTime: 0,
     optionsCustomerColor: '',
     optionsCustomerNotes: '',
+    optionsPrice: 0,
 
     setOptionsCustomerName: (name) => set({ optionsCustomerName: name }),
     setOptionsCustomerNumber: (number) => set({ optionsCustomerNumber: number }),
@@ -153,6 +157,7 @@ export const globalStore = create<IGlobal>((set, get) => ({
     setOptionsEndTime: (end) => set({ optionsEndTime: end }),
     setOptionsCustomerNotes: (note) => set({ optionsCustomerNotes: note }),
     setOptionsCustomerColor: (color) => set({ optionsCustomerColor: color }),
+    setOptionsPrice: (price) => set({ optionsPrice: price }),
 
     setCustomerName: (name) => set({ customerName: name }),
     setCustomerNumber: (number) => set({ customerNumber: number }),
@@ -199,6 +204,7 @@ export const globalStore = create<IGlobal>((set, get) => ({
             setOptionsEndTime,
             setOptionsStartLane,
             setOptionsStartTime,
+            setOptionsPrice,
             gridData,
         } = get();
         setOptionsModal(true);
@@ -211,6 +217,7 @@ export const globalStore = create<IGlobal>((set, get) => ({
         setOptionsEndTime(customerData.endTime);
         setOptionsStartLane(customerData.startLane);
         setOptionsStartTime(customerData.startTime);
+        setOptionsPrice(customerData.price);
     },
     randomColorPicker: () => {
         const { setCustomerColor } = get();

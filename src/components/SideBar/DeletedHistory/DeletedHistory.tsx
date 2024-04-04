@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import DeletedCustomer from './DeletedCustomer';
 import { globalStore } from '../../../store/global.store';
 import Placeholder from '../Placeholder';
+import { switchIndexToTime } from '../../../init/initGridData';
 
 const DeletedHistory = () => {
     const { date, customerList, deletedList, setDeletedList, setCustomerList, emitSuccessToast, useTranslate } =
@@ -53,16 +54,23 @@ const DeletedHistory = () => {
     }, [date, customerList]);
 
     return (
-        <div className={'no-scrollbar flex max-h-[832px] w-full flex-col gap-1 overflow-y-auto scroll-smooth p-1'}>
+        <div
+            className={
+                'no-scrollbar flex max-h-[832px] w-full flex-col items-center gap-1 overflow-y-auto scroll-smooth p-1'
+            }>
             {deletedList.length > 0 ? (
                 deletedList.map((customer: any, index: number) => {
+                    const startTimeConverted = switchIndexToTime(customer.value.startTime);
+                    const endTimeConverted = switchIndexToTime(customer.value.endTime);
+                    const startLane = customer.value.startLane === 0 ? 1 : customer.value.startLane;
+                    const endLane = customer.value.endLane === 0 ? 1 : customer.value.endLane + 1;
                     return (
                         <DeletedCustomer
                             key={index}
                             name={customer.value.customerName}
                             number={customer.value.customerNumber}
-                            lanes={customer.value.startLane + ' ' + customer.value.endLane}
-                            time={customer.value.startTime + ' ' + customer.value.endTime + ' Uhr'}
+                            lanes={startLane + ' - ' + endLane}
+                            time={startTimeConverted + ' - ' + endTimeConverted + ' Uhr'}
                             notes={customer.value.customerNotes}
                             permRemoveLane={() => deleteStorageItem(customer.key)}
                             recoverLane={() => recoverLane(index, customer.value.customerName)}

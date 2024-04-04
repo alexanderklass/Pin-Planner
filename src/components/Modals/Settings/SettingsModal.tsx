@@ -87,7 +87,7 @@ const SettingsModal = () => {
                             <div>
                                 <button
                                     className={
-                                        'min-w-[70px] rounded-md border border-gray-400 bg-red-500 p-1 text-[14px] font-bold text-white transition-all hover:bg-red-600'
+                                        'outline-text min-w-[70px] rounded-md border border-gray-400 bg-red-500 p-1 text-[14px] font-bold text-white transition-all hover:bg-red-600'
                                     }>
                                     {useTranslate('SettingsLogoutButton')}
                                 </button>
@@ -95,7 +95,7 @@ const SettingsModal = () => {
                             <div className={'gap flex flex-row justify-between gap-1'}>
                                 <button
                                     className={
-                                        'min-w-[70px] rounded-md border border-gray-400 bg-purple-500 p-1 text-[14px] font-bold text-white transition-colors hover:bg-purple-600'
+                                        'outline-text min-w-[70px] rounded-md border border-gray-400 bg-purple-500 p-1 text-[14px] font-bold text-white transition-colors hover:bg-purple-600'
                                     }>
                                     {useTranslate('SettingsSaveButton')}
                                 </button>

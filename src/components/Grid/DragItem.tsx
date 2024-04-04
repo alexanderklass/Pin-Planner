@@ -23,7 +23,7 @@ const DragItem = ({ data, type, children, color, onClick, isDraggingColor }: pro
         <div
             ref={drag}
             onClick={onClick}
-            className={`${isDragging && isDraggingColor} ${color} relative flex h-full w-full animate-jump-in cursor-pointer items-center justify-center text-[14px] font-bold animate-duration-300 animate-ease-linear`}>
+            className={`${isDragging && isDraggingColor} ${color} relative flex h-full w-full cursor-pointer items-center justify-center text-[14px] font-bold`}>
             {children}
         </div>
     );

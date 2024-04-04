@@ -16,7 +16,7 @@ const LaneSettings = () => {
                     {Array.from({ length: 18 }).map((_, index) => {
                         return (
                             <option value={index} key={index}>
-                                {index + 1}
+                                {index}
                             </option>
                         );
                     })}

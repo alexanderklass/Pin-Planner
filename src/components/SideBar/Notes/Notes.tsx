@@ -71,7 +71,7 @@ const Notes = () => {
                 name={'extraBooking'}
                 value={extraNotes}
                 onChange={(e) => setExtraNotes(e.target.value)}
-                className={`h-full w-full resize-none rounded-xl ${focusExtraBooking && 'opacity-70'} p-2 placeholder:rounded-xl placeholder:bg-gray-200 placeholder:p-1`}
+                className={`h-full w-full resize-none rounded-xl ${focusExtraBooking && 'opacity-70'} p-2 outline-0 ring-1 ring-purple-400 placeholder:rounded-xl placeholder:bg-gray-200 placeholder:p-1`}
                 style={{
                     backgroundImage: `url(${focusExtraBooking && !extraNotes && extraBookingImage})`,
                     backgroundRepeat: 'no-repeat',
@@ -86,7 +86,7 @@ const Notes = () => {
                 name={'cookNotes'}
                 value={cookNotes}
                 onChange={(e) => setCookNotes(e.target.value)}
-                className={`h-full resize-none rounded-xl p-2 ${focusCooking && 'opacity-70'} placeholder:rounded-xl placeholder:bg-gray-200 placeholder:p-1`}
+                className={`h-full resize-none rounded-xl p-2 ${focusCooking && 'opacity-70'} outline-0 ring-1 ring-purple-400 placeholder:rounded-xl placeholder:bg-gray-200 placeholder:p-1`}
                 style={{
                     backgroundImage: `url(${focusCooking && !cookNotes && cookingImage})`,
                     backgroundRepeat: 'no-repeat',
@@ -101,7 +101,7 @@ const Notes = () => {
                 name={'clubNotes'}
                 value={clubNotes}
                 onChange={(e) => setClubNotes(e.target.value)}
-                className={`h-full resize-none rounded-xl p-2 ${focusClub && 'opacity-70'} placeholder:rounded-xl placeholder:bg-gray-200 placeholder:p-1`}
+                className={`h-full resize-none rounded-xl p-2 ${focusClub && 'opacity-70'} outline-0 ring-1 ring-purple-400 placeholder:rounded-xl placeholder:bg-gray-200 placeholder:p-1`}
                 style={{
                     backgroundImage: `url(${focusClub && !clubNotes && clubroomImage})`,
                     backgroundRepeat: 'no-repeat',
@@ -112,7 +112,9 @@ const Notes = () => {
             />
             <button
                 onClick={addNotesToList}
-                className={'rounded-xl bg-violet-500 p-1 font-bold text-white transition-colors hover:bg-violet-600'}>
+                className={
+                    'outline-text rounded-xl bg-violet-500 p-1 font-bold text-white transition-colors hover:bg-violet-600'
+                }>
                 {useTranslate('NotesSaveButton')}
             </button>
         </div>

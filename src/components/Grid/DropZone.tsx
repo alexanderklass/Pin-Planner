@@ -19,7 +19,9 @@ const DropZone = ({ onDrop, acceptType, children, isOverColor }: props) => {
         }),
     });
     return (
-        <div ref={drop} className={`${isOver && isOverColor} h-full w-[80px] border border-black bg-neutral-200`}>
+        <div
+            ref={drop}
+            className={` ${isOver && isOverColor} h-full w-[50px] border border-black bg-neutral-200 xl:w-[80px]`}>
             {children}
         </div>
     );

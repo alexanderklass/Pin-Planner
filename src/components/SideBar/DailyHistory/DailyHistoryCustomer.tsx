@@ -13,13 +13,13 @@ const DailyHistoryCustomer = ({ time, name, notes, onlineStatus }: props) => {
     return (
         <div
             className={
-                'relative flex animate-fade-right flex-row items-center justify-start gap-5 rounded-xl border border-gray-400 bg-gray-300 p-1'
+                'relative flex w-[195px] animate-fade-right flex-row items-center justify-start gap-5 rounded-xl border border-gray-400 bg-gray-300 p-1 xl:w-[255px]'
             }>
-            <FcConferenceCall className={'rounded-xl bg-gray-400 p-1 text-[35px]'} />
+            <FcConferenceCall className={'rounded-xl bg-gray-400 p-1 text-[25px] xl:text-[35px]'} />
             <div className={'flex w-[195px] flex-col items-start justify-center'}>
-                <p className={'text-[14px] font-bold'}>{name}</p>
-                <p className={'rounded-xl bg-purple-300 px-1 text-[13px] font-bold text-gray-600'}>{time}</p>
-                <p className={'break-all text-[14px]'}>{notes}</p>
+                <p className={'text-xs font-bold xl:text-[14px]'}>{name}</p>
+                <p className={'rounded-xl bg-purple-300 px-1 text-xs font-bold text-gray-600 xl:text-[13px]'}>{time}</p>
+                <p className={'break-all text-xs xl:text-[14px]'}>{notes}</p>
             </div>
             <OnlineStatusPing active={onlineStatus} />
         </div>

@@ -8,7 +8,7 @@ const DeletedHistoryCounter = () => {
         <div className={'relative'}>
             <FcFullTrash />
             <div
-                className={`${deletedList.length === 0 && 'hidden'} absolute -right-1 -top-1 flex h-[20px] w-[20px] items-center justify-center rounded-full border border-white bg-red-500 text-[11px] font-bold text-white`}>
+                className={`${deletedList.length === 0 && 'hidden'} absolute -right-1 -top-1 flex h-[15px] w-[15px] items-center justify-center rounded-full border border-white bg-red-500 text-[8px] font-bold text-white xl:h-[20px] xl:w-[20px] xl:text-[11px]`}>
                 {deletedList.length}
             </div>
         </div>

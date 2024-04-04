@@ -9,6 +9,7 @@ import { BsTelephonePlusFill } from 'react-icons/bs';
 import { FaStickyNote } from 'react-icons/fa';
 import { startTimeList, endTimeList } from '../../../init/initGridData';
 import InfoHover from '../../InfoHover';
+import RequiredInfo from '../../RequiredInfo';
 
 const BookingModal = () => {
     const {
@@ -122,7 +123,8 @@ const BookingModal = () => {
                 className={
                     'flex animate-jump-in flex-col items-center justify-center gap-3 rounded-xl border border-gray-600 bg-neutral-700 p-3 shadow shadow-gray-500 animate-duration-300 animate-ease-linear'
                 }>
-                <div className={'flex flex-row gap-2 rounded-xl bg-gray-200 p-3'}>
+                <div className={'relative flex flex-row gap-2 rounded-xl bg-gray-200 p-3'}>
+                    <RequiredInfo />
                     <div className={'flex w-full flex-col'}>
                         <Dialog.Title className={'font-bold text-gray-600'}>
                             {useTranslate('BookingModalText')}
@@ -288,7 +290,7 @@ const BookingModal = () => {
                             onClick={addCustomer}
                             disabled={activeBookingButton}
                             className={
-                                'flex h-[30px] w-[90px] items-center justify-center rounded-md bg-green-500 p-2 font-bold text-white transition-all hover:bg-green-600 disabled:bg-gray-500 disabled:text-black disabled:text-white'
+                                'outline-text flex h-[30px] w-[90px] items-center justify-center rounded-md bg-green-500 p-2 font-bold text-white transition-all hover:bg-green-600 disabled:bg-gray-500 disabled:text-black disabled:text-white'
                             }>
                             {useTranslate('BookingModalBookingButton')}
                         </button>

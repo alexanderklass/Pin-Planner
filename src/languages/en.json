@@ -14,7 +14,7 @@
   "DeletedHistoryEmptyList": "The trash is currently empty!",
   "BookingModalText": "Booking",
   "BookingModalCustomerName": "Customer name",
-  "BookingModalCustomerNumber": "Telephone number",
+  "BookingModalCustomerNumber": "Phone number",
   "BookingModalLanes": "Lanes:",
   "BookingModalTime": "Time:",
   "BookingModalWorkerName": "Employee name",
@@ -55,5 +55,7 @@
   "NotificationBookingDeleted": "Booking successfully deleted!",
   "NotificationBookingPayed": "Booking was successfully paid!",
   "NotificationCantMoveBooking": "Booking is outside the range!",
-  "NotificationNotesSaved": "Notes saved!"
+  "NotificationNotesSaved": "Notes saved!",
+  "languageValueDE": "German",
+  "languageValueEN": "English"
 }

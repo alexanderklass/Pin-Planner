@@ -34,7 +34,7 @@ const ConfirmModal = ({ open, confirm, decline }: props) => {
                 <div className={'mt-5 flex w-full flex-row justify-center gap-1'}>
                     <button
                         className={
-                            'min-w-[90px] rounded-md border border-gray-400 bg-red-300 p-1 text-[14px] font-bold transition-all hover:bg-red-400'
+                            'outline-text min-w-[90px] rounded-md border border-gray-400 bg-red-500 p-1 text-[14px] font-bold transition-all hover:bg-red-600'
                         }
                         onClick={confirm}>
                         {deleteButton}

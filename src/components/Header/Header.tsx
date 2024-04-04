@@ -65,24 +65,24 @@ const Header = () => {
     return (
         <header
             className={
-                'border-b-1 flex w-full flex-row items-center justify-between border-b border-neutral-600 bg-neutral-700 p-3'
+                'border-b-1 flex w-full flex-row items-center justify-between border-b border-neutral-600 bg-neutral-700 p-3 text-xs xl:text-base'
             }>
             <div className={'flex flex-row items-center justify-center gap-1 text-gray-100'}>
                 <Link to={'/portal'}>
                     <LuArrowLeftSquare
                         className={
-                            'rounded-md text-[30px] text-gray-300 transition-all hover:bg-gray-300 hover:text-black'
+                            'rounded-md text-[20px] text-gray-300 transition-all hover:bg-gray-300 hover:text-black xl:text-[30px]'
                         }
                     />
                 </Link>
-                <FcCalendar className={'text-[40px]'} />
-                <p className={'font-bold'}>{useTranslate('HeaderSchedulerTitle')}</p>
+                <FcCalendar className={'text-[30px] xl:text-[40px]'} />
+                <p className={'outline-text font-bold'}>{useTranslate('HeaderSchedulerTitle')}</p>
             </div>
 
             <div className={'flex flex-row items-center justify-center'}>
                 <button
                     className={
-                        'rounded-l-xl border bg-sky-500 p-2 font-bold text-white transition-all hover:bg-sky-600'
+                        'outline-text rounded-l-xl border bg-sky-500 p-2 font-bold text-white transition-all hover:bg-sky-600'
                     }
                     onClick={openModalBooking}>
                     {useTranslate('HeaderBookingButton')}
@@ -103,7 +103,7 @@ const Header = () => {
                 <button
                     onClick={() => setSettingsModal(true)}
                     className={'rounded-xl p-1 transition-all hover:scale-110 hover:bg-purple-300'}>
-                    <FcSettings className={'text-[25px]'} />
+                    <FcSettings className={'text-[15px] xl:text-[25px]'} />
                 </button>
             </div>
         </header>
