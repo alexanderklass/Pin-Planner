@@ -5,7 +5,7 @@ export interface IBahn {
 }
 
 interface ITime {
-    bahnID: number;
+    uID: string;
     id?: number;
     customerColor: string;
     date: string;
@@ -19,6 +19,7 @@ interface ITime {
     endTime: number;
     payedStatus: boolean;
     price: number;
+    isOverGrid: boolean;
 }
 
 export const initLaneData = (laneGrids: number) => {
@@ -31,7 +32,7 @@ export const initLaneData = (laneGrids: number) => {
         };
         for (let j = 0; j < 22; j++) {
             let time: ITime = {
-                bahnID: 0,
+                uID: '',
                 id: j,
                 customerColor: '',
                 date: '',
@@ -45,6 +46,7 @@ export const initLaneData = (laneGrids: number) => {
                 endTime: 0,
                 payedStatus: false,
                 price: 0,
+                isOverGrid: false,
             };
             bahn.time.push(time);
         }

@@ -11,27 +11,14 @@ const OptionsModal = () => {
     const {
         optionsModal,
         setOptionsModal,
-        setOptionsCustomerNotes,
-        setOptionsCustomerName,
-        setOptionsStartTime,
-        setOptionsCustomerNumber,
-        setOptionsStartLane,
-        setOptionsEndLane,
-        setOptionsEndTime,
-        optionsEndTime,
-        optionsCustomerNotes,
-        optionsStartTime,
-        optionsEndLane,
-        optionsStartLane,
-        optionsCustomerNumber,
-        optionsCustomerName,
         customerList,
         setCustomerList,
-        emitSuccessToast,
+        emitToast,
         deletedLaneToLocalStorage,
-        optionsCustomerColor,
         useTranslate,
-        optionsPrice,
+        setOptionsData,
+        optionsData,
+        settingsLaneGrids,
         date,
     } = globalStore();
     const selectStartTime = startTimeList();
@@ -39,52 +26,79 @@ const OptionsModal = () => {
     const [hoverDeleteButton, setHoverDeleteButton] = useState(false);
     const [hoverPayButton, setHoverPayButton] = useState(false);
     const [openDeleteModal, setOpenDeleteModal] = useState(false);
-    const optionsLaneGreater = optionsStartLane > optionsEndLane;
-    const optionsTimeGreater = optionsStartTime > optionsEndTime;
-    const activeConfirmButton = !optionsCustomerNumber || optionsLaneGreater || optionsTimeGreater;
-    const disablePayedButton = optionsCustomerName === 'Außerbetrieb' || optionsCustomerName === 'Ganztagsbuchung';
+    const optionsLaneGreater = optionsData.startLane > optionsData.endLane;
+    const optionsTimeGreater = optionsData.startTime > optionsData.endTime;
+    const activeConfirmButton = !optionsData.customerName || optionsLaneGreater || optionsTimeGreater;
+    const disablePayedButton =
+        optionsData.customerName === 'Außer Betrieb' || optionsData.customerName === 'Ganztagsbuchung';
     const bookingAdjustedNotification = useTranslate('NotificationOptionsChanged');
     const bookingDeletedNotification = useTranslate('NotificationBookingDeleted');
     const bookingPayedNotification = useTranslate('NotificationBookingPayed');
+    const cantAdjustCustomerNotification = useTranslate('GridCantMoveCustomer');
 
     const confirmUpdateOptions = () => {
         const oldList = [...customerList];
+        if (checkIfCanAdjustCustomer()) return emitToast('error', cantAdjustCustomerNotification);
         const newList = oldList.map((customer: any) => {
-            if (customer.customerName === optionsCustomerName && customer.date === date) {
+            if (customer.uID === optionsData.uID && customer.date === date) {
                 return {
                     ...customer,
-                    customerNumber: optionsCustomerNumber,
-                    startLane: optionsStartLane,
-                    endLane: optionsEndLane,
-                    startTime: optionsStartTime,
-                    endTime: optionsEndTime,
-                    customerNotes: optionsCustomerNotes,
-                    customerColor: optionsCustomerColor,
-                    price: optionsPrice,
+                    customerNumber: optionsData.customerNumber,
+                    startLane: optionsData.startLane,
+                    endLane: optionsData.endLane,
+                    startTime: optionsData.startTime,
+                    endTime: optionsData.endTime,
+                    customerNotes: optionsData.customerNotes,
+                    customerColor: optionsData.customerColor,
+                    price: optionsData.price,
                 };
             }
             return customer;
         });
         setCustomerList(newList);
-        emitSuccessToast(bookingAdjustedNotification);
+        emitToast('success', bookingAdjustedNotification);
         setOptionsModal(false);
+    };
+
+    const checkIfCanAdjustCustomer = () => {
+        const filteredList = customerList.filter((item: any) => {
+            return (
+                item.date === date &&
+                item.startLane <= optionsData.endLane &&
+                item.endLane >= optionsData.startLane &&
+                item.startTime <= optionsData.endTime &&
+                item.endTime >= optionsData.startTime &&
+                item.uID !== optionsData.uID
+            );
+        });
+        return filteredList.length > 0;
     };
 
     const handleDeleteCustomer = () => {
         const oldList = [...customerList];
         const newList = oldList.filter((item: any) => {
-            return item.customerName !== optionsCustomerName && item.date === date;
+            return item.uID !== optionsData.uID && item.date === date;
         });
         setCustomerList(newList);
-        emitSuccessToast(bookingDeletedNotification);
+        emitToast('success', bookingDeletedNotification);
         deletedLaneToLocalStorage();
         setOptionsModal(false);
+    };
+
+    const handleChange = (event: any) => {
+        const numbers = ['startLane', 'endLane', 'startTime', 'endTime'];
+        const checkForNumber = numbers.includes(event.target.name);
+        const value = checkForNumber ? Number(event.target.value) : event.target.value;
+        setOptionsData({
+            ...optionsData,
+            [event.target.name]: value,
+        });
     };
 
     const handlePaymentStatus = () => {
         const oldList = [...customerList];
         const newList = oldList.map((customer: any) => {
-            if (customer.customerName === optionsCustomerName && customer.date === date) {
+            if (customer.uID === optionsData.uID && customer.date === date) {
                 return {
                     ...customer,
                     payedStatus: true,
@@ -93,7 +107,7 @@ const OptionsModal = () => {
             return customer;
         });
         setCustomerList(newList);
-        emitSuccessToast(bookingPayedNotification);
+        emitToast('success', bookingPayedNotification);
         setOptionsModal(false);
     };
 
@@ -129,9 +143,9 @@ const OptionsModal = () => {
                             <div className={'flex flex-col'}>
                                 <p>{useTranslate('BookingModalCustomerName')}</p>
                                 <input
-                                    value={optionsCustomerName}
-                                    onChange={(e) => setOptionsCustomerName(e.target.value)}
-                                    name={'optionsCustomerName'}
+                                    value={optionsData.customerName}
+                                    onChange={(e) => handleChange(e)}
+                                    name={'customerName'}
                                     disabled={true}
                                     className={'w-full rounded-xl border border-gray-300 p-1 outline-0'}
                                 />
@@ -139,9 +153,9 @@ const OptionsModal = () => {
                             <div className={'flex flex-col'}>
                                 <p>{useTranslate('BookingModalCustomerNumber')}</p>
                                 <input
-                                    value={optionsCustomerNumber}
-                                    onChange={(e) => setOptionsCustomerNumber(e.target.value)}
-                                    name={'optionsCustomerNumber'}
+                                    value={optionsData.customerNumber}
+                                    onChange={(e) => handleChange(e)}
+                                    name={'customerNumber'}
                                     className={'w-full rounded-xl border border-gray-300 p-1 outline-0'}
                                 />
                             </div>
@@ -149,11 +163,11 @@ const OptionsModal = () => {
                                 <p>{useTranslate('BookingModalLanes')}</p>
                                 <div className={'flex flex-row gap-2'}>
                                     <select
-                                        value={optionsStartLane}
-                                        onChange={(e) => setOptionsStartLane(Number(e.target.value))}
-                                        name={'optionsStartLane'}
+                                        value={optionsData.startLane}
+                                        onChange={(e) => handleChange(e)}
+                                        name={'startLane'}
                                         className={'w-full rounded-xl border border-gray-300 p-1 outline-0'}>
-                                        {Array.from({ length: 12 }).map((_, index) => {
+                                        {Array.from({ length: settingsLaneGrids }).map((_, index) => {
                                             return (
                                                 <option key={index} value={index}>
                                                     {index + 1}
@@ -162,11 +176,11 @@ const OptionsModal = () => {
                                         })}
                                     </select>
                                     <select
-                                        value={optionsEndLane}
-                                        onChange={(e) => setOptionsEndLane(Number(e.target.value))}
-                                        name={'optionsEndLane'}
+                                        value={optionsData.endLane}
+                                        onChange={(e) => handleChange(e)}
+                                        name={'endLane'}
                                         className={'w-full rounded-xl border border-gray-300 p-1 outline-0'}>
-                                        {Array.from({ length: 12 }).map((_, index) => {
+                                        {Array.from({ length: settingsLaneGrids }).map((_, index) => {
                                             return (
                                                 <option key={index} value={index}>
                                                     {index + 1}
@@ -180,9 +194,9 @@ const OptionsModal = () => {
                                 <p>{useTranslate('BookingModalTime')}</p>
                                 <div className={'flex flex-row gap-2'}>
                                     <select
-                                        value={optionsStartTime}
-                                        onChange={(e) => setOptionsStartTime(Number(e.target.value))}
-                                        name={'optionsStartTime'}
+                                        value={optionsData.startTime}
+                                        onChange={(e) => handleChange(e)}
+                                        name={'startTime'}
                                         className={'w-full rounded-xl border border-gray-300 p-1 outline-0'}>
                                         {selectStartTime.map((time, index) => {
                                             return (
@@ -193,9 +207,9 @@ const OptionsModal = () => {
                                         })}
                                     </select>
                                     <select
-                                        value={optionsEndTime}
-                                        onChange={(e) => setOptionsEndTime(Number(e.target.value))}
-                                        name={'optionsEndTime'}
+                                        value={optionsData.endTime}
+                                        onChange={(e) => handleChange(e)}
+                                        name={'endTime'}
                                         className={'w-full rounded-xl border border-gray-300 p-1 outline-0'}>
                                         {selectEndTime.map((time, index) => {
                                             return (
@@ -206,26 +220,36 @@ const OptionsModal = () => {
                                         })}
                                     </select>
                                 </div>
-                                <div>
-                                    <p>Aktueller Preis</p>
-                                    <input
-                                        className={'rounded-xl border border-gray-300 bg-red-200 p-1 font-bold'}
-                                        disabled={true}
-                                        value={optionsPrice + '.00€'}
-                                    />
-                                </div>
                                 <ColorList />
                             </div>
                         </div>
                         <div className={'flex flex-col'}>
                             <p>{useTranslate('BookingModalNotes')}</p>
                             <textarea
-                                onChange={(e) => setOptionsCustomerNotes(e.target.value)}
-                                value={optionsCustomerNotes}
+                                onChange={(e) => handleChange(e)}
+                                value={optionsData.customerNotes}
                                 placeholder={useTranslate('BookingModalNotesPH')}
-                                name={'optionsCustomerNotes'}
+                                name={'customerNotes'}
                                 className={'h-full resize-none rounded-xl border border-gray-300 p-2 outline-0'}
                             />
+                            <div>
+                                <p>{useTranslate('BookingModalWorkerName')}</p>
+                                <input
+                                    className={`rounded-xl border border-gray-300 p-1 font-bold`}
+                                    disabled={true}
+                                    name={'workerName'}
+                                    value={optionsData.workerName}
+                                />
+                            </div>
+                            <div>
+                                <p>{useTranslate('OptionsCurrentPrice')}</p>
+                                <input
+                                    className={`rounded-xl border border-gray-300 ${optionsData.payedStatus ? 'bg-green-200' : 'bg-red-200'} p-1 font-bold`}
+                                    disabled={true}
+                                    name={'price'}
+                                    value={optionsData.price?.toFixed(2) + '€'}
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>

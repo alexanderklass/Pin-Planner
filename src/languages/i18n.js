@@ -4,7 +4,6 @@ import translationEN from './en.json';
 import translationDE from './de.json';
 
 i18n.use(initReactI18next).init({
-    debug: true,
     resources: {
         en: {
             translation: translationEN,

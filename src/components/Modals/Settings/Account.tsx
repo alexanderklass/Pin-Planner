@@ -27,7 +27,6 @@ const Account = () => {
                 <p className={'w-[150px] text-gray-600'}>{t('SettingsAccountRole')}</p>
                 <input
                     disabled={true}
-                    value={'Test'}
                     className={'w-full rounded-md p-1 text-center ring-1 ring-purple-400'}
                     type={'text'}
                     name={'role'}

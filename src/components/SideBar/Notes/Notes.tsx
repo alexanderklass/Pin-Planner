@@ -5,7 +5,7 @@ import clubroomImage from '../../../assets/images/clubroom-background.png';
 import { globalStore } from '../../../store/global.store';
 
 const Notes = () => {
-    const { date, setNotesList, notesList, emitSuccessToast, useTranslate } = globalStore();
+    const { date, setNotesList, notesList, emitToast, useTranslate } = globalStore();
     const [focusExtraBooking, setFocusExtraBooking] = useState(true);
     const [focusCooking, setFocusCooking] = useState(true);
     const [focusClub, setFocusClub] = useState(true);
@@ -55,7 +55,7 @@ const Notes = () => {
             });
             setNotesList(customizedNotes);
         }
-        emitSuccessToast(notesSavedNotification);
+        emitToast('success', notesSavedNotification);
     };
 
     useEffect(() => {

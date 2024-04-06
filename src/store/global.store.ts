@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { IBahn, colorList } from '../init/initGridData';
-import { toast } from 'react-toastify';
+import { toast, ToastOptions } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 
 export interface IGlobal {
@@ -10,13 +10,13 @@ export interface IGlobal {
     optionsModal: boolean;
 
     settingsModal: boolean;
-    setSettingsModal: (toggle: boolean) => void;
-    settingsJsonData: any;
-    setSettingsJsonData: (data: any) => void;
     settingsLaneGrids: number;
-    setSettingsLaneGrids: (number: number) => void;
     settingsLanguage: string;
+    settingsPrice: number;
+    setSettingsModal: (toggle: boolean) => void;
+    setSettingsLaneGrids: (number: number) => void;
     setSettingsLanguage: (language: string) => void;
+    setSettingsPrice: (number: number) => void;
 
     customerName: string;
     customerNumber: string;
@@ -28,26 +28,8 @@ export interface IGlobal {
     customerNotes: string;
     customerColor: string;
 
-    optionsCustomerName: string;
-    optionsCustomerNumber: string;
-    optionsStartLane: number;
-    optionsEndLane: number;
-    optionsStartTime: number;
-    optionsEndTime: number;
-    optionsCustomerColor: string;
-    optionsCustomerNotes: string;
-
-    optionsPrice: number;
-    setOptionsPrice: (price: number) => void;
-
-    setOptionsCustomerName: (name: string) => void;
-    setOptionsCustomerNumber: (number: string) => void;
-    setOptionsStartLane: (start: number) => void;
-    setOptionsEndLane: (end: number) => void;
-    setOptionsStartTime: (start: number) => void;
-    setOptionsEndTime: (end: number) => void;
-    setOptionsCustomerColor: (color: string) => void;
-    setOptionsCustomerNotes: (note: string) => void;
+    optionsData: any;
+    setOptionsData: (data: any) => void;
 
     setCustomerName: (name: string) => void;
     setCustomerNumber: (number: string) => void;
@@ -72,11 +54,9 @@ export interface IGlobal {
     setCurrentDay: (day: string) => void;
 
     resetLanes: () => void;
-    handleCustomerClicked: (laneIndex: number, timeIndex: number) => void;
     randomColorPicker: () => void;
 
-    emitSuccessToast: (message: string) => void;
-    emitFailedToast: (message: string) => void;
+    emitToast: (type: string, message: string) => void;
 
     notesList: object[];
     setNotesList: (note: object[]) => void;
@@ -121,43 +101,16 @@ export const globalStore = create<IGlobal>((set, get) => ({
     customerColor: '',
 
     settingsModal: false,
-    setSettingsModal: (toggle) => set({ settingsModal: toggle }),
-    settingsJsonData: {
-        laneSettings: {
-            currentLaneGrids: 11,
-            currentTimeGrids: 22,
-            currentPrice: 12.5,
-        },
-        language: 'DE',
-        colorDesign: 'default',
-        notifications: true,
-        notificationsPosition: 'default',
-    },
-    setSettingsJsonData: (data: any) => set({ settingsJsonData: data }),
     settingsLaneGrids: 12,
-    setSettingsLaneGrids: (number) => set({ settingsLaneGrids: number }),
     settingsLanguage: 'de',
+    settingsPrice: 13,
+    setSettingsModal: (toggle) => set({ settingsModal: toggle }),
+    setSettingsLaneGrids: (number) => set({ settingsLaneGrids: number }),
     setSettingsLanguage: (language) => set({ settingsLanguage: language }),
+    setSettingsPrice: (price) => set({ settingsPrice: price }),
 
-    optionsCustomerName: '',
-    optionsCustomerNumber: '',
-    optionsStartLane: 0,
-    optionsEndLane: 0,
-    optionsStartTime: 0,
-    optionsEndTime: 0,
-    optionsCustomerColor: '',
-    optionsCustomerNotes: '',
-    optionsPrice: 0,
-
-    setOptionsCustomerName: (name) => set({ optionsCustomerName: name }),
-    setOptionsCustomerNumber: (number) => set({ optionsCustomerNumber: number }),
-    setOptionsStartLane: (start) => set({ optionsStartLane: start }),
-    setOptionsEndLane: (end) => set({ optionsEndLane: end }),
-    setOptionsStartTime: (start) => set({ optionsStartTime: start }),
-    setOptionsEndTime: (end) => set({ optionsEndTime: end }),
-    setOptionsCustomerNotes: (note) => set({ optionsCustomerNotes: note }),
-    setOptionsCustomerColor: (color) => set({ optionsCustomerColor: color }),
-    setOptionsPrice: (price) => set({ optionsPrice: price }),
+    optionsData: {},
+    setOptionsData: (data) => set({ optionsData: data }),
 
     setCustomerName: (name) => set({ customerName: name }),
     setCustomerNumber: (number) => set({ customerNumber: number }),
@@ -192,41 +145,14 @@ export const globalStore = create<IGlobal>((set, get) => ({
         setStartTime(0);
         setEndTime(21);
     },
-
-    handleCustomerClicked: (laneIndex, timeIndex) => {
-        const {
-            setOptionsModal,
-            setOptionsCustomerName,
-            setOptionsCustomerNotes,
-            setOptionsCustomerColor,
-            setOptionsCustomerNumber,
-            setOptionsEndLane,
-            setOptionsEndTime,
-            setOptionsStartLane,
-            setOptionsStartTime,
-            setOptionsPrice,
-            gridData,
-        } = get();
-        setOptionsModal(true);
-        const customerData = gridData[laneIndex].time[timeIndex];
-        setOptionsCustomerName(customerData.customerName);
-        setOptionsCustomerNumber(customerData.customerNumber);
-        setOptionsCustomerNotes(customerData.customerNotes);
-        setOptionsCustomerColor(customerData.customerColor);
-        setOptionsEndLane(customerData.endLane);
-        setOptionsEndTime(customerData.endTime);
-        setOptionsStartLane(customerData.startLane);
-        setOptionsStartTime(customerData.startTime);
-        setOptionsPrice(customerData.price);
-    },
     randomColorPicker: () => {
         const { setCustomerColor } = get();
         const index = Math.floor(Math.random() * colorList.length);
         const color = colorList[index].colorGrid;
         setCustomerColor(color);
     },
-    emitSuccessToast: (msg) => {
-        toast.success(msg, {
+    emitToast: (type: string, msg: string) => {
+        const options: ToastOptions = {
             position: 'top-right',
             autoClose: 3000,
             hideProgressBar: false,
@@ -235,36 +161,14 @@ export const globalStore = create<IGlobal>((set, get) => ({
             draggable: true,
             progress: undefined,
             theme: 'light',
-        });
-    },
-    emitFailedToast: (msg) => {
-        toast.error(msg, {
-            position: 'top-right',
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: 'light',
-        });
+        };
+        if (type === 'success') toast.success(msg, options);
+        if (type === 'error') toast.error(msg);
     },
     deletedLaneToLocalStorage: () => {
-        const deletedLane = {
-            customerName: get().optionsCustomerName,
-            customerNumber: get().optionsCustomerNumber,
-            customerNotes: get().optionsCustomerNotes,
-            customerColor: get().optionsCustomerColor,
-            startLane: get().optionsStartLane,
-            endLane: get().optionsEndLane,
-            startTime: get().optionsStartTime,
-            endTime: get().optionsEndTime,
-            date: get().date,
-            //workerName: ,
-            payedStatus: false,
-            //bahnID: optionsId,
-        };
+        const { optionsData } = get();
+        const deletedLane = optionsData;
         const deleteLaneJson = JSON.stringify(deletedLane);
-        if (deletedLane) localStorage.setItem(get().optionsCustomerName.toString(), deleteLaneJson);
+        if (deletedLane) localStorage.setItem(optionsData.uID, deleteLaneJson);
     },
 }));

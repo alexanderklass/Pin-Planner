@@ -10,6 +10,7 @@ import { FaStickyNote } from 'react-icons/fa';
 import { startTimeList, endTimeList } from '../../../init/initGridData';
 import InfoHover from '../../InfoHover';
 import RequiredInfo from '../../RequiredInfo';
+import { nanoid } from 'nanoid';
 
 const BookingModal = () => {
     const {
@@ -38,8 +39,9 @@ const BookingModal = () => {
         setCustomerList,
         randomColorPicker,
         resetLanes,
-        emitSuccessToast,
+        emitToast,
         useTranslate,
+        settingsLaneGrids,
     } = globalStore();
 
     const [inactiveLane, setInactiveLane] = useState(false);
@@ -52,11 +54,14 @@ const BookingModal = () => {
     const timeGreater = startTime > endTime;
     const activeBookingButton = !customerName || !customerNumber || !workerName || laneGreater || timeGreater;
     const bookingNotification = useTranslate('NotificationBooking');
+    const cantBookCustomerMessage = useTranslate('BookingCantBookCustomer');
 
     const addCustomer = () => {
+        if (checkIfCanAddCustomer()) return emitToast('error', cantBookCustomerMessage);
         setCustomerList([
             ...customerList,
             {
+                uID: nanoid(),
                 customerName: customerName,
                 customerNumber: customerNumber,
                 customerColor: customerColor,
@@ -71,7 +76,20 @@ const BookingModal = () => {
             },
         ]);
         closeBookingModal();
-        emitSuccessToast(bookingNotification);
+        emitToast('success', bookingNotification);
+    };
+
+    const checkIfCanAddCustomer = () => {
+        const filteredList = customerList.filter((item: any) => {
+            return (
+                item.date === date &&
+                item.startLane <= endLane &&
+                item.endLane >= startLane &&
+                item.startTime <= endTime &&
+                item.endTime >= startTime
+            );
+        });
+        return filteredList.length > 0;
     };
 
     const addAllDayBookingToList = () => {
@@ -96,10 +114,10 @@ const BookingModal = () => {
     const addMaintainingLane = () => {
         if (!inactiveLane) {
             setInactiveLane(true);
-            setCustomerName('Außerbetrieb');
-            setCustomerNumber('Außerbetrieb');
-            setCustomerNotes('Außerbetrieb');
-            setWorkerName('Außerbetrieb');
+            setCustomerName('Außer Betrieb');
+            setCustomerNumber('Außer Betrieb');
+            setCustomerNotes('Außer Betrieb');
+            setWorkerName('Außer Betrieb');
             setCustomerColor('bg-black');
         } else if (inactiveLane) {
             setInactiveLane(false);
@@ -170,7 +188,7 @@ const BookingModal = () => {
                                     value={startLane}
                                     name={'startLane'}
                                     onChange={(e) => setStartLane(Number(e.target.value))}>
-                                    {Array.from({ length: 12 }).map((_, index) => {
+                                    {Array.from({ length: settingsLaneGrids }).map((_, index) => {
                                         return (
                                             <option key={index} value={index}>
                                                 {index + 1}
@@ -185,7 +203,7 @@ const BookingModal = () => {
                                     value={endLane}
                                     name={'endLane'}
                                     onChange={(e) => setEndLane(Number(e.target.value))}>
-                                    {Array.from({ length: 12 }).map((_, index) => {
+                                    {Array.from({ length: settingsLaneGrids }).map((_, index) => {
                                         return (
                                             <option key={index} value={index}>
                                                 {index + 1}
@@ -267,7 +285,7 @@ const BookingModal = () => {
                             <FcSupport className={'text-[20px]'} />
                             <InfoHover
                                 active={infoInactiveLane}
-                                text={'Ausgewählte Bahn und Zeit auf außerbetrieb stellen!'}
+                                text={'Ausgewählte Bahn und Zeit auf außer Betrieb stellen!'}
                                 width={'w-[330px]'}
                             />
                         </Switch>
@@ -290,7 +308,7 @@ const BookingModal = () => {
                             onClick={addCustomer}
                             disabled={activeBookingButton}
                             className={
-                                'outline-text flex h-[30px] w-[90px] items-center justify-center rounded-md bg-green-500 p-2 font-bold text-white transition-all hover:bg-green-600 disabled:bg-gray-500 disabled:text-black disabled:text-white'
+                                'outline-text flex h-[30px] w-[90px] items-center justify-center rounded-md bg-green-500 p-2 font-bold text-white transition-all hover:bg-green-600 disabled:bg-gray-500'
                             }>
                             {useTranslate('BookingModalBookingButton')}
                         </button>

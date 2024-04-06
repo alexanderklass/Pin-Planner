@@ -1,9 +1,0 @@
-Header:
-- Collapse Menu => add settings and user functionality
-
-Electron:
-- Add header with move, close and fullscreen buttons
-
-IMPORTANT BEFORE RELEASE:
-- Change customerName and date checker => ID checker
-- Language picker

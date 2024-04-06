@@ -5,11 +5,11 @@ import Placeholder from '../Placeholder';
 import { switchIndexToTime } from '../../../init/initGridData';
 
 const DeletedHistory = () => {
-    const { date, customerList, deletedList, setDeletedList, setCustomerList, emitSuccessToast, useTranslate } =
-        globalStore();
+    const { date, customerList, deletedList, setDeletedList, setCustomerList, emitToast, useTranslate } = globalStore();
     const placeholderText = useTranslate('DeletedHistoryEmptyList');
     const recoveredNotification = useTranslate('NotificationBookingRecovered');
     const permDeletedNotification = useTranslate('NotificationBookingPermRemoved');
+    const cantRecoverLane = useTranslate('BookingCantBookCustomer');
     const getStorageItems = () => {
         const itemsArray: any = [];
         for (let i = 0; i < localStorage.length; i++) {
@@ -24,8 +24,10 @@ const DeletedHistory = () => {
         const key = localStorage.key(index);
         const storageItem = localStorage.getItem(key ?? '');
         const value = JSON.parse(storageItem ?? 'null');
+        if (checkIfCanRecoverLane(value)) return emitToast('error', cantRecoverLane);
         const restoredCustomer = {
             date: value.date,
+            uID: value.uID,
             customerName: value.customerName,
             startLane: value.startLane,
             endLane: value.endLane,
@@ -33,18 +35,31 @@ const DeletedHistory = () => {
             endTime: value.endTime,
             customerColor: value.customerColor,
             customerNumber: value.customerNumber,
-            //workerName: value.workerName,
+            workerName: value.workerName,
             customerNotes: value.customerNotes,
             payedStatus: false,
         };
         setCustomerList([...customerList, restoredCustomer]);
         localStorage.removeItem(id);
-        emitSuccessToast(recoveredNotification);
+        emitToast('success', recoveredNotification);
+    };
+
+    const checkIfCanRecoverLane = (value: any) => {
+        const filteredList = customerList.filter((item: any) => {
+            return (
+                item.date === date &&
+                item.startLane <= value.endLane &&
+                item.endLane >= value.startLane &&
+                item.startTime <= value.endTime &&
+                item.endTime >= value.startTime
+            );
+        });
+        return filteredList.length > 0;
     };
 
     const deleteStorageItem = (id: any) => {
         localStorage.removeItem(id);
-        emitSuccessToast(permDeletedNotification);
+        emitToast('success', permDeletedNotification);
         getStorageItems();
     };
 
@@ -62,7 +77,7 @@ const DeletedHistory = () => {
                 deletedList.map((customer: any, index: number) => {
                     const startTimeConverted = switchIndexToTime(customer.value.startTime);
                     const endTimeConverted = switchIndexToTime(customer.value.endTime);
-                    const startLane = customer.value.startLane === 0 ? 1 : customer.value.startLane;
+                    const startLane = customer.value.startLane === 0 ? 1 : customer.value.startLane + 1;
                     const endLane = customer.value.endLane === 0 ? 1 : customer.value.endLane + 1;
                     return (
                         <DeletedCustomer
@@ -73,7 +88,7 @@ const DeletedHistory = () => {
                             time={startTimeConverted + ' - ' + endTimeConverted + ' Uhr'}
                             notes={customer.value.customerNotes}
                             permRemoveLane={() => deleteStorageItem(customer.key)}
-                            recoverLane={() => recoverLane(index, customer.value.customerName)}
+                            recoverLane={() => recoverLane(index, customer.key)}
                         />
                     );
                 })

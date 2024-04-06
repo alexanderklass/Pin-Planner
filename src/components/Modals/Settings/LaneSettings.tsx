@@ -2,7 +2,7 @@ import React from 'react';
 import { globalStore } from '../../../store/global.store';
 
 const LaneSettings = () => {
-    const { settingsLaneGrids, setSettingsLaneGrids, useTranslate } = globalStore();
+    const { settingsLaneGrids, setSettingsLaneGrids, settingsPrice, setSettingsPrice, useTranslate } = globalStore();
 
     return (
         <div className={'flex w-full animate-fade flex-col gap-2'}>
@@ -12,7 +12,7 @@ const LaneSettings = () => {
                     name={'settingsNumberLanes'}
                     value={settingsLaneGrids}
                     onChange={(e) => setSettingsLaneGrids(Number(e.target.value))}
-                    className={'w-full rounded-md p-1 text-center'}>
+                    className={'w-[250px] rounded-md p-1 text-center'}>
                     {Array.from({ length: 18 }).map((_, index) => {
                         return (
                             <option value={index} key={index}>
@@ -24,8 +24,8 @@ const LaneSettings = () => {
             </div>
             <div className={'flex items-center justify-between'}>
                 <p className={'w-full text-gray-600'}>{useTranslate('SettingsLaneOpeningTimeText')}</p>
-                <div className={'flex w-full flex-row items-center gap-1'}>
-                    <select className={'w-full rounded-md p-1 text-center'} name={'settingsStartTime'}>
+                <div className={'flex w-full flex-row items-center justify-end gap-1'}>
+                    <select className={'w-[73px] rounded-md p-1 text-center'} name={'settingsStartTime'}>
                         {Array.from({ length: 18 }).map((_, index) => {
                             return (
                                 <option value={index} key={index}>
@@ -34,7 +34,7 @@ const LaneSettings = () => {
                             );
                         })}
                     </select>
-                    <select className={'w-full rounded-md p-1 text-center'} name={'settingsEndTime'}>
+                    <select className={'w-[73px] rounded-md p-1 text-center'} name={'settingsEndTime'}>
                         {Array.from({ length: 18 }).map((_, index) => {
                             return (
                                 <option value={index} key={index}>
@@ -48,9 +48,10 @@ const LaneSettings = () => {
             <div className={'flex w-full items-center'}>
                 <p className={'w-full text-gray-600'}>{useTranslate('SettingsLanePrice')}</p>
                 <input
-                    className={'w-full rounded-md p-1 text-center'}
+                    className={'w-[150px] rounded-md p-1 text-center'}
                     type={'number'}
-                    placeholder={'10.00 €'}
+                    onChange={(e) => setSettingsPrice(Number(e.target.value))}
+                    value={settingsPrice}
                     name={'currentPrice'}
                 />
             </div>

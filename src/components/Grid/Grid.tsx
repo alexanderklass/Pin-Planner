@@ -12,34 +12,56 @@ import PayedSymbol from './PayedSymbol';
 const Grid = () => {
     const {
         gridData,
-        handleCustomerClicked,
+        setOptionsModal,
         customerList,
         setCustomerList,
         date,
-        emitSuccessToast,
-        emitFailedToast,
+        emitToast,
         setGridData,
         settingsLaneGrids,
         useTranslate,
         currentDay,
+        setOptionsData,
+        settingsPrice,
     } = globalStore();
     const time = startTimeList();
     const changedNotification = useTranslate('NotificationBookingMoved');
     const cantMoveNotification = useTranslate('NotificationCantMoveBooking');
+    const cantMoveCustomer = useTranslate('GridCantMoveCustomer');
+
+    const checkIfCanMoveCustomer = (
+        startLane: number,
+        endLane: number,
+        startTime: number,
+        endTime: number,
+        uID: string,
+    ) => {
+        const filteredList = customerList.filter((item: any) => {
+            return (
+                item.date === date &&
+                item.startLane <= endLane &&
+                item.endLane >= startLane &&
+                item.startTime <= endTime &&
+                item.endTime >= startTime &&
+                item.uID !== uID
+            );
+        });
+        return filteredList.length > 0;
+    };
+
     const onDrop = (item: any, laneIndex: number, timeIndex: number) => {
         const data = item.data;
         const laneOffset = laneIndex - data.startLane;
         const timeOffset = timeIndex - data.startTime;
         const endLane = data.endLane + laneOffset;
         const endTime = data.endTime + timeOffset;
-        const outOfRange = endTime >= 22 || endLane >= 12;
-        if (outOfRange) {
-            emitFailedToast(cantMoveNotification);
-            return;
-        }
+        const outOfRange = endTime > 21 || endLane >= settingsLaneGrids;
+        if (checkIfCanMoveCustomer(laneIndex, endLane, timeIndex, endTime, data.uID))
+            return emitToast('error', cantMoveCustomer);
+        if (outOfRange) return emitToast('error', cantMoveNotification);
         let oldCustomerList = [...customerList];
         let newCustomerList = oldCustomerList.map((customer: any) => {
-            if (customer.customerName === data.customerName && customer.date === date) {
+            if (customer.uID === data.uID && customer.date === date) {
                 return {
                     ...customer,
                     startLane: laneIndex,
@@ -51,7 +73,7 @@ const Grid = () => {
             return customer;
         });
         setCustomerList(newCustomerList);
-        emitSuccessToast(changedNotification);
+        emitToast('success', changedNotification);
     };
 
     const fetchCustomerList = () => {
@@ -65,6 +87,7 @@ const Grid = () => {
                 for (let j = item.startTime; j <= item.endTime; j++) {
                     updatedLane[i].time[j] = {
                         ...updatedLane[i].time[j],
+                        uID: item.uID,
                         customerName: item.customerName,
                         customerNumber: item.customerNumber,
                         date: item.date,
@@ -90,7 +113,7 @@ const Grid = () => {
         } else if (currentDay === 'Sa' && item.id >= 13) {
             return 15;
         } else {
-            return 13;
+            return settingsPrice;
         }
     };
 
@@ -105,10 +128,15 @@ const Grid = () => {
         return price;
     };
 
+    const handleCustomerClicked = (laneIndex: number, timeIndex: number) => {
+        setOptionsModal(true);
+        setOptionsData(gridData[laneIndex].time[timeIndex]);
+    };
+
     useEffect(() => {
         fetchCustomerList();
         //eslint-disable-next-line
-    }, [customerList, date, settingsLaneGrids]);
+    }, [customerList, date, settingsLaneGrids, settingsPrice]);
 
     const laneGrid = () => {
         return gridData.map((lane, index) => {
@@ -148,7 +176,6 @@ const Grid = () => {
                         return (
                             <DropZone
                                 acceptType={'lane'}
-                                isOverColor={'bg-gray-500'}
                                 key={timeIndex}
                                 onDrop={(item) => onDrop(item, laneIndex, timeIndex)}>
                                 {time.customerName && (
@@ -157,7 +184,6 @@ const Grid = () => {
                                         key={timeIndex}
                                         onClick={() => handleCustomerClicked(laneIndex, timeIndex)}
                                         color={time.customerColor}
-                                        isDraggingColor={'bg-green-300'}
                                         data={time}>
                                         <p
                                             className={

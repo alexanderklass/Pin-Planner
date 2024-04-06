@@ -37,7 +37,7 @@ const DeletedCustomer = ({ name, number, lanes, time, notes, permRemoveLane, rec
                 </p>
                 <p>
                     <span className={'font-bold'}>Notizen: </span>
-                    Notizen: {notes}
+                    {notes}
                 </p>
             </div>
             <div className={'absolute right-1 top-1 flex flex-row items-center justify-center gap-1 text-[25px]'}>
