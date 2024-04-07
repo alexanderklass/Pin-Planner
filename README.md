@@ -1,6 +1,6 @@
 # Description
 
-[logo](https://imgur.com/a/lQojff9)\
+[logo](logo.png)\
 This is a demo **`booking scheduler`** for my **portfolio**. It was actually designed for a bowling company.
 So most of the features you see are made especially for that company. After the project was done, I started adding some extra
 features, so it could be used for several companies or other usages.
