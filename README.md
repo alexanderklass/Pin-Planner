@@ -14,7 +14,7 @@ to make it usable by multiple accounts to achieve using the scheduler with many 
 
 ## Configuration before starting
 
-![settingsGif](https://imgur.com/a/42KPJ7b) \
+![settings.gif](settings.gif)
 First things first, the standard lane number is set to 12. You can change it to the lanes you need.
 Afterward it´s not recommended to change it. Also, the language can be changed, at the moment there are only two,
 german and english.
