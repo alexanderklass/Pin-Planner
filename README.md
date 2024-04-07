@@ -1,5 +1,6 @@
 # Description
 
+[logo](https://imgur.com/a/lQojff9)\
 This is a demo **`booking scheduler`** for my **portfolio**. It was actually designed for a bowling company.
 So most of the features you see are made especially for that company. After the project was done, I started adding some extra
 features, so it could be used for several companies or other usages.
@@ -64,9 +65,16 @@ or right. In case of an error you can adjust your actions.
 ## Searching for customer data
 
 How do we find customers that were booked in the future or in the past? The easiest and quickest way is by typing the name into the `searchbar`.
-You can also search the customer by pressing
+You can also search the customer by pressing on the `datepicker` and selecting the date you want.
 
+## Where does the data go after we delete the booking?
 
+In production, you'll have a `database` for `deleted bookings`, but in this case all deleted data goes into the `local storage.` If you do something like this,
+you want to encrypt the data before sending it to the `local storage`. If you decide using the `local storage` for sensitive customer data.
+
+## Functionality of the sidebar
+
+### What is the sidebar for?
 
 
 
