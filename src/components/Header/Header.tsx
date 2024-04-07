@@ -7,8 +7,6 @@ import { globalStore } from '../../store/global.store';
 import { days } from '../../init/initGridData';
 import DatePicker from './DatePicker';
 import Searchbar from './Searchbar';
-import { LuArrowLeftSquare } from 'react-icons/lu';
-import { Link } from 'react-router-dom';
 
 const Header = () => {
     const {
@@ -68,13 +66,6 @@ const Header = () => {
                 'border-b-1 flex w-full flex-row items-center justify-between border-b border-neutral-600 bg-neutral-700 p-3 text-xs xl:text-base'
             }>
             <div className={'flex flex-row items-center justify-center gap-1 text-gray-100'}>
-                <Link to={'/portal'}>
-                    <LuArrowLeftSquare
-                        className={
-                            'rounded-md text-[20px] text-gray-300 transition-all hover:bg-gray-300 hover:text-black xl:text-[30px]'
-                        }
-                    />
-                </Link>
                 <FcCalendar className={'text-[30px] xl:text-[40px]'} />
                 <p className={'outline-text font-bold'}>{useTranslate('HeaderSchedulerTitle')}</p>
             </div>

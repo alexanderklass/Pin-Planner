@@ -10,11 +10,11 @@ There are several thing that can be changed in the settings. Number of lanes, la
 The idea was to create a scheduler that can add customers to a specific day and visualize it in a grid. The Main thing was
 to make it usable by multiple accounts to achieve using the scheduler with many clients at the same time as possible.
 
-**Disclaimer**: This is just a demo so it`s not connected to a database and there is no option for use of multiple clients.
+`Disclaimer`: This is just a demo so it`s not connected to a database and there is no option for use of multiple clients.
 
-## How to start?
+## Configuration before starting
 
-[settingsGif]() \
+![settingsGif](https://imgur.com/a/42KPJ7b) \
 First things first, the standard lane number is set to 12. You can change it to the lanes you need.
 Afterward it´s not recommended to change it. Also, the language can be changed, at the moment there are only two,
 german and english.
@@ -64,17 +64,44 @@ or right. In case of an error you can adjust your actions.
 
 ## Searching for customer data
 
+[searchbar gif]()\
 How do we find customers that were booked in the future or in the past? The easiest and quickest way is by typing the name into the `searchbar`.
 You can also search the customer by pressing on the `datepicker` and selecting the date you want.
 
-## Where does the data go after we delete the booking?
+## Where does the data go after deleting the booking?
 
 In production, you'll have a `database` for `deleted bookings`, but in this case all deleted data goes into the `local storage.` If you do something like this,
 you want to encrypt the data before sending it to the `local storage`. If you decide using the `local storage` for sensitive customer data.
 
-## Functionality of the sidebar
+## Components of the sidebar
 
-### What is the sidebar for?
+- `Notes`
+- `Daily schedule`
+- `Recycle bin`
+
+### Notes
+
+[notesGif]()\
+These are notes for the current day. After you write anything into the fields, you need to press the `save button`
+in order to save the `notes`.
+
+### Daily schedule
+
+[scheduleGif]()\
+Here you can see every customer for the day in a quick overview. The name, time, and notes for the specific booking.
+Notice the red or green circle at the top right of the customer.
+It only pulses green when the `current time` is in the range of the `booking time`.
+
+### Recycle bin
+
+[recoverGif]() [permDeleteGif]()\
+In the recycle bin you'll find every booking that was deleted for that current day. If you deleted a booking by accident,
+no worries. There are two `buttons` one for `recovery` and one for `deleting` the booking permanently.
+In this case just press the recovery and the booking will appear in the same place, unless there is already a customer
+for the `lane` and `time` values. Then just move the current customer and recover the deleted one. If you try to press the `button`
+anyway, then you'll get an `error notification`.
+
+
 
 
 
