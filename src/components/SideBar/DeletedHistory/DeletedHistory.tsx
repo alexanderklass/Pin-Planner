@@ -10,6 +10,7 @@ const DeletedHistory = () => {
     const recoveredNotification = useTranslate('NotificationBookingRecovered');
     const permDeletedNotification = useTranslate('NotificationBookingPermRemoved');
     const cantRecoverLane = useTranslate('BookingCantBookCustomer');
+
     const getStorageItems = () => {
         const itemsArray: any = [];
         for (let i = 0; i < localStorage.length; i++) {
@@ -79,14 +80,15 @@ const DeletedHistory = () => {
                     const endTimeConverted = switchIndexToTime(customer.value.endTime);
                     const startLane = customer.value.startLane === 0 ? 1 : customer.value.startLane + 1;
                     const endLane = customer.value.endLane === 0 ? 1 : customer.value.endLane + 1;
+                    const deleted = customer.value;
                     return (
                         <DeletedCustomer
                             key={index}
-                            name={customer.value.customerName}
-                            number={customer.value.customerNumber}
+                            name={deleted.customerName}
+                            number={deleted.customerNumber}
                             lanes={startLane + ' - ' + endLane}
                             time={startTimeConverted + ' - ' + endTimeConverted + ' Uhr'}
-                            notes={customer.value.customerNotes}
+                            notes={deleted.customerNotes}
                             permRemoveLane={() => deleteStorageItem(customer.key)}
                             recoverLane={() => recoverLane(index, customer.key)}
                         />

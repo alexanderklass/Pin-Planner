@@ -56,9 +56,10 @@ const Searchbar = () => {
                                 <div className={'rounded-md bg-gray-100 p-1'}>
                                     <FcPodiumWithSpeaker className={'text-[25px]'} />
                                 </div>
-                                <div>{item.customerName}</div>
-                                <div className={'h-[20px] w-[2px] rounded-full bg-gray-400'}></div>
-                                <div>{item.date}</div>
+                                <div className={'flex w-full flex-row justify-between'}>
+                                    <div>{item.customerName}</div>
+                                    <div>{item.date}</div>
+                                </div>
                             </div>
                         );
                     })}

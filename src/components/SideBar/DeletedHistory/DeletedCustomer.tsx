@@ -1,6 +1,7 @@
 import React from 'react';
 import { FcDeleteDatabase } from 'react-icons/fc';
 import { FcDataBackup } from 'react-icons/fc';
+import { globalStore } from '../../../store/global.store';
 
 interface props {
     name?: string;
@@ -13,6 +14,10 @@ interface props {
 }
 
 const DeletedCustomer = ({ name, number, lanes, time, notes, permRemoveLane, recoverLane }: props) => {
+    const { useTranslate } = globalStore();
+    const Tlane = useTranslate('DeletedCustomerLane');
+    const Ttime = useTranslate('DeletedCustomerTime');
+    const Tnotes = useTranslate('DeletedCustomerNotes');
     return (
         <div
             className={
@@ -28,15 +33,15 @@ const DeletedCustomer = ({ name, number, lanes, time, notes, permRemoveLane, rec
                     {number}
                 </p>
                 <p>
-                    <span className={'font-bold'}>Bahn: </span>
+                    <span className={'font-bold'}>{Tlane} </span>
                     {lanes}
                 </p>
                 <p>
-                    <span className={'font-bold'}>Uhrzeit: </span>
+                    <span className={'font-bold'}>{Ttime} </span>
                     {time}
                 </p>
                 <p>
-                    <span className={'font-bold'}>Notizen: </span>
+                    <span className={'font-bold'}>{Tnotes} </span>
                     {notes}
                 </p>
             </div>

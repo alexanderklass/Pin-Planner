@@ -57,13 +57,12 @@ the number of `lanes`.
 
 ## About Notifications
 
-[notifications]()\
 For almost every action there will be either a `success` or `error` `notification` at the top right. These `notifications` show what happened if something went wrong
 or right. In case of an error you can adjust your actions.
 
 ## Searching for customer data
 
-[searching]()\
+![searchbar.gif](searchbar.gif)\
 How do we find customers that were booked in the future or in the past? The easiest and quickest way is by typing the name into the `searchbar`.
 You can also search the customer by pressing on the `datepicker` and selecting the date you want.
 
@@ -80,20 +79,20 @@ you want to encrypt the data before sending it to the `local storage`. If you de
 
 ### Notes
 
-[notesGif]()\
+![notes.gif](notes.gif)\
 These are notes for the current day. After you write anything into the fields, you need to press the `save button`
 in order to save the `notes`.
 
 ### Daily schedule
 
-[scheduleGif]()\
+![dailyScheduler.gif](dailyScheduler.gif)\
 Here you can see every customer for the day in a quick overview. The name, time, and notes for the specific booking.
 Notice the red or green circle at the top right of the customer.
 It only pulses green when the `current time` is in the range of the `booking time`.
 
 ### Recycle bin
 
-[recoverGif]() [permDeleteGif]()\
+![deletedHistory.gif](deletedHistory.gif)\
 In the recycle bin you'll find every booking that was deleted for that current day. If you deleted a booking by accident,
 no worries. There are two `buttons` one for `recovery` and one for `deleting` the booking permanently.
 In this case just press the recovery and the booking will appear in the same place, unless there is already a customer
