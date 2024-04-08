@@ -1,4 +1,4 @@
-# Description
+# `Pin Planner`
 
 ![logo.png](logo.png)\
 This is a demo **`booking scheduler`** for my **portfolio**. It was actually designed for a bowling company.
@@ -11,6 +11,24 @@ The idea was to create a scheduler that can add customers to a specific day and 
 to make it usable by multiple accounts to achieve using the scheduler with many clients at the same time as possible.
 
 `Disclaimer`: This is just a demo so it`s not connected to a database and there is no option for use of multiple clients.
+
+### Tech
+
+- `Typescript`
+- `React`
+- `Electron`
+- `I18next`(languages)
+- `Nanoid`(replacement for db id's)
+- `Zustand`(store to avoid prop drilling)
+-
+
+### Style
+
+- `TailwindCSS`
+- `TailwindCSS-Animated`(extra tailwind animation's)
+- `Flatpickr`(custom datepicker)
+- `React-toastify`(notifications)
+- `React-icons`
 
 ## Configuration before starting
 
