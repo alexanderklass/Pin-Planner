@@ -22,8 +22,6 @@ clients.
 - `React`
 - `Electron`
 
-Checkout
-
 ## Configuration before starting
 
 ![settings.gif](https://i.imgur.com/2VPF3dw.gif)\
