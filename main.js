@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 
 function createWindow() {
@@ -6,10 +6,13 @@ function createWindow() {
         width: 1920,
         height: 1200,
         roundedCorners: true,
-        frame: true,
+        frame: false,
         webPreferences: {
+            enableRemoteModules: true,
             nodeIntegration: true,
+            contextIsolation: false,
         },
+        icon: `${__dirname}/public/favicon.png`,
     });
 
     win.loadURL('http://localhost:3000');

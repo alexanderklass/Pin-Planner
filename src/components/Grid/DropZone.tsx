@@ -18,6 +18,7 @@ const DropZone = ({ onDrop, acceptType, children, isOverGrid }: props) => {
             isOver: monitor.isOver(),
         }),
     });
+
     return (
         <div
             ref={drop}

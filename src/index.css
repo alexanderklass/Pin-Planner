@@ -36,3 +36,11 @@ body, html {
     -1px 1px 0 #ffffff,
     1px 1px 0 #ffffff;
 }
+
+.drag-title-bar {
+    -webkit-app-region: drag;
+}
+
+.drag-no-buttons {
+    -webkit-app-region: no-drag;
+}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import DailyHistoryCustomer from './DailyHistoryCustomer';
 import { globalStore } from '../../../store/global.store';
-import { switchIndexToTime, switchTimeToIndex } from '../../../init/initGridData';
+import { switchIndexToTime, switchTimeToIndex } from '../../../utils/timeIndexConverter';
 import Placeholder from '../Placeholder';
 
 const DailyHistory = () => {

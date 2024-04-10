@@ -20,6 +20,7 @@ const Header = () => {
         setSettingsModal,
         useTranslate,
     } = globalStore();
+    const isElectron = typeof process !== 'undefined' && !!process.versions.electron;
     const openModalBooking = () => {
         resetLanes();
         randomColorPicker();
@@ -62,9 +63,7 @@ const Header = () => {
 
     return (
         <header
-            className={
-                'border-b-1 flex w-full flex-row items-center justify-between border-b border-neutral-600 bg-neutral-700 p-3 text-xs xl:text-base'
-            }>
+            className={`border-b-1 flex ${isElectron && 'mt-6'} w-full flex-row items-center justify-between border-b border-neutral-600 bg-neutral-700 p-3 text-xs xl:text-base`}>
             <div className={'flex flex-row items-center justify-center gap-1 text-gray-100'}>
                 <FcCalendar className={'text-[30px] xl:text-[40px]'} />
                 <p className={'outline-text font-bold'}>{useTranslate('HeaderSchedulerTitle')}</p>

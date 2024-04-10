@@ -1,6 +1,6 @@
 # `Pin Planner`
 
-![logo.png](logo.png)\
+![logo.png](https://i.imgur.com/QNyQiQF.png)\
 This is a demo **`booking scheduler`** for my **portfolio**. It was actually designed for a bowling company.
 So most of the features you see are made especially for that company. After the project was done, I started adding some extra
 features, so it could be used for several companies or other usages.
@@ -32,14 +32,14 @@ to make it usable by multiple accounts to achieve using the scheduler with many 
 
 ## Configuration before starting
 
-![settings.gif](settings.gif)\
+![settings.gif](https://i.imgur.com/2VPF3dw.gif)\
 First things first, the standard lane number is set to 12. You can change it to the lanes you need.
 Afterward it´s not recommended to change it. Also, the language can be changed, at the moment there are only two,
 german and english.
 
 ## How to start adding customers?
 
-![addCustomer.gif](addCustomer.gif)\
+![addCustomer.gif](https://i.imgur.com/b5S6uFQ.gif)\
 After everything is set up in the `settings`, you can start with adding your first customer.
 By pressing at the `booking button` a new `window` appears. Now you can start entering every information.
 I need to mention that every red border `input` needs to be filled in order activate the `booking button` at the bottom right.
@@ -48,14 +48,14 @@ There are also some special things I added. For example the `booking button` won
 a maintaining and the second one is for blocking the entire day for any events. If everything is completed and the `booking button`
 lights up green you can press it and add your first customer.
 
-![bookingNotification.gif](bookingNotification.gif) \
+![bookingNotification.gif](https://i.imgur.com/YHHIcFw.gif) \
 `Note:` if everything works the `window` closes, and you get a `notification` at the top right that it was successfully booked.
 If the `window` does not close there is only one error `notification` that can appear and that is, when there is customer already booked,
 and it would overlap the existing one. So just adjust your `time` and `lane` values.
 
 ## How can I change something afterward?
 
-![adjustingCustomer.gif](adjustingCustomer.gif)\
+![adjustingCustomer.gif](https://i.imgur.com/taHphgT.gif)\
 To adjust the customer, if something needs to be changed, you can easily click on any `grid` of that customer and
 a new window will appear. You´ll have now plenty of information and fields you can change. You can almost change everything except  
 the `customer name`, `the registered by employee name` or `the current price`. Here you can also `delete` the customer or set it to `paid`,
@@ -63,7 +63,7 @@ if the customer has `paid` and wants to leave.
 
 ### How do I move the grid of the customer?
 
-![dragAndDrop.gif](dragAndDrop.gif)\
+![dragAndDrop.gif](https://i.imgur.com/BNJq8nJ.gif)\
 To move the customer into a different location for example from `lane 1` to `lane 3`. It s pretty simple, just `drag and drop`   
 the customer where you want it to be. `Notice`, the first `grid` where the customer´s name is, will always appear first at the next `location`.
 
@@ -80,7 +80,7 @@ or right. In case of an error you can adjust your actions.
 
 ## Searching for customer data
 
-![searchbar.gif](searchbar.gif)\
+![searchbar.gif](https://i.imgur.com/8stMxoH.gif)\
 How do we find customers that were booked in the future or in the past? The easiest and quickest way is by typing the name into the `searchbar`.
 You can also search the customer by pressing on the `datepicker` and selecting the date you want.
 
@@ -97,20 +97,20 @@ you want to encrypt the data before sending it to the `local storage`. If you de
 
 ### Notes
 
-![notes.gif](notes.gif)\
+![notes.gif](https://i.imgur.com/LHIMIts.gif)\
 These are notes for the current day. After you write anything into the fields, you need to press the `save button`
 in order to save the `notes`.
 
 ### Daily schedule
 
-![dailyScheduler.gif](dailyScheduler.gif)\
+![dailyScheduler.gif](https://i.imgur.com/AYbLR7H.gif)\
 Here you can see every customer for the day in a quick overview. The name, time, and notes for the specific booking.
 Notice the red or green circle at the top right of the customer.
 It only pulses green when the `current time` is in the range of the `booking time`.
 
 ### Recycle bin
 
-![deletedHistory.gif](deletedHistory.gif)\
+![deletedHistory.gif](https://i.imgur.com/S46xq0n.gif)\
 In the recycle bin you'll find every booking that was deleted for that current day. If you deleted a booking by accident,
 no worries. There are two `buttons` one for `recovery` and one for `deleting` the booking permanently.
 In this case just press the recovery and the booking will appear in the same place, unless there is already a customer

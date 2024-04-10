@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import DeletedCustomer from './DeletedCustomer';
 import { globalStore } from '../../../store/global.store';
 import Placeholder from '../Placeholder';
-import { switchIndexToTime } from '../../../init/initGridData';
+import { switchIndexToTime } from '../../../utils/timeIndexConverter';
 
 const DeletedHistory = () => {
     const { date, customerList, deletedList, setDeletedList, setCustomerList, emitToast, useTranslate } = globalStore();
