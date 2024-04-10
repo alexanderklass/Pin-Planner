@@ -16,6 +16,8 @@ to make it usable by multiple accounts to achieve using the scheduler with many 
 `Disclaimer`: This is just a demo, so it's not connected to a database and there is no option for use of multiple
 clients.
 
+`Checkout the demo:` [Pin Planner](https://alexanderklass.github.io/Pin-Planner/)
+
 ### Tech
 
 - `Typescript`

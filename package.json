@@ -1,6 +1,6 @@
 {
-  "name": "Pin Planner",
   "homepage": "https://alexanderklass.github.io/Pin-Planner",
+  "name": "Pin Planner",
   "version": "1.0.0",
   "private": true,
   "main": "main.js",
