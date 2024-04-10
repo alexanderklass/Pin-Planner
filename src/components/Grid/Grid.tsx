@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
-import { initLaneData, startTimeList } from '../../init/initGridData';
-import { globalStore } from '../../store/global.store';
+import React, {useEffect} from 'react';
+import {initLaneData, startTimeList} from '../../init/initGridData';
+import {globalStore} from '../../store/global.store';
 import DropZone from './DropZone';
 import DragItem from './DragItem';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
+import {DndProvider} from 'react-dnd';
+import {HTML5Backend} from 'react-dnd-html5-backend';
 import Switcher from '../SideBar/Switcher';
-import schedulerIcon from '../../assets/images/img_1.png';
+import schedulerIcon from '../../assets/images/grid-logo.png';
 import PayedSymbol from './PayedSymbol';
 
 const Grid = () => {
@@ -193,7 +193,7 @@ const Grid = () => {
                                                 time.startTime === timeIndex &&
                                                 time.customerName.split(' ')[0]}
                                         </p>
-                                        {time.payedStatus && <PayedSymbol />}
+                                        {time.payedStatus && <PayedSymbol/>}
                                     </DragItem>
                                 )}
                             </DropZone>
@@ -213,7 +213,7 @@ const Grid = () => {
                             className={
                                 'flex w-[45px] items-center justify-center rounded-tl-xl border border-black bg-gray-300 xl:w-[70px]'
                             }>
-                            <img src={schedulerIcon} alt={'icon'} className={'w-[25px] rounded-tl-xl xl:w-[30px]'} />
+                            <img src={schedulerIcon} alt={'icon'} className={'w-[25px] rounded-tl-xl xl:w-[30px]'}/>
                         </div>
                         {laneGrid()}
                     </div>
@@ -222,7 +222,7 @@ const Grid = () => {
                         {gridItems()}
                     </div>
                 </div>
-                <Switcher />
+                <Switcher/>
             </div>
         </DndProvider>
     );
