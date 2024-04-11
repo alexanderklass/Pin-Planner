@@ -1,5 +1,6 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
-const path = require('path');
+const {app, BrowserWindow} = require("electron");
+
+//const path = require("path");
 
 function createWindow() {
     const win = new BrowserWindow({
@@ -15,7 +16,7 @@ function createWindow() {
         icon: `${__dirname}/public/favicon.png`,
     });
 
-    win.loadURL('http://localhost:3000');
+    win.loadURL("http://localhost:3000");
     //win.loadFile(path.join(__dirname, '../electron-app/public/index.html'));
 }
 

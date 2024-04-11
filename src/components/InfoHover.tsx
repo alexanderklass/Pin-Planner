@@ -1,14 +1,13 @@
 import React from 'react';
-import { FcInfo } from 'react-icons/fc';
-import { Transition } from '@headlessui/react';
+import {FcInfo} from 'react-icons/fc';
+import {Transition} from '@headlessui/react';
 
 interface props {
     active: boolean;
     text: string;
-    width: string;
 }
 
-const InfoHover = ({ active, text, width }: props) => {
+const InfoHover = ({active, text}: props) => {
     return (
         <Transition
             show={active}
@@ -19,8 +18,8 @@ const InfoHover = ({ active, text, width }: props) => {
             leaveFrom='opacity-100'
             leaveTo='opacity-0'>
             <div
-                className={`pointer-events-none absolute -top-8 left-2 flex ${width} items-center justify-center break-words rounded-md border border-gray-500 bg-gray-200 p-1 text-gray-600`}>
-                <FcInfo />
+                className={`pointer-events-none absolute -top-8 left-2 gap-1 items-center flex whitespace-nowrap rounded-md border border-gray-500 bg-gray-200 p-1 text-gray-600`}>
+                <FcInfo/>
                 <p className={'text-[12px] font-bold'}>{text}</p>
             </div>
         </Transition>

@@ -1,10 +1,13 @@
-import { create } from 'zustand';
-import { IBahn, colorList } from '../init/initGridData';
-import { toast, ToastOptions } from 'react-toastify';
-import { useTranslation } from 'react-i18next';
+import {create} from 'zustand';
+import {IBahn, colorList} from '../init/initGridData';
+import {toast, ToastOptions} from 'react-toastify';
+import {useTranslation} from 'react-i18next';
 
 export interface IGlobal {
     useTranslate: (text: string) => any;
+    draggingData: any;
+    setDraggingData: (data: any) => void;
+
 
     bookingModal: boolean;
     optionsModal: boolean;
@@ -68,25 +71,28 @@ export interface IGlobal {
 
 export const globalStore = create<IGlobal>((set, get) => ({
     useTranslate: (text) => {
-        const { t } = useTranslation();
+        const {t} = useTranslation();
         return t(text);
     },
 
+    draggingData: {},
+    setDraggingData: (data: any) => set({draggingData: data}),
+
     notesList: [],
-    setNotesList: (note: object[]) => set({ notesList: note }),
+    setNotesList: (note: object[]) => set({notesList: note}),
 
     deletedList: [],
-    setDeletedList: (item) => set({ deletedList: item }),
+    setDeletedList: (item) => set({deletedList: item}),
 
     gridData: [],
-    setGridData: (data) => set({ gridData: data }),
+    setGridData: (data) => set({gridData: data}),
     customerList: [],
-    setCustomerList: (customer) => set({ customerList: customer }),
+    setCustomerList: (customer) => set({customerList: customer}),
 
     date: '',
-    setDate: (newDate) => set({ date: newDate }),
+    setDate: (newDate) => set({date: newDate}),
     currentDay: '',
-    setCurrentDay: (day) => set({ currentDay: day }),
+    setCurrentDay: (day) => set({currentDay: day}),
 
     bookingModal: false,
     optionsModal: false,
@@ -102,27 +108,27 @@ export const globalStore = create<IGlobal>((set, get) => ({
 
     settingsModal: false,
     settingsLaneGrids: 12,
-    settingsLanguage: 'de',
+    settingsLanguage: 'en',
     settingsPrice: 13,
-    setSettingsModal: (toggle) => set({ settingsModal: toggle }),
-    setSettingsLaneGrids: (number) => set({ settingsLaneGrids: number }),
-    setSettingsLanguage: (language) => set({ settingsLanguage: language }),
-    setSettingsPrice: (price) => set({ settingsPrice: price }),
+    setSettingsModal: (toggle) => set({settingsModal: toggle}),
+    setSettingsLaneGrids: (number) => set({settingsLaneGrids: number}),
+    setSettingsLanguage: (language) => set({settingsLanguage: language}),
+    setSettingsPrice: (price) => set({settingsPrice: price}),
 
     optionsData: {},
-    setOptionsData: (data) => set({ optionsData: data }),
+    setOptionsData: (data) => set({optionsData: data}),
 
-    setCustomerName: (name) => set({ customerName: name }),
-    setCustomerNumber: (number) => set({ customerNumber: number }),
-    setStartLane: (lane) => set({ startLane: lane }),
-    setEndLane: (lane) => set({ endLane: lane }),
-    setStartTime: (time) => set({ startTime: time }),
-    setEndTime: (time) => set({ endTime: time }),
-    setWorkerName: (name) => set({ workerName: name }),
-    setBookingModal: (toggle) => set({ bookingModal: toggle }),
-    setOptionsModal: (toggle) => set({ optionsModal: toggle }),
-    setCustomerNotes: (note) => set({ customerNotes: note }),
-    setCustomerColor: (color) => set({ customerColor: color }),
+    setCustomerName: (name) => set({customerName: name}),
+    setCustomerNumber: (number) => set({customerNumber: number}),
+    setStartLane: (lane) => set({startLane: lane}),
+    setEndLane: (lane) => set({endLane: lane}),
+    setStartTime: (time) => set({startTime: time}),
+    setEndTime: (time) => set({endTime: time}),
+    setWorkerName: (name) => set({workerName: name}),
+    setBookingModal: (toggle) => set({bookingModal: toggle}),
+    setOptionsModal: (toggle) => set({optionsModal: toggle}),
+    setCustomerNotes: (note) => set({customerNotes: note}),
+    setCustomerColor: (color) => set({customerColor: color}),
     resetLanes: () => {
         const {
             setCustomerNumber,
@@ -146,7 +152,7 @@ export const globalStore = create<IGlobal>((set, get) => ({
         setEndTime(21);
     },
     randomColorPicker: () => {
-        const { setCustomerColor } = get();
+        const {setCustomerColor} = get();
         const index = Math.floor(Math.random() * colorList.length);
         const color = colorList[index].colorGrid;
         setCustomerColor(color);
@@ -166,7 +172,7 @@ export const globalStore = create<IGlobal>((set, get) => ({
         if (type === 'error') toast.error(msg);
     },
     deletedLaneToLocalStorage: () => {
-        const { optionsData } = get();
+        const {optionsData} = get();
         const deletedLane = optionsData;
         const deleteLaneJson = JSON.stringify(deletedLane);
         if (deletedLane) localStorage.setItem(optionsData.uID, deleteLaneJson);

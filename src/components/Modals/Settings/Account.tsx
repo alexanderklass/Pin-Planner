@@ -1,11 +1,12 @@
 import React from 'react';
 import BreakingLine from '../../BreakingLine';
-import { globalStore } from '../../../store/global.store';
-import { useTranslation } from 'react-i18next';
+import {globalStore} from '../../../store/global.store';
+import {useTranslation} from 'react-i18next';
 
 const Account = () => {
-    const { settingsLanguage, setSettingsLanguage } = globalStore();
-    const { t, i18n } = useTranslation();
+    const {settingsLanguage, setSettingsLanguage} = globalStore();
+    const {t, i18n} = useTranslation();
+
     const changeLanguage = (lng: any) => {
         setSettingsLanguage(lng);
         i18n.changeLanguage(lng);
@@ -43,7 +44,7 @@ const Account = () => {
                     type={'email'}
                 />
             </div>
-            <BreakingLine />
+            <BreakingLine/>
             <div className={'flex items-center justify-between'}>
                 <p className={'w-[150px] text-gray-600'}>{t('SettingsAccountLanguage')}</p>
                 <select

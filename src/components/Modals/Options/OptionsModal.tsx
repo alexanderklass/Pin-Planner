@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { Dialog } from '@headlessui/react';
-import { globalStore } from '../../../store/global.store';
-import { FcPaid, FcEmptyTrash } from 'react-icons/fc';
-import { startTimeList, endTimeList } from '../../../init/initGridData';
+import React, {useState} from 'react';
+import {Dialog} from '@headlessui/react';
+import {globalStore} from '../../../store/global.store';
+import {FcPaid, FcEmptyTrash} from 'react-icons/fc';
+import {startTimeList, endTimeList} from '../../../init/initGridData';
 import InfoHover from '../../InfoHover';
 import ConfirmModal from '../Confirm/ConfirmModal';
 import ColorList from './ColorList';
@@ -129,7 +129,8 @@ const OptionsModal = () => {
         <Dialog
             className={'fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50'}
             open={optionsModal}
-            onClose={() => {}}>
+            onClose={() => {
+            }}>
             <Dialog.Panel
                 className={
                     'flex animate-jump-in flex-col items-center justify-center gap-3 rounded-xl border border-gray-600 bg-neutral-700 p-3 shadow shadow-gray-500 animate-duration-300 animate-ease-linear'
@@ -167,7 +168,7 @@ const OptionsModal = () => {
                                         onChange={(e) => handleChange(e)}
                                         name={'startLane'}
                                         className={'w-full rounded-xl border border-gray-300 p-1 outline-0'}>
-                                        {Array.from({ length: settingsLaneGrids }).map((_, index) => {
+                                        {Array.from({length: settingsLaneGrids}).map((_, index) => {
                                             return (
                                                 <option key={index} value={index}>
                                                     {index + 1}
@@ -180,7 +181,7 @@ const OptionsModal = () => {
                                         onChange={(e) => handleChange(e)}
                                         name={'endLane'}
                                         className={'w-full rounded-xl border border-gray-300 p-1 outline-0'}>
-                                        {Array.from({ length: settingsLaneGrids }).map((_, index) => {
+                                        {Array.from({length: settingsLaneGrids}).map((_, index) => {
                                             return (
                                                 <option key={index} value={index}>
                                                     {index + 1}
@@ -220,7 +221,7 @@ const OptionsModal = () => {
                                         })}
                                     </select>
                                 </div>
-                                <ColorList />
+                                <ColorList/>
                             </div>
                         </div>
                         <div className={'flex flex-col'}>
@@ -260,11 +261,10 @@ const OptionsModal = () => {
                             onMouseEnter={() => setHoverPayButton(true)}
                             onMouseLeave={() => setHoverPayButton(false)}
                             className={`${disablePayedButton && 'hidden'} relative flex items-center justify-center rounded-full bg-green-300 p-1 transition-all hover:bg-green-400 disabled:bg-gray-500`}>
-                            <FcPaid className={`text-[25px]`} />
+                            <FcPaid className={`text-[25px]`}/>
                             <InfoHover
                                 active={hoverPayButton}
                                 text={useTranslate('OptionsModalPayedButtonHoverInfo')}
-                                width={'w-[220px]'}
                             />
                         </button>
                         <button
@@ -274,11 +274,10 @@ const OptionsModal = () => {
                             className={
                                 'relative flex items-center justify-center rounded-full bg-red-400 p-1 text-center transition-all hover:bg-red-500'
                             }>
-                            <FcEmptyTrash className={'text-[25px]'} />
+                            <FcEmptyTrash className={'text-[25px]'}/>
                             <InfoHover
                                 active={hoverDeleteButton}
                                 text={useTranslate('OptionsModalDeleteButtonHoverInfo')}
-                                width={'w-[130px]'}
                             />
                         </button>
                     </div>
@@ -300,7 +299,7 @@ const OptionsModal = () => {
                         </button>
                     </div>
                 </div>
-                <ConfirmModal confirm={confirmDelete} decline={declineDelete} open={openDeleteModal} />
+                <ConfirmModal confirm={confirmDelete} decline={declineDelete} open={openDeleteModal}/>
             </Dialog.Panel>
         </Dialog>
     );

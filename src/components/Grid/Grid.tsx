@@ -177,7 +177,9 @@ const Grid = () => {
                             <DropZone
                                 acceptType={'lane'}
                                 key={timeIndex}
-                                onDrop={(item) => onDrop(item, laneIndex, timeIndex)}>
+                                onDrop={(item) => onDrop(item, laneIndex, timeIndex)}
+                                onHover={time.isOverGrid}
+                                hoverIndex={{startLane: laneIndex, startTime: timeIndex, data: time}}>
                                 {time.customerName && (
                                     <DragItem
                                         type={'lane'}
