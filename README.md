@@ -5,7 +5,7 @@ This is a demo **`booking scheduler`** for my **portfolio**. It was actually des
 So most of the features you see are made especially for that company. After the project was done, I started adding some
 extra
 features, so it could be used for several companies or other usages.
-It´s structured by rows with number of lanes and cols with the time.
+It's structured by rows with number of lanes and cols with the time.
 There are several thing that can be changed in the settings. Number of lanes, language, design or a custom price for the
 lanes.
 
@@ -28,7 +28,7 @@ clients.
 
 ![settings.gif](https://i.imgur.com/2VPF3dw.gif)\
 First things first, the standard lane number is set to 12. You can change it to the lanes you need.
-Afterward it´s not recommended to change it. Also, the language can be changed, at the moment there are only two,
+Afterward it's not recommended to change it. Also, the language can be changed, at the moment there are only two,
 german and english.
 
 ## How to start adding customers?
@@ -66,14 +66,14 @@ if the customer has `paid` and wants to leave.
 ### How do I move the grid of the customer?
 
 ![dragAndDrop.gif](https://i.imgur.com/Zy77QYH.gif)\
-To move the customer into a different location for example from `lane 1` to `lane 3`. It s pretty simple,
+To move the customer into a different location for example from `lane 1` to `lane 3`. It's pretty simple,
 just `drag and drop`   
 the customer where you want it to be. `Notice`, the first `grid` where the customer´s name is, will always appear first
 at the next `location`.
 
 There is also other way to `change` the `location` of the customers, by `changing` the values of `lane` and `time` will
 achieve the same thing.
-But it's not recommended to do it this way cause of time efficiency and visualisation.
+But it's not recommended to do it this way, cause of time efficiency and visualisation.
 
 In case you asked yourself where the `price` comes from, it gets the value per `grid` from the `settings`. Where you
 also changed
@@ -128,6 +128,14 @@ In this case just press the recovery and the booking will appear in the same pla
 for the `lane` and `time` values. Then just move the current customer and recover the deleted one. If you try to press
 the `button`
 anyway, then you'll get an `error notification`.
+
+## License
+
+This project is under the [MIT](LICENSE.txt) license.
+
+## Contact
+
+Alexander Klass - [E-Mail](mailto:alexklass16@gmail.com).
 
 
 
