@@ -16,7 +16,7 @@ to make it usable by multiple accounts to achieve using the scheduler with many 
 `Disclaimer`: This is just a demo, so it's not connected to a database and there is no option for use of multiple
 clients.
 
-`Checkout the demo:` [Pin Planner](https://alexanderklass.github.io/Pin-Planner/)
+`Demo:` [Pin Planner](https://alexanderklass.github.io/Pin-Planner/)
 
 ### Tech
 
@@ -46,7 +46,7 @@ a maintaining and the second one is for blocking the entire day for any events. 
 the `booking button`
 lights up green you can press it and add your first customer.
 
-![bookingNotification.gif](https://i.imgur.com/YHHIcFw.gif) \
+![bookingNotification.gif](https://i.imgur.com/wfdeByj.gif) \
 `Note:` if everything works the `window` closes, and you get a `notification` at the top right that it was successfully
 booked.
 If the `window` does not close there is only one error `notification` that can appear and that is, when there is
@@ -65,7 +65,7 @@ if the customer has `paid` and wants to leave.
 
 ### How do I move the grid of the customer?
 
-![dragAndDrop.gif](https://i.imgur.com/BNJq8nJ.gif)\
+![dragAndDrop.gif](https://i.imgur.com/Zy77QYH.gif)\
 To move the customer into a different location for example from `lane 1` to `lane 3`. It s pretty simple,
 just `drag and drop`   
 the customer where you want it to be. `Notice`, the first `grid` where the customer´s name is, will always appear first

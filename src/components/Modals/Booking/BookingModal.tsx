@@ -66,8 +66,7 @@ const BookingModal = () => {
     const hoverInfoMaintenance = useTranslate("MaintenanceHoverInfo");
 
     const addCustomer = () => {
-        if (checkIfCanAddCustomer())
-            return emitToast("error", cantBookCustomerMessage);
+        if (checkIfCanAddCustomer()) return emitToast("error", cantBookCustomerMessage);
         setCustomerList([
             ...customerList,
             {

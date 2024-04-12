@@ -5,9 +5,9 @@ import {useTranslation} from 'react-i18next';
 
 export interface IGlobal {
     useTranslate: (text: string) => any;
+
     draggingData: any;
     setDraggingData: (data: any) => void;
-
 
     bookingModal: boolean;
     optionsModal: boolean;
@@ -60,6 +60,7 @@ export interface IGlobal {
     randomColorPicker: () => void;
 
     emitToast: (type: string, message: string) => void;
+    checkIfCanMoveCustomer: (startLane: number, endLane: number, startTime: number, endTime: number, uID: string) => boolean;
 
     notesList: object[];
     setNotesList: (note: object[]) => void;
@@ -157,6 +158,20 @@ export const globalStore = create<IGlobal>((set, get) => ({
         const color = colorList[index].colorGrid;
         setCustomerColor(color);
     },
+    checkIfCanMoveCustomer: (startLane, endLane, startTime, endTime, uID) => {
+        const {customerList} = get();
+        const filteredList: any = customerList.filter((item: any) => {
+            return (
+                item.date === get().date &&
+                item.startLane <= endLane &&
+                item.endLane >= startLane &&
+                item.startTime <= endTime &&
+                item.endTime >= startTime &&
+                item.uID !== uID
+            );
+        });
+        return filteredList.length > 0;
+    },
     emitToast: (type: string, msg: string) => {
         const options: ToastOptions = {
             position: 'top-right',
@@ -169,7 +184,7 @@ export const globalStore = create<IGlobal>((set, get) => ({
             theme: 'light',
         };
         if (type === 'success') toast.success(msg, options);
-        if (type === 'error') toast.error(msg);
+        if (type === 'error') toast.error(msg, options);
     },
     deletedLaneToLocalStorage: () => {
         const {optionsData} = get();

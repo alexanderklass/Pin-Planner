@@ -1,17 +1,17 @@
 import React, {useCallback} from "react";
-import {useDrop} from "react-dnd";
 import {globalStore} from "../../store/global.store";
+import {useDrop} from "react-dnd";
 
 interface props {
     onDrop: (item: any) => void;
     onHover: boolean;
-    hoverIndex: { startLane: number, startTime: number, data: any };
+    hoverIndex: { startLane: number; startTime: number; };
     acceptType: string;
     children: any;
 }
 
-const DropZone = ({onDrop, acceptType, children, onHover, hoverIndex}: props) => {
-    const {setGridData, gridData, draggingData} = globalStore()
+const DropZone = ({onDrop, acceptType, children, onHover, hoverIndex,}: props) => {
+    const {setGridData, gridData, draggingData, checkIfCanMoveCustomer} = globalStore();
     const [{isOver}, drop] = useDrop({
         accept: acceptType,
         drop: (item) => {
@@ -29,14 +29,19 @@ const DropZone = ({onDrop, acceptType, children, onHover, hoverIndex}: props) =>
         }),
     });
 
-    const changeHoverColor = useCallback(() => {
+    const getRange = () => {
         const laneOffset = hoverIndex.startLane - draggingData.startLane;
         const timeOffset = hoverIndex.startTime - draggingData.startTime;
         const endLane = draggingData.endLane + laneOffset;
         const endTime = draggingData.endTime + timeOffset;
-        const oldGrid = [...gridData];
         const outOfRange = endTime > 21 || endLane >= 12;
-        if (outOfRange) return;
+        return {endLane, endTime, outOfRange};
+    };
+
+    const changeHoverColor = useCallback(() => {
+        const {endLane, endTime, outOfRange} = getRange();
+        const oldGrid = [...gridData];
+        if (checkIfCanMoveCustomer(hoverIndex.startLane, endLane, hoverIndex.startTime, endTime, draggingData.uID,) || outOfRange) return;
         for (let i = hoverIndex.startLane; i <= endLane; i++) {
             for (let j = hoverIndex.startTime; j <= endTime; j++) {
                 oldGrid[i].time[j] = {
@@ -46,7 +51,8 @@ const DropZone = ({onDrop, acceptType, children, onHover, hoverIndex}: props) =>
             }
         }
         setGridData(oldGrid);
-    }, [gridData])
+        //eslint-disable-next-line
+    }, [gridData]);
 
     const resetHoverColor = useCallback(() => {
         const oldGrid = [...gridData];
@@ -59,12 +65,13 @@ const DropZone = ({onDrop, acceptType, children, onHover, hoverIndex}: props) =>
             }
         }
         setGridData(oldGrid);
-    }, [gridData])
+        //eslint-disable-next-line
+    }, [gridData]);
 
     return (
         <div
             ref={drop}
-            className={`${onHover ? `${draggingData.customerColor}` : "bg-neutral-200"} h-full w-[50px] border border-black xl:w-[80px]`}
+            className={`${onHover ? `bg-neutral-500 transition-colors` : "bg-neutral-200"} h-full w-[50px] border border-black xl:w-[80px]`}
         >
             {children}
         </div>

@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import DeletedCustomer from './DeletedCustomer';
-import { globalStore } from '../../../store/global.store';
+import {globalStore} from '../../../store/global.store';
 import Placeholder from '../Placeholder';
-import { switchIndexToTime } from '../../../utils/timeIndexConverter';
+import {switchIndexToTime} from '../../../utils/timeIndexConverter';
 
 const DeletedHistory = () => {
-    const { date, customerList, deletedList, setDeletedList, setCustomerList, emitToast, useTranslate } = globalStore();
+    const {date, customerList, deletedList, setDeletedList, setCustomerList, emitToast, useTranslate} = globalStore();
     const placeholderText = useTranslate('DeletedHistoryEmptyList');
     const recoveredNotification = useTranslate('NotificationBookingRecovered');
     const permDeletedNotification = useTranslate('NotificationBookingPermRemoved');
@@ -16,7 +16,7 @@ const DeletedHistory = () => {
         for (let i = 0; i < localStorage.length; i++) {
             let key: any = localStorage.key(i);
             let value: any = JSON.parse(localStorage.getItem(key) ?? '');
-            if (value.date === date) itemsArray.push({ key, value });
+            if (value.date === date) itemsArray.push({key, value});
         }
         setDeletedList(itemsArray);
     };
@@ -77,7 +77,7 @@ const DeletedHistory = () => {
             {deletedList.length > 0 ? (
                 deletedList.map((customer: any, index: number) => {
                     const startTimeConverted = switchIndexToTime(customer.value.startTime);
-                    const endTimeConverted = switchIndexToTime(customer.value.endTime);
+                    const endTimeConverted = switchIndexToTime(customer.value.endTime + 1);
                     const startLane = customer.value.startLane === 0 ? 1 : customer.value.startLane + 1;
                     const endLane = customer.value.endLane === 0 ? 1 : customer.value.endLane + 1;
                     const deleted = customer.value;
@@ -87,7 +87,7 @@ const DeletedHistory = () => {
                             name={deleted.customerName}
                             number={deleted.customerNumber}
                             lanes={startLane + ' - ' + endLane}
-                            time={startTimeConverted + ' - ' + endTimeConverted + ' Uhr'}
+                            time={startTimeConverted + ' - ' + endTimeConverted}
                             notes={deleted.customerNotes}
                             permRemoveLane={() => deleteStorageItem(customer.key)}
                             recoverLane={() => recoverLane(index, customer.key)}
@@ -95,7 +95,7 @@ const DeletedHistory = () => {
                     );
                 })
             ) : (
-                <Placeholder text={placeholderText} />
+                <Placeholder text={placeholderText}/>
             )}
         </div>
     );

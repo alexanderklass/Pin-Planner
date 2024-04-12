@@ -11,7 +11,7 @@ interface props {
 }
 
 const DragItem = ({data, type, children, color, onClick}: props) => {
-    const {gridData, setGridData, setDraggingData} = globalStore();
+    const {setDraggingData} = globalStore();
     const [{isDragging}, drag] = useDrag({
         item: {data: data},
         type: type,
@@ -20,24 +20,11 @@ const DragItem = ({data, type, children, color, onClick}: props) => {
         }),
     });
 
-    const colorGrid = () => {
-        const oldGrid = [...gridData];
-        for (let i = data.startLane; i <= data.endLane; i++) {
-            for (let j = data.startTime; j <= data.endTime; j++) {
-                oldGrid[i].time[j] = {
-                    ...oldGrid[i].time[j],
-                    customerColor: "bg-neutral-400",
-                };
-            }
-        }
-        setGridData(oldGrid);
-    };
-
     useEffect(() => {
         if (isDragging) {
-            //colorGrid();
             setDraggingData(data);
         }
+        //eslint-disable-next-line
     }, [isDragging]);
 
     return (

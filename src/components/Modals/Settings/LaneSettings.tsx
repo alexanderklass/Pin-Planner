@@ -1,8 +1,8 @@
 import React from 'react';
-import { globalStore } from '../../../store/global.store';
+import {globalStore} from '../../../store/global.store';
 
 const LaneSettings = () => {
-    const { settingsLaneGrids, setSettingsLaneGrids, settingsPrice, setSettingsPrice, useTranslate } = globalStore();
+    const {settingsLaneGrids, setSettingsLaneGrids, settingsPrice, setSettingsPrice, useTranslate} = globalStore();
 
     return (
         <div className={'flex w-full animate-fade flex-col gap-2'}>
@@ -13,7 +13,7 @@ const LaneSettings = () => {
                     value={settingsLaneGrids}
                     onChange={(e) => setSettingsLaneGrids(Number(e.target.value))}
                     className={'w-[250px] rounded-md p-1 text-center'}>
-                    {Array.from({ length: 18 }).map((_, index) => {
+                    {Array.from({length: 18}).map((_, index) => {
                         return (
                             <option value={index} key={index}>
                                 {index}
@@ -25,8 +25,8 @@ const LaneSettings = () => {
             <div className={'flex items-center justify-between'}>
                 <p className={'w-full text-gray-600'}>{useTranslate('SettingsLaneOpeningTimeText')}</p>
                 <div className={'flex w-full flex-row items-center justify-end gap-1'}>
-                    <select className={'w-[73px] rounded-md p-1 text-center'} name={'settingsStartTime'}>
-                        {Array.from({ length: 18 }).map((_, index) => {
+                    <select disabled={true} className={'w-[73px] rounded-md p-1 text-center'} name={'settingsStartTime'}>
+                        {Array.from({length: 18}).map((_, index) => {
                             return (
                                 <option value={index} key={index}>
                                     {index + 1}
@@ -34,8 +34,8 @@ const LaneSettings = () => {
                             );
                         })}
                     </select>
-                    <select className={'w-[73px] rounded-md p-1 text-center'} name={'settingsEndTime'}>
-                        {Array.from({ length: 18 }).map((_, index) => {
+                    <select disabled={true} className={'w-[73px] rounded-md p-1 text-center'} name={'settingsEndTime'}>
+                        {Array.from({length: 18}).map((_, index) => {
                             return (
                                 <option value={index} key={index}>
                                     {index + 1}

@@ -23,31 +23,12 @@ const Grid = () => {
         currentDay,
         setOptionsData,
         settingsPrice,
+        checkIfCanMoveCustomer
     } = globalStore();
     const time = startTimeList();
     const changedNotification = useTranslate('NotificationBookingMoved');
-    const cantMoveNotification = useTranslate('NotificationCantMoveBooking');
     const cantMoveCustomer = useTranslate('GridCantMoveCustomer');
 
-    const checkIfCanMoveCustomer = (
-        startLane: number,
-        endLane: number,
-        startTime: number,
-        endTime: number,
-        uID: string,
-    ) => {
-        const filteredList = customerList.filter((item: any) => {
-            return (
-                item.date === date &&
-                item.startLane <= endLane &&
-                item.endLane >= startLane &&
-                item.startTime <= endTime &&
-                item.endTime >= startTime &&
-                item.uID !== uID
-            );
-        });
-        return filteredList.length > 0;
-    };
 
     const onDrop = (item: any, laneIndex: number, timeIndex: number) => {
         const data = item.data;
@@ -56,9 +37,11 @@ const Grid = () => {
         const endLane = data.endLane + laneOffset;
         const endTime = data.endTime + timeOffset;
         const outOfRange = endTime > 21 || endLane >= settingsLaneGrids;
-        if (checkIfCanMoveCustomer(laneIndex, endLane, timeIndex, endTime, data.uID))
-            return emitToast('error', cantMoveCustomer);
-        if (outOfRange) return emitToast('error', cantMoveNotification);
+        if (checkIfCanMoveCustomer(laneIndex, endLane, timeIndex, endTime, data.uID) || outOfRange) {
+            fetchCustomerList();
+            emitToast('error', cantMoveCustomer);
+            return;
+        }
         let oldCustomerList = [...customerList];
         let newCustomerList = oldCustomerList.map((customer: any) => {
             if (customer.uID === data.uID && customer.date === date) {
@@ -179,7 +162,7 @@ const Grid = () => {
                                 key={timeIndex}
                                 onDrop={(item) => onDrop(item, laneIndex, timeIndex)}
                                 onHover={time.isOverGrid}
-                                hoverIndex={{startLane: laneIndex, startTime: timeIndex, data: time}}>
+                                hoverIndex={{startLane: laneIndex, startTime: timeIndex}}>
                                 {time.customerName && (
                                     <DragItem
                                         type={'lane'}
