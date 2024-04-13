@@ -59,7 +59,7 @@ and it would overlap the existing one. So just adjust your `time` and `lane` val
 To adjust the customer, if something needs to be changed, you can easily click on any `grid` of that customer and
 a new window will appear. You´ll have now plenty of information and fields you can change. You can almost change
 everything except  
-the `customer name`, `the registered by employee name` or `the current price`. Here you can also `delete` the customer
+the `customer name`, `registered by employee name` or `current price`. Here you can also `delete` the customer
 or set it to `paid`,
 if the customer has `paid` and wants to leave.
 
@@ -113,7 +113,7 @@ in order to save the `notes`.
 
 ### Daily schedule
 
-![dailyScheduler.gif](https://i.imgur.com/AYbLR7H.gif)\
+![dailyScheduler.gif](https://i.imgur.com/p0xokfh.gif)\
 Here you can see every customer for the day in a quick overview. The name, time, and notes for the specific booking.
 Notice the red or green circle at the top right of the customer.
 It only pulses green when the `current time` is in the range of the `booking time`.

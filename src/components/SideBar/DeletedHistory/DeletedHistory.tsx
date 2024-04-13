@@ -70,10 +70,7 @@ const DeletedHistory = () => {
     }, [date, customerList]);
 
     return (
-        <div
-            className={
-                'no-scrollbar flex max-h-[832px] w-full flex-col items-center gap-1 overflow-y-auto scroll-smooth p-1'
-            }>
+        <div className={'no-scrollbar flex max-h-[832px] w-full flex-col items-center gap-1 overflow-y-auto scroll-smooth p-1'}>
             {deletedList.length > 0 ? (
                 deletedList.map((customer: any, index: number) => {
                     const startTimeConverted = switchIndexToTime(customer.value.startTime);
