@@ -120,7 +120,7 @@ It only pulses green when the `current time` is in the range of the `booking tim
 
 ### Recycle bin
 
-![deletedHistory.gif](https://i.imgur.com/S46xq0n.gif)\
+![deletedHistory.gif](https://i.imgur.com/zKStIEJ.gif)\
 In the recycle bin you'll find every booking that was deleted for that current day. If you deleted a booking by
 accident,
 no worries. There are two `buttons` one for `recovery` and one for `deleting` the booking permanently.
