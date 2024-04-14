@@ -8,6 +8,7 @@ const DailyHistory = () => {
     const {customerList, date, useTranslate} = globalStore();
     const [currentTimeIndex, setCurrentTimeIndex] = useState(-1);
     const placeholderText = useTranslate('DailyHistoryEmptyList');
+
     const getIndexToTime = (startTime: number, endTime: number) => {
         const switchedStartTime = switchIndexToTime(startTime);
         const switchedEndTime = switchIndexToTime(endTime + 1);

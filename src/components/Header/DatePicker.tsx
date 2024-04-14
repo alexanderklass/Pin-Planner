@@ -25,7 +25,7 @@ const DatePicker = ({value, day = 'Mo', onChange}: props) => {
             });
         } else {
             flatpickr(dateRef.current, {
-                dateFormat: 'm.d.Y',
+                dateFormat: 'd.m.Y',
                 weekNumbers: true,
                 onChange: onChange,
                 defaultDate: value,
