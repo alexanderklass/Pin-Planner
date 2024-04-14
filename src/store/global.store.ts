@@ -141,6 +141,7 @@ export const globalStore = create<IGlobal>((set, get) => ({
             setWorkerName,
             setCustomerColor,
             setCustomerNotes,
+            settingsLaneGrids
         } = get();
         setCustomerNumber('');
         setCustomerName('');
@@ -148,7 +149,7 @@ export const globalStore = create<IGlobal>((set, get) => ({
         setCustomerColor('');
         setCustomerNotes('');
         setStartLane(0);
-        setEndLane(11);
+        setEndLane(settingsLaneGrids - 1);
         setStartTime(0);
         setEndTime(21);
     },

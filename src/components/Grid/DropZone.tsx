@@ -11,7 +11,7 @@ interface props {
 }
 
 const DropZone = ({onDrop, acceptType, children, onHover, hoverIndex,}: props) => {
-    const {setGridData, gridData, draggingData, checkIfCanMoveCustomer} = globalStore();
+    const {setGridData, gridData, draggingData, checkIfCanMoveCustomer, settingsLaneGrids} = globalStore();
     const [{isOver}, drop] = useDrop({
         accept: acceptType,
         drop: (item) => {
@@ -34,7 +34,7 @@ const DropZone = ({onDrop, acceptType, children, onHover, hoverIndex,}: props) =
         const timeOffset = hoverIndex.startTime - draggingData.startTime;
         const endLane = draggingData.endLane + laneOffset;
         const endTime = draggingData.endTime + timeOffset;
-        const outOfRange = endTime > 21 || endLane >= 12;
+        const outOfRange = endTime > 21 || endLane >= settingsLaneGrids;
         return {endLane, endTime, outOfRange};
     };
 

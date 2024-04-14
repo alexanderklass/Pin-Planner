@@ -1,8 +1,8 @@
-import React, { useEffect, useRef } from 'react';
+import React, {useEffect, useRef} from 'react';
 import flatpickr from 'flatpickr';
-import { German } from 'flatpickr/dist/l10n/de';
-import { BsCalendar2Event } from 'react-icons/bs';
-import { globalStore } from '../../store/global.store';
+import {German} from 'flatpickr/dist/l10n/de';
+import {BsCalendar2Event} from 'react-icons/bs';
+import {globalStore} from '../../store/global.store';
 
 interface props {
     value?: string;
@@ -10,8 +10,8 @@ interface props {
     onChange?: (selectedDate: Date[], dateStr: string) => void;
 }
 
-const DatePicker = ({ value, day = 'Mo', onChange }: props) => {
-    const { settingsLanguage } = globalStore();
+const DatePicker = ({value, day = 'Mo', onChange}: props) => {
+    const {settingsLanguage} = globalStore();
     const dateRef: any = useRef();
 
     useEffect(() => {
@@ -25,7 +25,7 @@ const DatePicker = ({ value, day = 'Mo', onChange }: props) => {
             });
         } else {
             flatpickr(dateRef.current, {
-                dateFormat: 'd.m.Y',
+                dateFormat: 'm.d.Y',
                 weekNumbers: true,
                 onChange: onChange,
                 defaultDate: value,

@@ -55,7 +55,16 @@ export const initLaneData = (laneGrids: number) => {
     return dataArray;
 };
 
-export const days = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
+export const getShortTermDays = (language: string) => {
+    switch (language) {
+        case "de":
+            return ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
+        case "en":
+            return ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+        default:
+            return language
+    }
+}
 
 export const startTimeList = () => {
     return [

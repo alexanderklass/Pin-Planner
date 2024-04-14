@@ -89,10 +89,7 @@ const OptionsModal = () => {
         const numbers = ['startLane', 'endLane', 'startTime', 'endTime'];
         const checkForNumber = numbers.includes(event.target.name);
         const value = checkForNumber ? Number(event.target.value) : event.target.value;
-        setOptionsData({
-            ...optionsData,
-            [event.target.name]: value,
-        });
+        setOptionsData({...optionsData, [event.target.name]: value,});
     };
 
     const handlePaymentStatus = () => {

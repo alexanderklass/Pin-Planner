@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import { globalStore } from '../../store/global.store';
-import { days } from '../../init/initGridData';
-import { FcPodiumWithSpeaker } from 'react-icons/fc';
+import React, {useState} from 'react';
+import {globalStore} from '../../store/global.store';
+import {getShortTermDays} from '../../init/initGridData';
+import {FcPodiumWithSpeaker} from 'react-icons/fc';
 
 const Searchbar = () => {
-    const { setDate, customerList, setCurrentDay, useTranslate } = globalStore();
+    const {setDate, customerList, setCurrentDay, useTranslate, settingsLanguage} = globalStore();
+    let days = getShortTermDays(settingsLanguage)
     const [searchValue, setSearchValue] = useState('');
     const [searchList, setSearchList] = useState<any>([]);
     const [isInputFocused, setInputFocus] = useState(false);
@@ -54,7 +55,7 @@ const Searchbar = () => {
                                 key={index}
                                 className={'flex cursor-pointer flex-row items-center gap-2 p-2 hover:bg-gray-300'}>
                                 <div className={'rounded-md bg-gray-100 p-1'}>
-                                    <FcPodiumWithSpeaker className={'text-[25px]'} />
+                                    <FcPodiumWithSpeaker className={'text-[25px]'}/>
                                 </div>
                                 <div className={'flex w-full flex-row justify-between'}>
                                     <div>{item.customerName}</div>

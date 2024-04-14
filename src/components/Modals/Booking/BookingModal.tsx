@@ -52,12 +52,7 @@ const BookingModal = () => {
     const selectEndTime = endTimeList();
     const laneGreater = startLane > endLane;
     const timeGreater = startTime > endTime;
-    const activeBookingButton =
-        !customerName ||
-        !customerNumber ||
-        !workerName ||
-        laneGreater ||
-        timeGreater;
+    const activeBookingButton = !customerName || !customerNumber || !workerName || laneGreater || timeGreater;
     const bookingNotification = useTranslate("NotificationBooking");
     const cantBookCustomerMessage = useTranslate("BookingCantBookCustomer");
     const maintenanceBooking = useTranslate("MaintenanceBooking");

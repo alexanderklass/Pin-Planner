@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import 'flatpickr/dist/flatpickr.min.css';
-import { FcCalendar } from 'react-icons/fc';
-import { IoIosSearch } from 'react-icons/io';
-import { FcSettings } from 'react-icons/fc';
-import { globalStore } from '../../store/global.store';
-import { days } from '../../init/initGridData';
+import {FcCalendar} from 'react-icons/fc';
+import {IoIosSearch} from 'react-icons/io';
+import {FcSettings} from 'react-icons/fc';
+import {globalStore} from '../../store/global.store';
+import {getShortTermDays} from '../../init/initGridData';
 import DatePicker from './DatePicker';
 import Searchbar from './Searchbar';
 
@@ -19,8 +19,13 @@ const Header = () => {
         setCurrentDay,
         setSettingsModal,
         useTranslate,
+        settingsLanguage
     } = globalStore();
+    let days = getShortTermDays(settingsLanguage)
+
+    //check if it's in electron environment
     const isElectron = typeof process !== 'undefined' && !!process.versions.electron;
+
     const openModalBooking = () => {
         resetLanes();
         randomColorPicker();
@@ -59,13 +64,13 @@ const Header = () => {
         handleStartUpDate();
         handleStartUpCurrentWeekDay();
         //eslint-disable-next-line
-    }, []);
+    }, [settingsLanguage]);
 
     return (
         <header
             className={`border-b-1 flex ${isElectron && 'mt-6'} w-full flex-row items-center justify-between border-b border-neutral-600 bg-neutral-700 p-3 text-xs xl:text-base`}>
             <div className={'flex flex-row items-center justify-center gap-1 text-gray-100'}>
-                <FcCalendar className={'text-[30px] xl:text-[40px]'} />
+                <FcCalendar className={'text-[30px] xl:text-[40px]'}/>
                 <p className={'outline-text font-bold'}>{useTranslate('HeaderSchedulerTitle')}</p>
             </div>
 
@@ -83,17 +88,17 @@ const Header = () => {
                     {useTranslate('HeaderTodayButton')}
                 </button>
                 <div className={'relative flex items-center justify-center'}>
-                    <IoIosSearch className={'absolute left-2 text-xl'} />
-                    <Searchbar />
+                    <IoIosSearch className={'absolute left-2 text-xl'}/>
+                    <Searchbar/>
                 </div>
-                <DatePicker value={date} onChange={handleDatePickerValue} day={currentDay} />
+                <DatePicker value={date} onChange={handleDatePickerValue} day={currentDay}/>
             </div>
 
             <div className={`flex flex-row items-center justify-center rounded-xl bg-neutral-200 transition-all`}>
                 <button
                     onClick={() => setSettingsModal(true)}
                     className={'rounded-xl p-1 transition-all hover:scale-110 hover:bg-purple-300'}>
-                    <FcSettings className={'text-[15px] xl:text-[25px]'} />
+                    <FcSettings className={'text-[15px] xl:text-[25px]'}/>
                 </button>
             </div>
         </header>

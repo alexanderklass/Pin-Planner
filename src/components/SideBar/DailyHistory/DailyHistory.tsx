@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import DailyHistoryCustomer from './DailyHistoryCustomer';
-import { globalStore } from '../../../store/global.store';
-import { switchIndexToTime, switchTimeToIndex } from '../../../utils/timeIndexConverter';
+import {globalStore} from '../../../store/global.store';
+import {switchIndexToTime, switchTimeToIndex} from '../../../utils/timeIndexConverter';
 import Placeholder from '../Placeholder';
 
 const DailyHistory = () => {
-    const { customerList, date, useTranslate } = globalStore();
+    const {customerList, date, useTranslate} = globalStore();
     const [currentTimeIndex, setCurrentTimeIndex] = useState(-1);
     const placeholderText = useTranslate('DailyHistoryEmptyList');
     const getIndexToTime = (startTime: number, endTime: number) => {
@@ -44,6 +44,7 @@ const DailyHistory = () => {
                 filteredCustomerList.map((customer: any, index) => {
                     return (
                         <DailyHistoryCustomer
+                            customer={customer}
                             key={index}
                             onlineStatus={isTimeInRange(customer.startTime, customer.endTime)}
                             name={customer.customerName}
@@ -53,7 +54,7 @@ const DailyHistory = () => {
                     );
                 })
             ) : (
-                <Placeholder text={placeholderText} />
+                <Placeholder text={placeholderText}/>
             )}
         </div>
     );
