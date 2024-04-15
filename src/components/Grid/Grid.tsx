@@ -29,7 +29,6 @@ const Grid = () => {
     const changedNotification = useTranslate('NotificationBookingMoved');
     const cantMoveCustomer = useTranslate('GridCantMoveCustomer');
 
-
     const onDrop = (item: any, laneIndex: number, timeIndex: number) => {
         const data = item.data;
         const laneOffset = laneIndex - data.startLane;
@@ -142,7 +141,7 @@ const Grid = () => {
                     key={index}
                     className={`flex h-full w-[45px] flex-col xl:w-[70px] 
                       ${index === 21 && 'rounded-bl-xl'} 
-                      ${index % 4 === 2 && 'bg-neutral-300'} 
+                      ${index % 4 === 2 && 'bg-neutral-300'}
                       ${index % 4 === 3 && 'bg-neutral-300'} 
                       items-center justify-center border border-black bg-neutral-100 text-center text-sm font-bold xl:text-base`}>
                     {time}
@@ -198,7 +197,7 @@ const Grid = () => {
                             className={
                                 'flex w-[45px] items-center justify-center rounded-tl-xl border border-black bg-gray-300 xl:w-[70px]'
                             }>
-                            <img src={schedulerIcon} alt={'icon'} className={'w-[25px] rounded-tl-xl xl:w-[30px]'}/>
+                            <img src={schedulerIcon} alt={'icon'} className={'w-[25px] xl:w-[38px]'}/>
                         </div>
                         {laneGrid()}
                     </div>

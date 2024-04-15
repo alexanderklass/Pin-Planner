@@ -71,7 +71,7 @@ const DropZone = ({onDrop, acceptType, children, onHover, hoverIndex,}: props) =
     return (
         <div
             ref={drop}
-            className={`${onHover ? `bg-neutral-500 transition-colors` : "bg-neutral-200"} h-full w-[50px] border border-black xl:w-[80px]`}
+            className={`${onHover ? `bg-neutral-500` : "bg-neutral-200"} h-full w-[50px] border border-black xl:w-[80px]`}
         >
             {children}
         </div>
