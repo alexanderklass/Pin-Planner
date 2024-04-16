@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/Pin-Planner/static/css/main.06d1ff35.css",
-    "main.js": "/Pin-Planner/static/js/main.cc524bc8.js",
+    "main.css": "/Pin-Planner/static/css/main.fb8849cb.css",
+    "main.js": "/Pin-Planner/static/js/main.e6ea96d9.js",
     "static/js/453.e70245b4.chunk.js": "/Pin-Planner/static/js/453.e70245b4.chunk.js",
     "static/media/grid-logo.png": "/Pin-Planner/static/media/grid-logo.e2deac72702220f0780c.png",
     "static/media/clubroom-background.png": "/Pin-Planner/static/media/clubroom-background.048747ab0d05ae207fb5.png",
     "static/media/cook-background.png": "/Pin-Planner/static/media/cook-background.335959270fa2b20d8dde.png",
     "static/media/extrabooking-background.png": "/Pin-Planner/static/media/extrabooking-background.18c309c6a923e2cd50a3.png",
     "index.html": "/Pin-Planner/index.html",
-    "main.06d1ff35.css.map": "/Pin-Planner/static/css/main.06d1ff35.css.map",
-    "main.cc524bc8.js.map": "/Pin-Planner/static/js/main.cc524bc8.js.map",
+    "main.fb8849cb.css.map": "/Pin-Planner/static/css/main.fb8849cb.css.map",
+    "main.e6ea96d9.js.map": "/Pin-Planner/static/js/main.e6ea96d9.js.map",
     "453.e70245b4.chunk.js.map": "/Pin-Planner/static/js/453.e70245b4.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.06d1ff35.css",
-    "static/js/main.cc524bc8.js"
+    "static/css/main.fb8849cb.css",
+    "static/js/main.e6ea96d9.js"
   ]
 }
