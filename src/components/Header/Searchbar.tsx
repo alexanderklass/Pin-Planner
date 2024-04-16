@@ -44,7 +44,7 @@ const Searchbar = () => {
             {(isInputFocused || isMouseOver) && searchList.length !== 0 && searchValue !== '' ? (
                 <div
                     className={
-                        'no-scrollbar absolute top-10 z-20 flex h-auto max-h-[300px] flex-col overflow-y-auto rounded-bl-lg rounded-br-lg border border-gray-500 bg-gray-200 md:w-[300px]'
+                        'no-scrollbar absolute xl:top-10 top-8 z-20 flex h-auto max-h-[300px] flex-col overflow-y-auto rounded-bl-lg rounded-br-lg border border-gray-500 bg-gray-200 md:w-[300px]'
                     }>
                     {searchList.map((item: any, index: number) => {
                         return (
@@ -55,7 +55,7 @@ const Searchbar = () => {
                                 key={index}
                                 className={'flex cursor-pointer flex-row items-center gap-2 p-2 hover:bg-gray-300'}>
                                 <div className={'rounded-md bg-gray-100 p-1'}>
-                                    <FcPodiumWithSpeaker className={'text-[25px]'}/>
+                                    <FcPodiumWithSpeaker className={'xl:text-[25px] text-[20px]'}/>
                                 </div>
                                 <div className={'flex w-full flex-row justify-between'}>
                                     <div>{item.customerName}</div>
